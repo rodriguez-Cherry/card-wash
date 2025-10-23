@@ -1,21 +1,10 @@
+import { Outlet } from "react-router";
 import { Navigation } from "./components/Navigation";
-import { HeroSection } from "./components/HeroSection";
-import { Services } from "./components/Services";
-import { Pricing } from "./components/Pricing";
-import { Footer } from "./components/Footer";
-
-function App() {
+export function App() {
   return (
     <>
-      <div>
-        <Navigation />
-        <HeroSection />
-        <Services />
-        <Pricing />
-        <Footer />
-      </div>
+      <Navigation />
+      <Outlet />
     </>
   );
 }
-
-export default App;

@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router";
+
 export function Navigation() {
+  const navigate = useNavigate();
   return (
     <nav class="bg-white shadow-lg sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,12 +94,12 @@ export function Navigation() {
           >
             Contact
           </a>
-          <a
-            href="#book"
+          <button
+            onClick={() => navigate("/home")}
             class="block w-full px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700 text-center"
           >
             Book Now
-          </a>
+          </button>
         </div>
       </div>
     </nav>
