@@ -4,7 +4,7 @@ export function Services() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-gray-900 mb-2">
-            Our Premium Services
+            Nuestros servicios premium
           </h2>
           <div class="w-20 h-1 bg-blue-500 mx-auto"></div>
         </div>
@@ -16,16 +16,15 @@ export function Services() {
               <i data-feather="shower" class="h-16 w-16 text-blue-500"></i>
             </div>
             <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-2">Basic Wash</h3>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Lavado Básico</h3>
               <p class="text-gray-600 mb-4">
-                Exterior wash, wheel cleaning, and spot-free rinse for a clean
-                finish.
+                Lavado exterior, limpieza de ruedas y enjuague sin manchas para un acabado impecable.
               </p>
               <a
                 href="#book"
                 class="text-blue-500 font-semibold hover:text-blue-700 flex items-center"
               >
-                Book Now <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
+                Reserva ahora <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
               </a>
             </div>
           </div>
@@ -36,16 +35,15 @@ export function Services() {
               <i data-feather="wind" class="h-16 w-16 text-blue-500"></i>
             </div>
             <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-2">Deluxe Wash</h3>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Lavado de lujo</h3>
               <p class="text-gray-600 mb-4">
-                Includes Basic Wash plus hand drying, tire dressing, and
-                interior vacuum.
+                Incluye lavado básico más secado a mano, abrillantado de neumáticos y aspirado interior.
               </p>
               <a
                 href="#book"
                 class="text-blue-500 font-semibold hover:text-blue-700 flex items-center"
               >
-                Book Now <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
+                Reserva ahora  <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
               </a>
             </div>
           </div>
@@ -56,17 +54,16 @@ export function Services() {
             </div>
             <div class="p-6">
               <h3 class="text-xl font-bold text-gray-900 mb-2">
-                Premium Detail
+                Detalle premium
               </h3>
               <p class="text-gray-600 mb-4">
-                Full interior and exterior detailing with wax, polish, and
-                fabric protection.
+                Detallado completo interior y exterior con cera, pulimento y protección de telas.
               </p>
               <a
                 href="#book"
                 class="text-blue-500 font-semibold hover:text-blue-700 flex items-center"
               >
-                Book Now <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
+                Reserva ahora <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
               </a>
             </div>
           </div>
@@ -77,17 +74,16 @@ export function Services() {
             </div>
             <div class="p-6">
               <h3 class="text-xl font-bold text-gray-900 mb-2">
-                Ceramic Coating
+                Revestimiento cerámico
               </h3>
               <p class="text-gray-600 mb-4">
-                Advanced paint protection that lasts for years with proper
-                maintenance.
+                Protección avanzada de pintura que dura años con el mantenimiento adecuado.
               </p>
               <a
                 href="#book"
                 class="text-blue-500 font-semibold hover:text-blue-700 flex items-center"
               >
-                Book Now <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
+                Reserva ahora  <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
               </a>
             </div>
           </div>

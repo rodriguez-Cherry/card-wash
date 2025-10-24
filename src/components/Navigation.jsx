@@ -10,7 +10,7 @@ export function Navigation() {
             <a href="#" class="flex-shrink-0 flex items-center">
               <i data-feather="droplet" class="h-8 w-8 text-blue-500"></i>
               <span class="ml-2 text-xl font-bold text-gray-900">
-                Shine & Sparkle
+                Brillo y resplandor
               </span>
             </a>
           </div>
@@ -19,32 +19,32 @@ export function Navigation() {
               href="#"
               class="text-blue-600 border-b-2 border-blue-500 px-3 py-2 text-sm font-medium"
             >
-              Home
+              Inicio
             </a>
             <a
               href="#services"
               class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
             >
-              Services
+              Servicios
             </a>
             <a
               href="#pricing"
               class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
             >
-              Pricing
+              Precios
             </a>
 
             <a
               href="#contact"
               class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
             >
-              Contact
+              Contacto
             </a>
             <a
               href="#book"
               class="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
             >
-              Book Now
+              Reserva ahora
             </a>
           </div>
           <div class="-mr-2 flex items-center md:hidden">
@@ -73,32 +73,32 @@ export function Navigation() {
             href="#"
             class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50"
           >
-            Home
+            Inicio
           </a>
           <a
             href="#services"
             class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50"
           >
-            Services
+            Servicios
           </a>
           <a
             href="#pricing"
             class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50"
           >
-            Pricing
+            Precios
           </a>
 
           <a
             href="#contact"
             class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50"
           >
-            Contact
+            Contacto
           </a>
           <button
             onClick={() => navigate("/home")}
             class="block w-full px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700 text-center"
           >
-            Book Now
+            Reserva ahora
           </button>
         </div>
       </div>

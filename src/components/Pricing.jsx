@@ -4,10 +4,10 @@ export function Pricing() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-gray-900 mb-2">
-            Simple, Transparent Pricing
+            Precios simples y transparentes
           </h2>
           <p class="text-gray-600 max-w-2xl mx-auto">
-            Choose the perfect package for your vehicle and budget
+            Elige el paquete perfecto para tu vehículo y presupuesto
           </p>
         </div>
 
@@ -15,11 +15,11 @@ export function Pricing() {
           {/* <!-- Basic Package --> */}
           <div class="border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
             <div class="bg-gray-100 p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-1">Basic Wash</h3>
-              <p class="text-gray-600 mb-4">Perfect for regular maintenance</p>
+              <h3 class="text-xl font-bold text-gray-900 mb-1">Lavado Básico</h3>
+              <p class="text-gray-600 mb-4">Perfecto para mantenimiento regular</p>
               <div class="flex items-baseline">
                 <span class="text-4xl font-bold text-blue-500">$15</span>
-                <span class="ml-1 text-gray-500">/wash</span>
+                <span class="ml-1 text-gray-500">/lavado</span>
               </div>
             </div>
             <div class="p-6">
@@ -29,32 +29,32 @@ export function Pricing() {
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Exterior wash</span>
+                  <span>Lavado exterior</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Wheel cleaning</span>
+                  <span>Limpieza de ruedas</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Spot-free rinse</span>
+                  <span>Enjuague sin manchas</span>
                 </li>
                 <li class="flex items-center text-gray-400">
                   <i data-feather="x" class="h-5 w-5 mr-2"></i>
-                  <span>Interior cleaning</span>
+                  <span>Limpieza de interiores</span>
                 </li>
               </ul>
               <a
                 href="#book"
                 class="block w-full py-3 px-4 text-center bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md"
               >
-                Get Started
+                Empezar
               </a>
             </div>
           </div>
@@ -64,16 +64,16 @@ export function Pricing() {
             <div class="bg-blue-500 p-6 text-white">
               <div class="flex justify-between items-start">
                 <div>
-                  <h3 class="text-xl font-bold mb-1">Deluxe Wash</h3>
-                  <p class="opacity-90 mb-4">Our most popular package</p>
+                  <h3 class="text-xl font-bold mb-1">Lavado de lujo</h3>
+                  <p class="opacity-90 mb-4">Nuestro paquete más popular</p>
                 </div>
                 <span class="bg-white text-blue-500 text-xs font-bold px-2 py-1 rounded-full">
-                  BEST VALUE
+                  MEJOR VALOR
                 </span>
               </div>
               <div class="flex items-baseline">
                 <span class="text-4xl font-bold">$25</span>
-                <span class="ml-1 opacity-90">/wash</span>
+                <span class="ml-1 opacity-90">/Lavado</span>
               </div>
             </div>
             <div class="p-6 bg-white">
@@ -83,35 +83,35 @@ export function Pricing() {
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Everything in Basic</span>
+                  <span>Todo lo Básico</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Hand drying</span>
+                  <span>Secado de manos</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Tire dressing</span>
+                  <span>Revestimiento de neumáticos</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Interior vacuum</span>
+                  <span>vacío de interior</span>
                 </li>
               </ul>
               <a
                 href="#book"
                 class="block w-full py-3 px-4 text-center bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md"
               >
-                Get Started
+                Empezar
               </a>
             </div>
           </div>
@@ -120,12 +120,12 @@ export function Pricing() {
           <div class="border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
             <div class="bg-gray-100 p-6">
               <h3 class="text-xl font-bold text-gray-900 mb-1">
-                Premium Detail
+                Detalle premium
               </h3>
-              <p class="text-gray-600 mb-4">Showroom quality finish</p>
+              <p class="text-gray-600 mb-4">Acabado de calidad de sala de exposición.</p>
               <div class="flex items-baseline">
                 <span class="text-4xl font-bold text-blue-500">$120</span>
-                <span class="ml-1 text-gray-500">/detail</span>
+                <span class="ml-1 text-gray-500">/detalle</span>
               </div>
             </div>
             <div class="p-6">
@@ -135,35 +135,35 @@ export function Pricing() {
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Everything in Deluxe</span>
+                  <span>Todo en Deluxe</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Hand wax</span>
+                  <span>cera de manos</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Interior shampoo</span>
+                  <span>Champú para interiores</span>
                 </li>
                 <li class="flex items-center">
                   <i
                     data-feather="check"
                     class="h-5 w-5 text-green-500 mr-2"
                   ></i>
-                  <span>Leather conditioning</span>
+                  <span>Acondicionamiento del cuero</span>
                 </li>
               </ul>
               <a
                 href="#book"
                 class="block w-full py-3 px-4 text-center bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md"
               >
-                Get Started
+                Empezar
               </a>
             </div>
           </div>
@@ -174,7 +174,7 @@ export function Pricing() {
             href="#"
             class="text-blue-500 font-semibold hover:text-blue-700 flex items-center justify-center"
           >
-            View all packages and pricing{" "}
+            Ver todos los paquetes y precios{" "}
             <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
           </a>
         </div>
