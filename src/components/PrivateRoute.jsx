@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export function PrivateRoute({ isAuthenticated, Component }) {
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (!isAuthenticated) {
-   
-      return <Navigate to='/' />
+      navigate("/");
+      return;
     }
   }, [isAuthenticated]);
 
