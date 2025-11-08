@@ -23,18 +23,23 @@ export function Login() {
 
   const iniciarSesion = async (e) => {
     e.preventDefault();
-    const { data } = await axiosClient.post("/access/login", {
-      email: userInfo.email,
-      contrasena: userInfo.password,
-    });
 
-    localStorage.setItem("token-value", data.token);
-    setUserAccess((prev) => ({
-      sessionEstado: "autenticado",
-      userData: data.data,
-    }));
+    try {
+      const { data } = await axiosClient.post("/access/login", {
+        email: userInfo.email,
+        contrasena: userInfo.password,
+      });
 
-    navigate("/home");
+      localStorage.setItem("token-value", data.token);
+      setUserAccess((prev) => ({
+        sessionEstado: "autenticado",
+        userData: data.data,
+      }));
+
+      navigate("/home");
+    } catch (error) {
+      console.log("Error")
+    }
   };
   const estaDeshabilitado = !userInfo.email || !userInfo.password;
 

@@ -1,34 +1,45 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router";
 import { axiosClient } from "../api/ApiCliente";
+import { CarWashContext } from "../contex/Context";
 
 export function Signup() {
+  const { setUserAccess } = useContext(CarWashContext);
   const [userInfo, setUserInfo] = useState({
     nombre: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const conseguirValores = (e) => {
     const { target } = e;
-
+  setError("");
     setUserInfo({
       ...userInfo,
       [target.name]: target.value,
     });
   };
 
-  const crearCliente = (e) => {
-    e.preventDefault()
-    axiosClient
-      .post("/access/signup", {
+  const crearCliente = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await axiosClient.post("/access/signup", {
         nombre: userInfo.nombre,
         email: userInfo.email,
         contrasena: userInfo.password,
-      })
-      .then((data) => {
-        console.log(data);
       });
+      localStorage.setItem("token-value", data.token);
+      setUserAccess((prev) => ({
+        sessionEstado: "autenticado",
+        userData: data.data,
+      }));
+      setError("");
+      navigate("/home");
+    } catch (error) {
+      setError(error.response.data.data);
+    }
   };
 
   const estaDeshabilitado =
@@ -97,6 +108,10 @@ export function Signup() {
                 className="block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
             </div>
+          </div>
+
+          <div>
+            {error.length > 0 && <p className="text-red-100 mt-4">{error}</p>}
           </div>
 
           <div>
