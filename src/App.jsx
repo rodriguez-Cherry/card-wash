@@ -1,44 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Authenticated } from "./components/Authenticated";
-import { UnAuthenticated } from "./components/UnAuthenticated";
+
 import { CarWashContext } from "./contex/Context";
-import { useLocation } from "react-router";
 
 export function App() {
-  const location = useLocation();
-  const [userAccess, setUserAccess] = useState(null);
+  const userToken = localStorage.getItem("token-value");
 
-  const usuario = {
-    estaAutenticado: userAccess,
+  // checking - autenticado - no-autenticado
+
+  const [userAccess, setUserAccess] = useState({
+    sessionEstado: userToken?.length > 0 ? "autenticado" : "no-autenticado",
+    userData: null,
+  });
+
+
+  const contexValues = {
+    ...userAccess,
+    setUserAccess,
   };
-
-  useEffect(() => {
-    const verificarEstadoDeSession = () => {
-      if (localStorage.getItem("token-value")) {
-        setUserAccess(true);
-        return;
-      }
-      setUserAccess(false);
-      return;
-    };
-
-    verificarEstadoDeSession();
-  }, [location.pathname]);
-
-  console.log(userAccess)
+  console.log(contexValues)
 
   return (
-    <CarWashContext.Provider value={{ data: usuario }}>
+    <CarWashContext.Provider value={{ ...contexValues }}>
       <div>
-        {userAccess ? (
-          <>
-            <Authenticated />
-          </>
-        ) : (
-          <>
-            <UnAuthenticated />
-          </>
-        )}
+        <>
+          <Authenticated />
+        </>
       </div>
     </CarWashContext.Provider>
   );

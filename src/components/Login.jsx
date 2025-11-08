@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
+import { useContext } from "react";
+import { CarWashContext } from "../contex/Context";
 
 export function Login() {
   const navigate = useNavigate();
+  const { setUserAccess } = useContext(CarWashContext);
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -26,7 +29,12 @@ export function Login() {
     });
 
     localStorage.setItem("token-value", data.token);
-    navigate('/home')
+    setUserAccess((prev) => ({
+      sessionEstado: "autenticado",
+      userData: data.data,
+    }));
+
+    navigate("/home");
   };
   const estaDeshabilitado = !userInfo.email || !userInfo.password;
 

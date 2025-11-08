@@ -1,18 +1,36 @@
 import { Route, Routes, Navigate } from "react-router";
 import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 import { Home } from "../pages/Home";
 import { Landing } from "../pages/Landing";
+import { LoginPage } from "../pages/LoginPage";
+import { SignupPage } from "../pages/SignupPage";
+import { useContext } from "react";
+import { CarWashContext } from "../contex/Context";
 
 export function Authenticated() {
+  const data = useContext(CarWashContext);
+
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route
         path="/home"
-        element={<PrivateRoute Component={Home} />}
+        element={<PrivateRoute estado={data?.sessionEstado} Component={Home} />}
       />
-
-      <Route path="/*" element={<Navigate to="/home" />} />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute estado={data?.sessionEstado} Component={LoginPage} />
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <PublicRoute estado={data?.sessionEstado} Component={SignupPage} />
+        }
+      />
+      <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
