@@ -4,7 +4,7 @@ import { Services } from "../components/Services";
 import { Pricing } from "../components/Pricing";
 import { Footer } from "../components/Footer";
 
-function Landing() {
+export function Landing() {
   return (
     <>
       <div>
@@ -18,4 +18,4 @@ function Landing() {
   );
 }
 
-export default Landing;
+

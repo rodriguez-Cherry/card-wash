@@ -1,6 +1,35 @@
 import { Link } from "react-router";
+import { useState } from "react";
+import { axiosClient } from "../api/ApiCliente";
 
 export function Login() {
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+
+  const conseguirValores = (e) => {
+    const { target } = e;
+
+    setUserInfo({
+      ...userInfo,
+      [target.name]: target.value,
+    });
+  };
+
+  const iniciarSesion = async (e) => {
+    e.preventDefault();
+    const { data } = await axiosClient.post("/access/login", {
+      email: userInfo.email,
+      contrasena: userInfo.password,
+    });
+
+    localStorage.setItem("token-value", data.token);
+  };
+  const estaDeshabilitado = !userInfo.email || !userInfo.password;
+
+  console.log(userInfo);
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -20,6 +49,7 @@ export function Login() {
                 type="email"
                 name="email"
                 placeholder="ejemplo@gmail.com"
+                onChange={conseguirValores}
                 required
                 autocomplete="email"
                 className="block w-full border rounded-md px-3 py-1.5  outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -38,6 +68,7 @@ export function Login() {
                 id="password"
                 type="password"
                 name="password"
+                onChange={conseguirValores}
                 required
                 autocomplete="current-password"
                 className="block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -48,7 +79,13 @@ export function Login() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              disabled={estaDeshabilitado}
+              onClick={iniciarSesion}
+              className={`flex w-full justify-center rounded-md ${
+                estaDeshabilitado
+                  ? "bg-gray-50 text-black border"
+                  : "bg-indigo-500 text-white hover:bg-indigo-400"
+              } px-3 py-1.5 text-sm/6 font-semibold  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500`}
             >
               Iniciar sesion
             </button>

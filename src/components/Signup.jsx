@@ -1,6 +1,39 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import { axiosClient } from "../api/ApiCliente";
 
 export function Signup() {
+  const [userInfo, setUserInfo] = useState({
+    nombre: "",
+    email: "",
+    password: "",
+  });
+
+  const conseguirValores = (e) => {
+    const { target } = e;
+
+    setUserInfo({
+      ...userInfo,
+      [target.name]: target.value,
+    });
+  };
+
+  const crearCliente = (e) => {
+    e.preventDefault()
+    axiosClient
+      .post("/access/signup", {
+        nombre: userInfo.nombre,
+        email: userInfo.email,
+        contrasena: userInfo.password,
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  const estaDeshabilitado =
+    !userInfo.email || !userInfo.nombre || !userInfo.password;
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -20,6 +53,8 @@ export function Signup() {
                 type="text"
                 name="nombre"
                 placeholder="Juan"
+                onChange={conseguirValores}
+                max={20}
                 required
                 className="block w-full border rounded-md px-3 py-1.5  outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
@@ -35,6 +70,8 @@ export function Signup() {
                 type="email"
                 name="email"
                 placeholder="ejemplo@gmail.com"
+                onChange={conseguirValores}
+                max={20}
                 required
                 autocomplete="email"
                 className="block w-full border rounded-md px-3 py-1.5  outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -53,6 +90,8 @@ export function Signup() {
                 id="password"
                 type="password"
                 name="password"
+                onChange={conseguirValores}
+                max={20}
                 required
                 autocomplete="current-password"
                 className="block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -62,8 +101,14 @@ export function Signup() {
 
           <div>
             <button
+              onClick={crearCliente}
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              disabled={estaDeshabilitado}
+              className={`flex w-full justify-center rounded-md ${
+                estaDeshabilitado
+                  ? "bg-gray-50 text-black border"
+                  : "bg-indigo-500 text-white hover:bg-indigo-400"
+              } px-3 py-1.5 text-sm/6 font-semibold   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500`}
             >
               Crear cuenta
             </button>

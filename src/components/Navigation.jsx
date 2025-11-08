@@ -1,7 +1,19 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { CarWashContext } from "../contex/Context";
 
 export function Navigation() {
   const navigate = useNavigate();
+
+  const { data } = useContext(CarWashContext);
+  console.log(data);
+
+  const reservarAhora = () => {
+    if (data.estaAutenticado) {
+      return navigate("/home");
+    }
+    navigate("/login");
+  };
   return (
     <nav class="bg-white shadow-lg sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,12 +52,12 @@ export function Navigation() {
             >
               Contacto
             </a>
-            <a
-              href="#book"
+            <button
+              onClick={reservarAhora}
               class="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
             >
               Reserva ahora
-            </a>
+            </button>
           </div>
           <div class="-mr-2 flex items-center md:hidden">
             <button
