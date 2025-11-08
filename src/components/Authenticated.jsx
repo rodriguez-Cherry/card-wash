@@ -9,7 +9,7 @@ export function Authenticated() {
       <Route path="/" element={<Landing />} />
       <Route
         path="/home"
-        element={<PrivateRoute isAuthenticated={false} Component={Home} />}
+        element={<PrivateRoute Component={Home} />}
       />
 
       <Route path="/*" element={<Navigate to="/home" />} />

@@ -1,8 +1,9 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 
 export function Login() {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -25,6 +26,7 @@ export function Login() {
     });
 
     localStorage.setItem("token-value", data.token);
+    navigate('/home')
   };
   const estaDeshabilitado = !userInfo.email || !userInfo.password;
 

@@ -6,11 +6,11 @@ export function Navigation() {
   const navigate = useNavigate();
 
   const { data } = useContext(CarWashContext);
-  console.log(data);
-
   const reservarAhora = () => {
+    console.log( "del", data)
     if (data.estaAutenticado) {
-      return navigate("/home");
+      navigate("/home");
+      return 
     }
     navigate("/login");
   };
@@ -107,7 +107,7 @@ export function Navigation() {
             Contacto
           </a>
           <button
-            onClick={() => navigate("/home")}
+            onClick={reservarAhora}
             class="block w-full px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700 text-center"
           >
             Reserva ahora
