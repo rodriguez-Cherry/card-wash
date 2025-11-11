@@ -5,11 +5,8 @@ export const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(function (config) {
-  return {
-    ...config,
-    headers: {
-      ...config.headers,
-      token: localStorage.getItem('token-value')
-    },
-  };
+  config.headers.Authorization = `Bearer ${localStorage.getItem(
+    "token-value"
+  )}`;
+  return config;
 });

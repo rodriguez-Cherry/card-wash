@@ -8,7 +8,5 @@ export function PrivateRoute({ estado, Component }) {
     return <Navigate to="/login" />;
   }
 
-  console.log(estado)
-
   return <Component />;
 }
