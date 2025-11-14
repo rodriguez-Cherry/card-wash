@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { NavBar } from "../components/NavBar";
+import { Tablero } from "../components/adminComponentes/Tablero";
+import { Clientes } from "../components/adminComponentes/Clientes";
+import { Vehiculos } from "../components/adminComponentes/Vehiculos";
+import { Servicios } from "../components/adminComponentes/Servicios";
+import { Ordenes } from "../components/adminComponentes/Ordenes";
 
 const componentes = {
-  Tablero: <div>Tablero</div>,
-  Clientes: <div>Clientes</div>,
-  Vehiculos: <div>Vehiculos</div>,
-  Servicios: <div>Servicios</div>,
-  Ordenes: <div>Ordenes</div>,
+  Tablero: <Tablero />,
+  Clientes: <Clientes />,
+  Vehiculos: <Vehiculos />,
+  Servicios: <Servicios />,
+  Ordenes: <Ordenes />,
 };
 
 export const AdminPage = () => {
