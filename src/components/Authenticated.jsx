@@ -7,6 +7,7 @@ import { LoginPage } from "../pages/LoginPage";
 import { SignupPage } from "../pages/SignupPage";
 import { useContext } from "react";
 import { CarWashContext } from "../contex/Context";
+import { AdminPage } from "../pages/AdminPage";
 
 export function Authenticated() {
   const data = useContext(CarWashContext);
@@ -17,6 +18,10 @@ export function Authenticated() {
       <Route
         path="/home"
         element={<PrivateRoute estado={data?.sessionEstado} Component={Home} />}
+      />
+            <Route
+        path="/admin"
+        element={<PrivateRoute estado={data?.sessionEstado} Component={AdminPage} />}
       />
       <Route
         path="/login"
