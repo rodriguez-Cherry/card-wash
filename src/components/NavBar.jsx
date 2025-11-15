@@ -1,35 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKeyboard, faUserCircle, faCarTunnel, faSquareRootVariable, faDatabase } from "@fortawesome/free-solid-svg-icons";
 
-export const NavBar = ({ setSelected }) => {
-  const options = [
-    {
-      id: 1,
-      name: "Tablero",
-      icon: <FontAwesomeIcon icon={faKeyboard} />,
-    },
-    {
-      id: 2,
-      name: "Clientes",
-      icon: <FontAwesomeIcon icon={faUserCircle} />,
-    },
-    {
-      id: 3,
-      name: "Vehiculos",
-      icon: <FontAwesomeIcon icon={faCarTunnel} />,
-    },
-    {
-      id: 4,
-      name: "Servicios",
-      icon: <FontAwesomeIcon icon={faSquareRootVariable} />,
-    },
-    {
-      id: 5,
-      name: "Ordenes",
-      icon: <FontAwesomeIcon icon={faDatabase} />,
-    },
-  ];
-
+export const NavBar = ({ setSelected, options }) => {
   return (
     <div className="border rounded w-40 p-4 flex flex-col gap-3">
       {options.map((item) => (

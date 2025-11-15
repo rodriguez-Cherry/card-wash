@@ -1,4 +1,5 @@
 import { Navigate } from "react-router";
+import { Header } from "./Header";
 
 export function PrivateRoute({ estado, Component }) {
   if (estado === "checking") {
@@ -8,5 +9,10 @@ export function PrivateRoute({ estado, Component }) {
     return <Navigate to="/login" />;
   }
 
-  return <Component />;
+  return (
+    <div id="private" style={{ backgroundColor: "#e1f1fd", height: "100vh" }}>
+      <Header />
+      <Component />;
+    </div>
+  );
 }
