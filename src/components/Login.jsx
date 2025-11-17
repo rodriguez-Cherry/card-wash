@@ -3,6 +3,7 @@ import { useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 import { useContext } from "react";
 import { CarWashContext } from "../contex/Context";
+import { toast } from "sonner";
 
 export function Login() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ export function Login() {
 
       localStorage.setItem("token-value", data.token);
       setUserAccess((prev) => ({
+        ...prev,
         sessionEstado: "autenticado",
         userData: data.data,
       }));
@@ -39,6 +41,7 @@ export function Login() {
       navigate("/home");
     } catch (error) {
       console.log("Error")
+      toast('Toast')
     }
   };
   const estaDeshabilitado = !userInfo.email || !userInfo.password;
