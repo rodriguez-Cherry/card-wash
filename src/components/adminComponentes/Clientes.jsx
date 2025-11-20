@@ -1,18 +1,11 @@
-import { useEffect, useState } from "react";
-import { axiosClient } from "../../api/ApiCliente";
+import { useData } from "../../util/useData";
 
 export function Clientes() {
-  const [usuarios, setUsuarios] = useState([]);
-  useEffect(() => {
-    async function getClients() {
-      try {
-        const { data } = await axiosClient.get("/admin/clientes");
-        setUsuarios(data.data);
-        console.log(data);
-      } catch (error) {}
-    }
-    getClients();
-  }, []);
+  const {
+    data: usuarios,
+    isLoading,
+    error,
+  } = useData("/admin/clientes", "get");
 
   return (
     <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default mt-5 rounded">
@@ -37,7 +30,7 @@ export function Clientes() {
           </tr>
         </thead>
         <tbody>
-          {usuarios.map((usuario) => (
+          {usuarios?.map((usuario) => (
             <tr
               id={usuario.id}
               class="bg-neutral-primary border-b border-default"
