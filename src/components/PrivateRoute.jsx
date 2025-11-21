@@ -10,7 +10,7 @@ export function PrivateRoute({ estado, Component }) {
   }
 
   return (
-    <div id="private" style={{ backgroundColor: "#e1f1fd", height: "100vh" }}>
+    <div id="private" style={{ backgroundColor: "#EFF5FC", height: "100vh" }}>
       <Header />
       <Component />;
     </div>

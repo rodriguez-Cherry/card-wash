@@ -12,21 +12,22 @@ import { Perfil } from "../components/userComponents/Perfil";
 import { CarWashContext } from "../contex/Context";
 
 const options = [
-  {
+    {
     id: 1,
-    name: "Servicios",
-    icon: <FontAwesomeIcon icon={faKeyboard} />,
+    name: "Perfil",
+    icon: <FontAwesomeIcon icon={faCarTunnel} color="blue"  />,
   },
   {
     id: 2,
-    name: "Ordenes",
-    icon: <FontAwesomeIcon icon={faUserCircle} />,
+    name: "Servicios",
+    icon: <FontAwesomeIcon icon={faKeyboard} color="blue" />,
   },
   {
     id: 3,
-    name: "Perfil",
-    icon: <FontAwesomeIcon icon={faCarTunnel} />,
+    name: "Ordenes",
+    icon: <FontAwesomeIcon icon={faUserCircle} color="blue" />,
   },
+
 ];
 
 const componentes = {
@@ -36,7 +37,7 @@ const componentes = {
 };
 
 export function Home() {
-  const [selected, setSelected] = useState("Servicios");
+  const [selected, setSelected] = useState("Perfil");
   const { userData } = useContext(CarWashContext)
 
   return (

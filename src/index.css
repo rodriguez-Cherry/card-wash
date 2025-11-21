@@ -118,3 +118,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+[role="alertdialog"] {
+
+  display: grid;
+  place-items: center;
+}

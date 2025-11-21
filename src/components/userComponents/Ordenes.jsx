@@ -1,62 +1,147 @@
 import { useContext } from "react";
 import { useData } from "../../util/useData";
 import { CarWashContext } from "../../contex/Context";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+const estadoMap = {
+  pendiente: "secondary",
+  proceso: "secondary",
+  completado: "outline",
+};
 
 export function Ordenes() {
-
-
-  const {userData} = useContext(CarWashContext)
+  const { userData } = useContext(CarWashContext);
   const userId = userData?.id;
-  console.log(userData)
-  const { isLoading, data: ordenes, error } = useData(`/users/citas/${userId}`, "get");
+  console.log(userData);
+  const {
+    isLoading,
+    data: ordenes,
+    error,
+  } = useData(`/users/citas/${userId}`, "get");
+  return <OrdenesTable ordenes={ordenes} />;
+}
+
+function OrdenesTable({ ordenes }) {
   return (
-      <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default mt-5 rounded">
-      <table class="w-full text-sm text-left rtl:text-right text-body">
-        <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
-          <tr>
-            <th scope="col" class="px-6 py-3 font-medium">
-              #
-            </th>
-            <th scope="col" class="px-6 py-3 font-medium">
-              Fecha
-            </th>
-            <th scope="col" class="px-6 py-3 font-medium">
-              Servicio
-            </th>
-            <th scope="col" class="px-6 py-3 font-medium">
-              Estado
-            </th>
-                 <th scope="col" class="px-6 py-3 font-medium">
-              Acciones
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="bg-white p-4 rounded shadow mt-4 ">
+      <Table className="w-full h-full">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">#</TableHead>
+            <TableHead>Estado</TableHead>
+            <TableHead>Fecha</TableHead>
+            <TableHead>Servicio</TableHead>
+            <TableHead className="text-right">Monto</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {ordenes?.map((orden, index) => (
-            <tr
-              id={orden.id}
-              class="bg-neutral-primary border-b border-default"
-            >
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-heading whitespace-nowrap"
-              >
-                {index + 1}
-              </th>
-              <td class="px-6 py-4">    {new Date(orden.fecha)
-                  .toString()
-                  .split("-")[0]
-                  .toString()}</td>
-              <td class="px-6 py-4"> Lavado {orden.tipo}</td>
-              <td class="px-6 py-4"> {orden.estado }</td>
-              <td class="px-6 py-4 flex gap-4">
-              <button>Editar</button>
-              <button>Cancelar</button>
-              </td>
-            </tr>
+            <AlertDialogDemo className="w-full mt-4">
+              <TableRow className="cursor-pointer" key={orden.id}>
+                <TableCell className="font-medium">{index + 1}</TableCell>
+                <TableCell>
+                  <Badge variant={estadoMap[orden.estado]}>
+                    {orden.estado}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  {" "}
+                  {new Date(orden.fecha).toString().split("-")[0].toString()}
+                </TableCell>
+                <TableCell className="text-right">{orden.tipo}</TableCell>
+                <TableCell className="text-right">$100</TableCell>
+              </TableRow>
+            </AlertDialogDemo>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
-  )
+  );
+}
+
+function AlertDialogDemo({ children }) {
+  return (
+    <div className="">
+      <AlertDialog>
+        <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+        <AlertDialogContent>
+          <TabsDemo />
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+}
+
+function TabsDemo() {
+  return (
+    <div className="flex w-full max-w-sm flex-col gap-6">
+      <Tabs defaultValue="Editar">
+        <TabsList>
+          <TabsTrigger value="Editar">Editar</TabsTrigger>
+          <TabsTrigger value="Cancelar">Cancelar</TabsTrigger>
+        </TabsList>
+        <TabsContent value="Editar">
+          <Card>
+            <CardHeader>
+              <CardTitle>Account</CardTitle>
+              <CardDescription>
+                Make changes to your account here. Click save when you&apos;re
+                done.
+              </CardDescription>
+            </CardHeader>
+
+            <CardFooter>
+              <Button>Save changes</Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+        <TabsContent value="Cancelar">
+          <Card>
+            <CardHeader>
+              <CardTitle>Password</CardTitle>
+              <CardDescription>
+                Change your password here. After saving, you&apos;ll be logged
+                out.
+              </CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Button>Save password</Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
 }
