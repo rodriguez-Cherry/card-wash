@@ -47,6 +47,7 @@ const componentes = {
 export const AdminPage = () => {
   const [selected, setSelected] = useState("Tablero");
 
+
   return (
     <div className="flex gap-2 p-8">
       <NavBar options={options} selected={selected} setSelected={setSelected} />

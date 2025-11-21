@@ -17,11 +17,25 @@ export function Authenticated() {
       <Route path="/" element={<Landing />} />
       <Route
         path="/home"
-        element={<PrivateRoute estado={data?.sessionEstado} Component={Home} />}
+        element={
+          <PrivateRoute
+            estado={data?.sessionEstado}
+            rol={data?.userData?.rol}
+            correctRole={data?.userData?.rol === "cliente"}
+            Component={Home}
+          />
+        }
       />
-            <Route
+      <Route
         path="/admin"
-        element={<PrivateRoute estado={data?.sessionEstado} Component={AdminPage} />}
+        element={
+          <PrivateRoute
+            estado={data?.sessionEstado}
+            rol={data?.userData?.rol}
+            correctRole={data?.userData?.rol === "admin"}
+            Component={AdminPage}
+          />
+        }
       />
       <Route
         path="/login"

@@ -41,7 +41,7 @@ export function Perfil() {
       </Card>
       <Card>
         <CardHeader>
-          <h1>Datos personales</h1>
+          <h1 className="text-xl text-blue-900">Datos personales</h1>
         </CardHeader>
         <CardContent>
           <div className="flex gap-6">
@@ -73,7 +73,7 @@ const Info = ({ icon, titulo, data }) => (
       <FontAwesomeIcon icon={icon} />
     </div>
     <div>
-      <h2 className="text-xl text-teal-600 underline">{titulo}</h2>
+      <h2 className="text-xl text-sky-600">{titulo}</h2>
       <p className="text-cyan-900"> {data}</p>
     </div>
   </div>

@@ -15,17 +15,17 @@ const options = [
     {
     id: 1,
     name: "Perfil",
-    icon: <FontAwesomeIcon icon={faCarTunnel} color="blue"  />,
+    icon: <FontAwesomeIcon icon={faCarTunnel} color="#7dd3fc"/>,
   },
   {
     id: 2,
     name: "Servicios",
-    icon: <FontAwesomeIcon icon={faKeyboard} color="blue" />,
+    icon: <FontAwesomeIcon icon={faKeyboard} color="#7dd3fc" />,
   },
   {
     id: 3,
     name: "Ordenes",
-    icon: <FontAwesomeIcon icon={faUserCircle} color="blue" />,
+    icon: <FontAwesomeIcon icon={faUserCircle} color="#7dd3fc" />,
   },
 
 ];

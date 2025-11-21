@@ -1,12 +1,21 @@
 import { Navigate } from "react-router";
 import { Header } from "./Header";
 
-export function PrivateRoute({ estado, Component }) {
+const roles = {
+  cliente: "/home",
+  admin: "/admin",
+};
+
+export function PrivateRoute({ estado, Component, correctRole, rol }) {
   if (estado === "checking") {
     return <div>Cargando</div>;
   }
-  if (estado === "no-autenticado") {
+  if (estado === "no-autenticado" || !estado) {
     return <Navigate to="/login" />;
+  }
+
+  if (!correctRole) {
+    return <Navigate to={roles[rol]} />;
   }
 
   return (

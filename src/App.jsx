@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Authenticated } from "./components/Authenticated";
 
+
 import { CarWashContext } from "./contex/Context";
 import { axiosClient } from "./api/ApiCliente";
 
@@ -44,11 +45,7 @@ export function App() {
 
   return (
     <CarWashContext.Provider value={{ ...contexValues }}>
-      <div>
-        <>
-          <Authenticated />
-        </>
-      </div>
+        <Authenticated />
     </CarWashContext.Provider>
   );
 }

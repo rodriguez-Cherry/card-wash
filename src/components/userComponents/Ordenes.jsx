@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useData } from "../../util/useData";
 import { CarWashContext } from "../../contex/Context";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,7 @@ import {
   AlertDialogFooter,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 import {
   Card,
@@ -49,19 +49,23 @@ export function Ordenes() {
 }
 
 function OrdenesTable({ ordenes }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="bg-white p-4 rounded shadow mt-4 ">
-      <Table className="w-full h-full">
+    <div className="bg-white p-4 rounded shadow mt-4  w-full border">
+      {/* <Table className="w-[full]">
         <TableHeader>
-          <TableRow>
+          <TableRow className="w-[200px]">
             <TableHead className="w-[100px]">#</TableHead>
-            <TableHead>Estado</TableHead>
-            <TableHead>Fecha</TableHead>
-            <TableHead>Servicio</TableHead>
+            <TableHead className="w-[100px]">Estado</TableHead>
+            <TableHead className="w-[100px]">Fecha</TableHead>
+            <TableHead className="w-[100px]">Servicio</TableHead>
             <TableHead className="text-right">Monto</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody >
+          {ordenes?.length === 0 && (
+            <h1 className="text-gray-400 w-full p-6">No hay ordenes por el momento</h1>
+          )}
           {ordenes?.map((orden, index) => (
             <AlertDialogDemo className="w-full mt-4">
               <TableRow className="cursor-pointer" key={orden.id}>
@@ -81,7 +85,38 @@ function OrdenesTable({ ordenes }) {
             </AlertDialogDemo>
           ))}
         </TableBody>
-      </Table>
+      </Table> */}
+
+      <Modal open={open} setOpen={setOpen} />
+
+      <table class="table-auto">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Servicio</th>
+            <th>Monto</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ordenes?.map((orden, index) => (
+            <tr className="p-4" key={orden.id} onClick={(e) => setOpen(!open)}>
+              <td>{index + 1}</td>
+              <td>
+                {" "}
+                <Badge variant={estadoMap[orden.estado]}>{orden.estado}</Badge>
+              </td>
+              <td>
+                {" "}
+                {new Date(orden.fecha).toString().split("-")[0].toString()}
+              </td>
+              <td>{orden.tipo}</td>
+              <td>$100</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -112,36 +147,39 @@ function TabsDemo() {
           <TabsTrigger value="Editar">Editar</TabsTrigger>
           <TabsTrigger value="Cancelar">Cancelar</TabsTrigger>
         </TabsList>
-        <TabsContent value="Editar">
-          <Card>
-            <CardHeader>
-              <CardTitle>Account</CardTitle>
-              <CardDescription>
-                Make changes to your account here. Click save when you&apos;re
-                done.
-              </CardDescription>
-            </CardHeader>
-
-            <CardFooter>
-              <Button>Save changes</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
+        <TabsContent value="Editar"></TabsContent>
         <TabsContent value="Cancelar">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you&apos;ll be logged
-                out.
-              </CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
-          </Card>
+          <h1>Estas seguro que deseas cancelar esta cita?</h1>
         </TabsContent>
       </Tabs>
     </div>
   );
 }
+
+import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
+
+const Modal = ({ open, setOpen }) => {
+  return (
+    <Dialog.Root lazyMount open={open}>
+      <Dialog.Backdrop />
+      <Portal>
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Body><TabsDemo /></Dialog.Body>
+            <Dialog.Footer>
+              <Dialog.ActionTrigger asChild>
+                <Button onClick={() => setOpen(false)} variant="outline">
+                  Cancel
+                </Button>
+              </Dialog.ActionTrigger>
+              <Button>Save</Button>
+            </Dialog.Footer>
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" />
+            </Dialog.CloseTrigger>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+};

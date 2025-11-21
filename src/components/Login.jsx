@@ -5,6 +5,11 @@ import { useContext } from "react";
 import { CarWashContext } from "../contex/Context";
 import { toast } from "sonner";
 
+const roles = {
+  cliente: "/home",
+  admin: "/admin",
+};
+
 export function Login() {
   const navigate = useNavigate();
   const { setUserAccess } = useContext(CarWashContext);
@@ -39,11 +44,11 @@ export function Login() {
       }));
 
       localStorage.setItem("userData", JSON.stringify(data.data));
-
-      navigate("/home");
+      const ruta = roles[data?.data?.rol];
+      navigate(ruta);
     } catch (error) {
-      console.log("Error");
-      toast("Toast");
+      console.log(error);
+      toast(error.response.data.data);
     }
   };
   const estaDeshabilitado = !userInfo.email || !userInfo.password;
@@ -101,7 +106,7 @@ export function Login() {
               type="submit"
               disabled={estaDeshabilitado}
               onClick={iniciarSesion}
-              className={`flex w-full justify-center rounded-md ${
+              className={`flex w-full justify-center rounded-md toast-button ${
                 estaDeshabilitado
                   ? "bg-gray-50 text-black border"
                   : "bg-indigo-500 text-white hover:bg-indigo-400"
