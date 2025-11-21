@@ -1,3 +1,5 @@
+
+
 export function Perfil() {
 
 
@@ -5,6 +7,8 @@ export function Perfil() {
 
 
   return <div>
-
+   <AlertDialog />
   </div>;
 }
+
+

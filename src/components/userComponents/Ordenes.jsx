@@ -26,6 +26,9 @@ export function Ordenes() {
             <th scope="col" class="px-6 py-3 font-medium">
               Estado
             </th>
+                 <th scope="col" class="px-6 py-3 font-medium">
+              Acciones
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -46,9 +49,9 @@ export function Ordenes() {
                   .toString()}</td>
               <td class="px-6 py-4"> Lavado {orden.tipo}</td>
               <td class="px-6 py-4"> {orden.estado }</td>
-              <td class="px-6 py-4">
-                {" "}
-             
+              <td class="px-6 py-4 flex gap-4">
+              <button>Editar</button>
+              <button>Cancelar</button>
               </td>
             </tr>
           ))}
