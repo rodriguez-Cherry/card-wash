@@ -8,13 +8,15 @@ export function Signup() {
   const [userInfo, setUserInfo] = useState({
     nombre: "",
     email: "",
+    telefono: "",
+    direccion: "",
     password: "",
   });
   const [error, setError] = useState("");
 
   const conseguirValores = (e) => {
     const { target } = e;
-  setError("");
+    setError("");
     setUserInfo({
       ...userInfo,
       [target.name]: target.value,
@@ -29,9 +31,13 @@ export function Signup() {
         nombre: userInfo.nombre,
         email: userInfo.email,
         contrasena: userInfo.password,
+        telefono: userInfo.telefono,
+        direccion: userInfo.direccion,
       });
       localStorage.setItem("token-value", data.token);
+      localStorage.setItem('userData', JSON.stringify(data.data))
       setUserAccess((prev) => ({
+        ...prev,
         sessionEstado: "autenticado",
         userData: data.data,
       }));
@@ -42,8 +48,14 @@ export function Signup() {
     }
   };
 
+  console.log(userInfo);
+
   const estaDeshabilitado =
-    !userInfo.email || !userInfo.nombre || !userInfo.password;
+    !userInfo.email ||
+    !userInfo.nombre ||
+    !userInfo.password ||
+    !userInfo.telefono ||
+    !userInfo.direccion;
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -89,7 +101,42 @@ export function Signup() {
               />
             </div>
           </div>
-
+          <div>
+            <label for="telefono" className="block text-sm/6 font-medium">
+              Telefono
+            </label>
+            <div className="mt-2">
+              <input
+                id="telefono"
+                type="tel"
+                name="telefono"
+                placeholder="8290003456"
+                onChange={conseguirValores}
+                max={20}
+                required
+                autocomplete="telefono"
+                className="block w-full border rounded-md px-3 py-1.5  outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+            </div>
+          </div>{" "}
+          <div>
+            <label for="direccion" className="block text-sm/6 font-medium">
+              Direccion
+            </label>
+            <div className="mt-2">
+              <input
+                id="direccion"
+                type="email"
+                name="direccion"
+                placeholder="C/ Juan, Santo Domingo Este"
+                onChange={conseguirValores}
+                max={20}
+                required
+                autocomplete="direccion"
+                className="block w-full border rounded-md px-3 py-1.5  outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+            </div>
+          </div>
           <div>
             <div className="flex items-center justify-between">
               <label for="password" className="block text-sm/6 font-medium">
@@ -109,11 +156,9 @@ export function Signup() {
               />
             </div>
           </div>
-
           <div>
             {error.length > 0 && <p className="text-red-100 mt-4">{error}</p>}
           </div>
-
           <div>
             <button
               onClick={crearCliente}

@@ -53,12 +53,12 @@ export function Perfil() {
             <Info
               titulo="Telefono Celular"
               icon={faTowerCell}
-              data="849-427-6410"
+              data={userData.telefono}
             />
             <Info
               titulo="Direccion fisica"
               icon={faDirections}
-              data="C/3, Santo Domingo"
+              data={userData.direccion}
             />
           </div>
         </CardContent>
