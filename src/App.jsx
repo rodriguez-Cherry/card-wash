@@ -9,9 +9,11 @@ export function App() {
 
   // checking - autenticado - no-autenticado
 
+  const userDataPersistent = localStorage.getItem("userData");
+
   const [userAccess, setUserAccess] = useState({
     sessionEstado: userToken?.length > 0 ? "autenticado" : "no-autenticado",
-    userData: null,
+    userData: JSON.parse(userDataPersistent) || null,
   });
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export function App() {
           ...userAccess,
           sessionEstado: "no-autenticado",
         });
-        localStorage.clear()
+        localStorage.clear();
       }
     }
     checkAuth();

@@ -38,10 +38,12 @@ export function Login() {
         userData: data.data,
       }));
 
+      localStorage.setItem("userData", JSON.stringify(data.data));
+
       navigate("/home");
     } catch (error) {
-      console.log("Error")
-      toast('Toast')
+      console.log("Error");
+      toast("Toast");
     }
   };
   const estaDeshabilitado = !userInfo.email || !userInfo.password;
