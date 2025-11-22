@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 import { CarWashContext } from "../contex/Context";
+import { toast } from "sonner";
 export function AgregarVehiculo({ setOpenModal }) {
   const { userData } = useContext(CarWashContext);
   const [carInfo, setCarInfo] = useState({
@@ -20,12 +21,15 @@ export function AgregarVehiculo({ setOpenModal }) {
   };
 
   async function guardarVehiculo() {
+    if (!carInfo.modelo || !carInfo.marca || !carInfo.año || !carInfo.color)
+      return toast("Por favor llenar todos los campos");
+
     try {
       const { data } = axiosClient.post("/users/add-car", {
         ...carInfo,
         user_id: userData.id,
       });
-      console.log(data)
+      console.log(data);
       setOpenModal(false);
     } catch (error) {
       console.log(error);

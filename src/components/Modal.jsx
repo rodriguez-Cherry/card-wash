@@ -9,7 +9,7 @@ export const Modal = ({ open, setOpen, children }) => {
           <Dialog.Content>
             <Dialog.Body>{children}</Dialog.Body>
             <Dialog.CloseTrigger asChild>
-              <CloseButton size="sm" />
+              <CloseButton onClick={() => setOpen(false)} size="sm" />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>
