@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 
-export function useData(url, method, payload) {
+export function useData(url, method,dependency, payload) {
   const [isLoading, setIsloading] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  console.log(url, method)
+  console.log(url, method);
 
   useEffect(() => {
     async function solicitar() {
@@ -24,7 +24,7 @@ export function useData(url, method, payload) {
             };
 
         const { data } = await axiosClient(axiosOpciones);
-        console.log(data)
+        console.log(data);
         setData(data.data);
         setIsloading(false);
         setError(null);
@@ -36,7 +36,7 @@ export function useData(url, method, payload) {
     }
 
     solicitar();
-  }, [method, url]);
+  }, [method, url, dependency]);
 
   return { data, isLoading, error };
 }

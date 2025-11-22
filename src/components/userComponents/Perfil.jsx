@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CarWashContext } from "../../contex/Context";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,11 +17,21 @@ import {
   faTowerCell,
   faDirections,
 } from "@fortawesome/free-solid-svg-icons";
+import { useData } from "../../util/useData";
+import { Modal } from "../Modal";
+import { AgregarVehiculo } from "../AgregarVehiculo";
 
 export function Perfil() {
   const { userData } = useContext(CarWashContext);
+  const [openModal, setOpenModal] = useState(false);
+  const { isLoading, data } = useData("/users/car/" + userData.id, "get", openModal);
   return (
     <div className="flex flex-col gap-4 w-full">
+      {openModal && (
+        <Modal open={openModal} setOpen={setOpenModal}>
+          <AgregarVehiculo setOpenModal={setOpenModal} />
+        </Modal>
+      )}
       <Card>
         <div className="flex">
           <CardHeader>
@@ -60,6 +70,53 @@ export function Perfil() {
               icon={faDirections}
               data={userData.direccion}
             />
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between gap-5">
+            <h1 className="text-xl text-blue-900">Mis vehiculos</h1>
+            <button className="border rounded p-1 bg-blue-600 text-white" onClick={() => setOpenModal(true)}>
+              Agregar
+            </button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div>
+            {data?.length === 0 && (
+              <p>
+                {" "}
+                Por el momento no posee vehiculos, puede agregar un vehiculo{" "}
+              </p>
+            )}
+
+            {data?.length > 0 && (
+              <>
+                <div className="flex gap-5 ">
+                  <p>#</p>
+                  <p>Color</p>
+                  <p>Marca</p>
+                  <p>Modelo</p>
+                </div>
+                <div>
+                  {data?.map((carro, index) => {
+                    return (
+                      <div
+                        className="flex gap-5"
+                        style={{ borderBottom: " 2px solid gray" }}
+                        key={carro.id}
+                      >
+                        <p>{index + 1}</p>
+                        <p> {carro.color} </p>
+                        <p> {carro.marca} </p>
+                        <p> {carro.modelo} </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>
