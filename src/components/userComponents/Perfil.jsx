@@ -20,18 +20,35 @@ import {
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
 import { AgregarVehiculo } from "../AgregarVehiculo";
+import { axiosClient } from "../../api/ApiCliente";
 
 export function Perfil() {
   const { userData } = useContext(CarWashContext);
   const [openModal, setOpenModal] = useState(false);
-  const { isLoading, data } = useData("/users/car/" + userData.id, "get", openModal);
+  const [isEliminado, setIsEliminado] = useState(false);
+  const { isLoading, data } = useData(
+    "/users/car/" + userData.id,
+    "get",
+    isEliminado
+  );
+
+  const eliminarVehiculo = async (carro) => {
+    try {
+      await axiosClient.post("/users/eliminar/" + carro.id);
+      setIsEliminado(!isEliminado);
+    } catch (error) {}
+  };
   return (
     <div className="flex flex-col gap-4 w-full">
       {openModal && (
         <Modal open={openModal} setOpen={setOpenModal}>
-          <AgregarVehiculo setOpenModal={setOpenModal} />
+          <AgregarVehiculo
+            setOpenModal={setOpenModal}
+            setIsEliminado={() => setIsEliminado(!isEliminado)}
+          />
         </Modal>
       )}
+      <p className="text-xl font-semibold">Mi Perfil</p>
       <Card>
         <div className="flex">
           <CardHeader>
@@ -77,7 +94,10 @@ export function Perfil() {
         <CardHeader>
           <div className="flex justify-between gap-5">
             <h1 className="text-xl text-blue-900">Mis vehiculos</h1>
-            <button className="border rounded p-1 bg-blue-600 text-white" onClick={() => setOpenModal(true)}>
+            <button
+              className="border rounded p-1 bg-blue-600 text-white"
+              onClick={() => setOpenModal(true)}
+            >
               Agregar
             </button>
           </div>
@@ -111,6 +131,12 @@ export function Perfil() {
                         <p> {carro.color} </p>
                         <p> {carro.marca} </p>
                         <p> {carro.modelo} </p>
+                        <button
+                          onClick={() => eliminarVehiculo(carro)}
+                          className="bg-red-300 border rounded p-1"
+                        >
+                          Eliminar
+                        </button>
                       </div>
                     );
                   })}

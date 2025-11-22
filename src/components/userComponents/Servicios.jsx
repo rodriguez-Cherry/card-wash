@@ -30,7 +30,9 @@ export function Servicios() {
   };
 
   return (
-    <div className="flex flex-wrap flex-row gap-4 mt-3 ">
+<div>
+  <h1 className="text-xl font-semibold">Servicios</h1>
+      <div className="flex flex-wrap flex-row gap-4 mt-3 ">
       <Modal open={open} setOpen={setOpen}>
         <AgendarCita
           userData={userData}
@@ -44,6 +46,7 @@ export function Servicios() {
         <Servicio {...servicio} setServicioSeleccionado={onAgendar} />
       ))}
     </div>
+</div>
   );
 }
 
@@ -148,6 +151,7 @@ function AgendarCita({ servicio, userData, setOpen, carros }) {
   const navigate = useNavigate();
   return (
     <div>
+      
       {carros?.length === 0 && (
         <div>
           {" "}

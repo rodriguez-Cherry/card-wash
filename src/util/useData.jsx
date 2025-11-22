@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 
-export function useData(url, method,dependency, payload) {
+export function useData(url, method,dependency, dependency1, payload) {
   const [isLoading, setIsloading] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -36,7 +36,7 @@ export function useData(url, method,dependency, payload) {
     }
 
     solicitar();
-  }, [method, url, dependency]);
+  }, [method, url, dependency, dependency1]);
 
   return { data, isLoading, error };
 }

@@ -44,7 +44,6 @@ export function Home() {
     <div className="flex p-6 gap-5">
       <NavBar options={options} setSelected={setSelected} />
       <div>
-        <h1 className="text-xl underline">Bienvendo {userData?.nombre}</h1>
         <div>{componentes[selected]}</div>
       </div>
     </div>

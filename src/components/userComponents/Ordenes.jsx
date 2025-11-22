@@ -45,51 +45,62 @@ export function Ordenes() {
     data: ordenes,
     error,
   } = useData(`/users/citas/${userId}`, "get");
-  return <OrdenesTable ordenes={ordenes} />;
+  return <div>
+    <h1 className="text-xl font-semibold"> Mis ordenes</h1>
+     <OrdenesTable ordenes={ordenes} />
+  </div>;
 }
 
 function OrdenesTable({ ordenes }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="bg-white p-4 rounded shadow mt-4  w-full border">
-      {/* <Table className="w-[full]">
-        <TableHeader>
-          <TableRow className="w-[200px]">
-            <TableHead className="w-[100px]">#</TableHead>
-            <TableHead className="w-[100px]">Estado</TableHead>
-            <TableHead className="w-[100px]">Fecha</TableHead>
-            <TableHead className="w-[100px]">Servicio</TableHead>
-            <TableHead className="text-right">Monto</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody >
-          {ordenes?.length === 0 && (
-            <h1 className="text-gray-400 w-full p-6">No hay ordenes por el momento</h1>
-          )}
-          {ordenes?.map((orden, index) => (
-            <AlertDialogDemo className="w-full mt-4">
-              <TableRow className="cursor-pointer" key={orden.id}>
-                <TableCell className="font-medium">{index + 1}</TableCell>
-                <TableCell>
-                  <Badge variant={estadoMap[orden.estado]}>
-                    {orden.estado}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  {" "}
-                  {new Date(orden.fecha).toString().split("-")[0].toString()}
-                </TableCell>
-                <TableCell className="text-right">{orden.tipo}</TableCell>
-                <TableCell className="text-right">$100</TableCell>
-              </TableRow>
-            </AlertDialogDemo>
-          ))}
-        </TableBody>
-      </Table> */}
-
       <Modal open={open} setOpen={setOpen} />
 
-      <table class="table-auto">
+      {
+        ordenes?.length === 0 && 
+        <>
+           <p>Por el momento no hay ordenes </p>
+        </>
+      }
+
+      {ordenes?.length > 0 && (
+        <>
+          <div className="flex gap-5 ">
+            <p>#</p>
+            <p className="font-semibold">Estado</p>
+            <p className="font-semibold">Fecha</p>
+            <p className="font-semibold">Servicio</p>
+            <p className="font-semibold">Monto</p>
+          </div>
+          <div>
+            {ordenes?.map((orden, index) => {
+              return (
+                <div
+                  className="flex gap-5"
+                  style={{ borderBottom: " 2px solid gray" }}
+                  key={orden.id}
+                >
+                  <p>{index + 1}</p>
+                  <p>
+                    {" "}
+                    <Badge variant={estadoMap[orden.estado]}>
+                      {orden.estado}
+                    </Badge>{" "}
+                  </p>
+                  <p>
+                    {" "}
+                    {new Date(orden.fecha).toString().split("-")[0].toString()}
+                  </p>
+                  <p> {orden.tipo} </p>
+                  <td>$100</td>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+      {/* <table className="table-auto">
         <thead>
           <tr>
             <th>#</th>
@@ -116,7 +127,7 @@ function OrdenesTable({ ordenes }) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }
@@ -165,7 +176,9 @@ const Modal = ({ open, setOpen }) => {
       <Portal>
         <Dialog.Positioner>
           <Dialog.Content>
-            <Dialog.Body><TabsDemo /></Dialog.Body>
+            <Dialog.Body>
+              <TabsDemo />
+            </Dialog.Body>
             <Dialog.Footer>
               <Dialog.ActionTrigger asChild>
                 <Button onClick={() => setOpen(false)} variant="outline">

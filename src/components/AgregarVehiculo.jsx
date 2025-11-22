@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 import { CarWashContext } from "../contex/Context";
 import { toast } from "sonner";
-export function AgregarVehiculo({ setOpenModal }) {
+import { Await } from "react-router";
+export function AgregarVehiculo({ setOpenModal, setIsEliminado }) {
   const { userData } = useContext(CarWashContext);
   const [carInfo, setCarInfo] = useState({
     modelo: "",
@@ -25,11 +26,12 @@ export function AgregarVehiculo({ setOpenModal }) {
       return toast("Por favor llenar todos los campos");
 
     try {
-      const { data } = axiosClient.post("/users/add-car", {
+      const { data } = await axiosClient.post("/users/add-car", {
         ...carInfo,
         user_id: userData.id,
       });
       console.log(data);
+      setIsEliminado()
       setOpenModal(false);
     } catch (error) {
       console.log(error);
