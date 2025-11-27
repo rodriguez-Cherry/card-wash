@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 import { CarWashContext } from "../contex/Context";
 import { toast } from "sonner";
-import { Await } from "react-router";
+
 export function AgregarVehiculo({ setOpenModal, setIsEliminado }) {
   const { userData } = useContext(CarWashContext);
   const [carInfo, setCarInfo] = useState({

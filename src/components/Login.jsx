@@ -91,7 +91,7 @@ export function Login() {
             <div className="mt-2">
               <input
                 id="password"
-                // type="password"
+                 type="password"
                 name="password"
                 onChange={conseguirValores}
                 required

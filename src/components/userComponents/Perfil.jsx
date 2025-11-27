@@ -105,7 +105,7 @@ export function Perfil() {
         <CardContent>
           <div>
             {data?.length === 0 && (
-              <p>
+              <p className="text-zinc-400">
                 {" "}
                 Por el momento no posee vehiculos, puede agregar un vehiculo{" "}
               </p>
