@@ -122,7 +122,7 @@ export function AgendarCita({ servicio, setOpen, userId }) {
                 }}
                 options={carros?.map((c) => ({
                   value: c.id,
-                  label: c.modelo,
+                  label: c.marca + " " + c.modelo ,
                 }))}
               />
             </div>

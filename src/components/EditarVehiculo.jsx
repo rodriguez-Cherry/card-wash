@@ -3,13 +3,19 @@ import { axiosClient } from "../api/ApiCliente";
 import { CarWashContext } from "../contex/Context";
 import { toast } from "sonner";
 
-export function AgregarVehiculo({ setOpenModal, setActualisado }) {
+export function EditarVehiculo({
+  setOpenModal,
+  setActualisado,
+  carroSeleccionado,
+}) {
+  console.log(carroSeleccionado);
   const { userData } = useContext(CarWashContext);
   const [carInfo, setCarInfo] = useState({
-    modelo: "",
-    marca: "",
-    año: "",
-    color: "",
+    id: carroSeleccionado?.id,
+    modelo: carroSeleccionado?.modelo || "",
+    marca: carroSeleccionado?.marca || "",
+    año: carroSeleccionado?.año || "",
+    color: carroSeleccionado?.color || "",
   });
 
   const conseguirValores = (e) => {
@@ -21,16 +27,16 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
     });
   };
 
-  async function guardarVehiculo() {
+  async function actualizarVehiculo() {
     if (!carInfo.modelo || !carInfo.marca || !carInfo.año || !carInfo.color)
       return toast("Por favor llenar todos los campos");
 
     try {
-      const { data } = await axiosClient.post("/users/add-car", {
+      const { data } = await axiosClient.put("/users/update-car/" + carInfo.id, {
         ...carInfo,
         user_id: userData.id,
       });
-      setActualisado()
+      setActualisado();
       setOpenModal(false);
     } catch (error) {
       console.log(error);
@@ -47,6 +53,7 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
         id="marca"
         type="text"
         name="marca"
+        value={carInfo?.marca}
         onChange={conseguirValores}
         required
         className=" block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -58,6 +65,7 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
         id="modelo"
         type="text"
         name="modelo"
+        value={carInfo?.modelo}
         onChange={conseguirValores}
         required
         className="block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -69,6 +77,7 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
         id="color"
         type="text"
         name="color"
+        value={carInfo?.color}
         onChange={conseguirValores}
         required
         className="block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -81,6 +90,7 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
         id="año"
         type="number"
         name="año"
+        value={carInfo?.año}
         onChange={conseguirValores}
         required
         className="block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
@@ -89,10 +99,10 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
       <button
         className="p-1 border rounded bg-blue-600 text-white"
         onClick={() => {
-          guardarVehiculo();
+          actualizarVehiculo();
         }}
       >
-        Guardar
+        Actualizar
       </button>
     </div>
   );

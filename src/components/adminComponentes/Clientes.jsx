@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { useData } from "../../util/useData";
+import { Modal } from "../Modal";
+import { AgregarCliente } from "../AgregarCliente";
 
 export function Clientes() {
   const {
@@ -7,8 +10,19 @@ export function Clientes() {
     error,
   } = useData("/admin/clientes", "get");
 
+  const [openModal, setOpenModal] = useState(false)
   return (
-    <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default mt-5 rounded">
+    <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
+      
+      <Modal setOpen={setOpenModal} open={openModal}>
+        <AgregarCliente />
+      </Modal>
+      
+      <div className="w-full text-right">
+        <button onClick={() => setOpenModal(true)} className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm">
+          Agregar
+        </button>
+      </div>
       <table class="w-full text-sm text-left rtl:text-right text-body">
         <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
           <tr>
@@ -17,9 +31,6 @@ export function Clientes() {
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
               Email
-            </th>
-            <th scope="col" class="px-6 py-3 font-medium">
-              Rol
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
               Registrado
@@ -42,7 +53,6 @@ export function Clientes() {
                 {usuario.nombre}
               </th>
               <td class="px-6 py-4"> {usuario.email}</td>
-              <td class="px-6 py-4"> {usuario.rol}</td>
               <td class="px-6 py-4"> {usuario.logueado ? "Si" : "NO"}</td>
               <td class="px-6 py-4">
                 {" "}

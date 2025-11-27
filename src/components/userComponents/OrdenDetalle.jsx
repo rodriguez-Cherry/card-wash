@@ -26,16 +26,16 @@ export const OrdenDetalle = ({ info }) => {
   return (
     <div>
       <div>
-        <h1 className="text-lg font-semibold">{info?.tipo}</h1>
-        <p>{info?.descripcion}</p>
+        <h1 className="text-lg font-semibold"> Tipo: {info?.tipo}</h1>
 
-        <p>{info?.tiempo_estimado}</p>
-        <p>{info?.estado}</p>
-        <div>
+        <p> Tiempo estimado: {info?.tiempo_estimado}</p>
+        <p>Estado: {info?.estado}</p>
+        <div className="flex gap-4">
+          <p className="font-semibold">Vehiculos: </p>
           {carrosPorOrden.map((carro) => (
             <div className="flex gap-3" key={carro.id}>
-              <p>{carro.marca}</p>
-              <p>{carro.modelo}</p>
+              <p>{carro?.marca}</p>
+              <p>{carro?.modelo}</p>
             </div>
           ))}
         </div>

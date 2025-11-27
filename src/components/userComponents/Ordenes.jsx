@@ -39,10 +39,7 @@ export function Ordenes() {
   return (
     <div style={{ width: "100%" }}>
       <h1 className="text-xl font-semibold"> Mis ordenes</h1>
-      <OrdenesTable
-        ordenes={ordenes}
-        setEliminadoOrden={setEliminadoOrden}
-      />
+      <OrdenesTable ordenes={ordenes} setEliminadoOrden={setEliminadoOrden} />
     </div>
   );
 }
@@ -65,12 +62,10 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
 
   //  const carIds = orderSeleccionada?.carros_ids.split('|');
 
-
-
   //   }
 
   // },[orderSeleccionada])
- 
+
   return (
     <div
       style={{ width: "100%" }}
@@ -83,41 +78,149 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
       )}
 
       <Modal setOpen={setOpen} open={open}>
-       <OrdenDetalle info={orderSeleccionada} />
+        <OrdenDetalle info={orderSeleccionada} />
       </Modal>
 
       {ordenes?.length > 0 && (
-        <table className="table-auto">
-          <thead>
-            <tr>
-              <div className="p-3 flex justify-between">
-                <th className="">#</th>
-                <th className=" font-semibold">Estado</th>
-                <th className="font-semibold">Fecha</th>
-                <th className="font-semibold">Servicio</th>
-                <th className="font-semibold">Monto</th>
-              </div>
-            </tr>
-          </thead>
-          <tbody>
-            {ordenes?.map((orden, index) => {
-              return (
-                <tr
-                  key={orden.id}
-                  onClick={() => {
-                    setOrdenSeleccionada(orden);
-                    setOpen(true);
+        <div style={{ width: "100%" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th
+                  style={{
+                    padding: "8px",
+                    textAlign: "left",
+                    borderBottom: "2px solid #ddd",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    color: "#4d4d4d",
+                    width: "16%",
                   }}
                 >
-                  <div className="p-2 flex justify-between gap-4">
-                    <td>{index + 1}</td>
-                    <td>
+                  <div className="flex items-center">
+                    {" "}
+                    <span className="font-semibold">#</span>
+                  </div>
+                </th>
+
+                <th
+                  style={{
+                    padding: "8px",
+                    textAlign: "left",
+                    borderBottom: "2px solid #ddd",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    color: "#4d4d4d",
+                    width: "16%",
+                  }}
+                >
+                  <div className="flex items-center">
+                    <span className="font-semibold">Estado</span>
+                  </div>
+                </th>
+                <th
+                  style={{
+                    padding: "8px",
+                    textAlign: "left",
+                    borderBottom: "2px solid #ddd",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    color: "#4d4d4d",
+                    width: "16%",
+                  }}
+                >
+                  <div className="flex items-center">
+                    <span className="font-semibold">Fecha</span>
+                  </div>
+                </th>
+                <th
+                  style={{
+                    padding: "8px",
+                    textAlign: "left",
+                    borderBottom: "2px solid #ddd",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    color: "#4d4d4d",
+                    width: "16%",
+                  }}
+                >
+                  <div className="flex items-center">
+                    <span className="font-semibold">Servicio</span>
+                  </div>
+                </th>
+                <th
+                  style={{
+                    padding: "8px",
+                    textAlign: "left",
+                    borderBottom: "2px solid #ddd",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    color: "#4d4d4d",
+                    width: "16%",
+                  }}
+                >
+                  <div>
+                    <span className="font-semibold">Monto</span>
+                  </div>
+                </th>
+                <th
+                  style={{
+                    padding: "8px",
+                    textAlign: "right",
+                    borderBottom: "2px solid #ddd",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    color: "#4d4d4d",
+                    width: "16%",
+                  }}
+                >
+                  <div>
+                    <span className="font-semibold">Acciones</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {ordenes?.map((orden, index) => {
+                return (
+                  <tr key={orden.id}>
+                    <td
+                      style={{
+                        height: "3rem",
+                        textAlign: "left",
+                        borderBottom: "1px solid #ddd",
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        color: "#4d4d4d",
+                      }}
+                    >
+                      {index + 1}
+                    </td>
+                    <td
+                      style={{
+                        height: "3rem",
+                        textAlign: "left",
+                        borderBottom: "1px solid #ddd",
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        color: "#4d4d4d",
+                      }}
+                    >
                       {" "}
                       <Badge variant={estadoMap[orden.estado]}>
                         {orden.estado}
                       </Badge>{" "}
                     </td>
-                    <td>
+                    <td
+                      style={{
+                        height: "3rem",
+                        textAlign: "left",
+                        borderBottom: "1px solid #ddd",
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        color: "#4d4d4d",
+                      }}
+                    >
                       {" "}
                       {new Date(orden.fecha)
                         .toString()
@@ -125,21 +228,66 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
                         .toString()
                         .slice(0, 15)}
                     </td>
-                    <td> {orden.tipo} </td>
-                    <td>${orden.precio}</td>
-                    <button onClick={(e) => {
-                      e.stopPropagation()
+                    <td
+                      style={{
+                        height: "3rem",
+                        textAlign: "left",
+                        borderBottom: "1px solid #ddd",
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        color: "#4d4d4d",
+                      }}
+                    >
+                      {" "}
+                      {orden.tipo}{" "}
+                    </td>
+                    <td
+                      style={{
+                        height: "3rem",
+                        textAlign: "rigth",
+                        borderBottom: "1px solid #ddd",
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        color: "#4d4d4d",
+                      }}
+                    >
+                      ${orden.precio}
+                    </td>
+                    <td
+                      style={{
+                        height: "3rem",
+                        textAlign: "right",
+                        borderBottom: "1px solid #ddd",
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        color: "#4d4d4d",
+                      }}
+                    >
+                      <button
+                        className="border mr-2"
+                        onClick={() => {
+                          setOrdenSeleccionada(orden);
+                          setOpen(true);
+                        }}
+                      >
+                        Ver
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
 
-                      eliminar(orden.id)
-                    }}>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                          eliminar(orden.id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -1,11 +1,8 @@
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useContext, useState } from "react";
@@ -21,22 +18,30 @@ import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
 import { AgregarVehiculo } from "../AgregarVehiculo";
 import { axiosClient } from "../../api/ApiCliente";
+import { EditarVehiculo } from "../EditarVehiculo";
 
 export function Perfil() {
   const { userData } = useContext(CarWashContext);
   const [openModal, setOpenModal] = useState(false);
-  const [isEliminado, setIsEliminado] = useState(false);
+  const [carroSeleccionado, setCarroSeleccionado] = useState(false);
+  const [openModalEditar, setOpenModalEditar] = useState(false);
+  const [actualisado, setActualisado] = useState(false);
   const { isLoading, data } = useData(
     "/users/car/" + userData.id,
     "get",
-    isEliminado
+    actualisado
   );
 
   const eliminarVehiculo = async (carro) => {
     try {
       await axiosClient.post("/users/eliminar/" + carro.id);
-      setIsEliminado(!isEliminado);
+      setActualisado(!actualisado);
     } catch (error) {}
+  };
+
+  const editarCarro = (carro) => {
+    setCarroSeleccionado(carro);
+    setOpenModalEditar(true);
   };
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -44,7 +49,16 @@ export function Perfil() {
         <Modal open={openModal} setOpen={setOpenModal}>
           <AgregarVehiculo
             setOpenModal={setOpenModal}
-            setIsEliminado={() => setIsEliminado(!isEliminado)}
+            setActualisado={() => setActualisado(!actualisado)}
+          />
+        </Modal>
+      )}
+      {openModalEditar && (
+        <Modal open={openModalEditar} setOpen={setOpenModalEditar}>
+          <EditarVehiculo
+            setOpenModal={setOpenModalEditar}
+            setActualisado={() => setActualisado(!actualisado)}
+            carroSeleccionado={carroSeleccionado}
           />
         </Modal>
       )}
@@ -118,6 +132,7 @@ export function Perfil() {
                   <p>Color</p>
                   <p>Marca</p>
                   <p>Modelo</p>
+                  <p>año</p>
                 </div>
                 <div>
                   {data?.map((carro, index) => {
@@ -131,6 +146,13 @@ export function Perfil() {
                         <p> {carro.color} </p>
                         <p> {carro.marca} </p>
                         <p> {carro.modelo} </p>
+                        <p> {carro.año} </p>
+                        <button
+                          onClick={() => editarCarro(carro)}
+                          className="bg-blue-300 border rounded p-1"
+                        >
+                          Editar
+                        </button>
                         <button
                           onClick={() => eliminarVehiculo(carro)}
                           className="bg-red-300 border rounded p-1"
