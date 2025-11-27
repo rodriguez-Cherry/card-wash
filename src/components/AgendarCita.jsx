@@ -1,6 +1,6 @@
 import { axiosClient } from "../api/ApiCliente";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useData } from "../util/useData";
 import Select from "react-select";
 import { toast } from "sonner";
@@ -27,38 +27,43 @@ const horasMap = {
   "11:00 AM - 12:00 AM": 11,
 };
 
-export function AgendarCita({ servicio, userData, setOpen, userId }) {
+export function AgendarCita({ servicio, setOpen, userId }) {
   const [date, setDate] = useState(null);
   const [hour, setHour] = useState(8);
   const [carrosSelect, setCarrosSelect] = useState([]);
 
   const { isLoading, data: carros } = useData("/users/car/" + userId, "get");
 
-  console.log('40ec4295-c7b5-11f0-97fa-c03eba484fce'.length)
-  console.log(userData , "data")
-
   const onAgendar = async () => {
-    if (!hour || !carrosSelect.length || !date) return toast("Por favor agrega los campos");
+    if (!hour || !carrosSelect.length || !date)
+      return toast("Por favor agrega los campos");
 
     const newDate = new Date(`${date}, ${hour}:00:00`);
 
     const payload = {
       fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
-      user_id:userId,
-      carros_id: carrosSelect.join('|'),
+      user_id: userId,
+      carros_id: carrosSelect.join("|"),
       servicio_id: servicio.id,
     };
     try {
       await axiosClient.post("/users/agendar", payload);
       setOpen(false);
-      toast('Su cita ha sido agendada!')
+      setDate(null);
+      setCarrosSelect([]);
+      toast("Su cita ha sido agendada!");
     } catch (error) {
-      toast(error.response.data)
+      setDate(null);
+      setCarrosSelect([]);
+      toast(error.response.data);
     }
   };
 
-  console.log(carrosSelect)
-
+  const onCancel = () => {
+    setOpen(false);
+    setDate(null);
+    setCarrosSelect([]);
+  };
   const navigate = useNavigate();
   return (
     <div>
@@ -96,18 +101,15 @@ export function AgendarCita({ servicio, userData, setOpen, userId }) {
               />
             </div>
             <div className="p-2 flex gap-2 items-center">
-              <label id="horas" className="px-1 font-semibold">
-                Selecciona la hora:
-              </label>
-              <select
-                onChange={(e) => setHour(e.target.value)}
-                id="horas"
-                className="border p-1 rounded"
-              >
-                {horasPermitidas.map((horas) => (
-                  <option value={horasMap[horas.hora]}>{horas.hora}</option>
-                ))}
-              </select>
+              <Select
+                onChange={(rangoHora) => {
+                  setHour(rangoHora.value);
+                }}
+                options={horasPermitidas?.map((hora) => ({
+                  value: horasMap[hora.hora],
+                  label: hora.hora,
+                }))}
+              />
             </div>
             <div className="p-2 flex gap-2 items-center">
               <Select
@@ -123,18 +125,6 @@ export function AgendarCita({ servicio, userData, setOpen, userId }) {
                   label: c.modelo,
                 }))}
               />
-              {/* <label id="carros" className="px-1 font-semibold">
-                Selecciona tu vehiculo:
-              </label>
-              <select
-                id="carros"
-                onChange={(e) => setCarro(e.target.value)}
-                className="border p-1 rounded"
-              >
-                {carrosAVer?.map((carro) => (
-                  <option value={carro.id}>{carro.modelo}</option>
-                ))}
-              </select> */}
             </div>
           </div>
           <div className="text-right">
@@ -145,7 +135,7 @@ export function AgendarCita({ servicio, userData, setOpen, userId }) {
               Agendar
             </button>
             <button
-              onClick={() => setOpen(false)}
+              onClick={onCancel}
               className="p-1 border rounded bg-red-600 font-semibold text-white mt-4 ms-2"
             >
               Cancelar

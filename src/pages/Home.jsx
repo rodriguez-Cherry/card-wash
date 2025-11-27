@@ -12,10 +12,10 @@ import { Perfil } from "../components/userComponents/Perfil";
 import { CarWashContext } from "../contex/Context";
 
 const options = [
-    {
+  {
     id: 1,
     name: "Perfil",
-    icon: <FontAwesomeIcon icon={faCarTunnel} color="#7dd3fc"/>,
+    icon: <FontAwesomeIcon icon={faCarTunnel} color="#7dd3fc" />,
   },
   {
     id: 2,
@@ -27,7 +27,6 @@ const options = [
     name: "Ordenes",
     icon: <FontAwesomeIcon icon={faUserCircle} color="#7dd3fc" />,
   },
-
 ];
 
 const componentes = {
@@ -38,14 +37,12 @@ const componentes = {
 
 export function Home() {
   const [selected, setSelected] = useState("Perfil");
-  const { userData } = useContext(CarWashContext)
+  const { userData } = useContext(CarWashContext);
 
   return (
-    <div style={{ width:"100%" }} className="flex p-3 gap-5">
+    <div style={{ width: "100%" }} className="flex p-3 gap-5">
       <NavBar options={options} setSelected={setSelected} />
-      <div>
-        <div>{componentes[selected]}</div>
-      </div>
+      <div>{componentes[selected]}</div>
     </div>
   );
 }

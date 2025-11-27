@@ -30,6 +30,7 @@ export function Servicios() {
     error,
   } = useData("/users/servicios", "get");
 
+
   const [servicioSeleccionado, setServicioSeleccionado] = useState({});
   const [open, setOpen] = useState(false);
 
@@ -44,12 +45,13 @@ export function Servicios() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "100%",
+          gridTemplateColumns: "3fr 3fr 2fr",
           gap: "20px",
         }}
       >
         <Modal open={open} setOpen={setOpen}>
           <AgendarCita
+            key={servicioSeleccionado.id}
             userId={userData?.id}
             servicio={servicioSeleccionado}
             setOpen={setOpen}
@@ -85,14 +87,14 @@ function Servicio(props) {
     .join(" ");
 
   return (
-    <div className="rounded ">
+    <div className="rounded w-full">
       <Tooltip
         content={detallesSplit}
         contentProps={{ css: { "--tooltip-bg": "gray" } }}
       >
-        <div className="border rounded  bg-white w-60 h-full ">
+        <div className="border rounded w-full bg-white w-60 h-full ">
           <img
-            style={{ height: "200px", width: "100%"}}
+            style={{ height: "200px", width: "100%" }}
             src={imagen}
             alt="imagen"
           />
