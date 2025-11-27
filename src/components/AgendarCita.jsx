@@ -44,15 +44,16 @@ export function AgendarCita({ servicio, userData, setOpen, userId }) {
 
     const payload = {
       fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
-      user_id: userData?.id,
-      carros_id: carrosSelect,
+      user_id:userId,
+      carros_id: carrosSelect.join('|'),
       servicio_id: servicio.id,
     };
     try {
       await axiosClient.post("/users/agendar", payload);
       setOpen(false);
+      toast('Su cita ha sido agendada!')
     } catch (error) {
-      toast(error)
+      toast(error.response.data)
     }
   };
 

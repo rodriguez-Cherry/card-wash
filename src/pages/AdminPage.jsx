@@ -51,7 +51,7 @@ export const AdminPage = () => {
   return (
     <div className="flex gap-2 p-8">
       <NavBar options={options} selected={selected} setSelected={setSelected} />
-      <div>
+      <div style={{ width:"100%"}}>
         <h1>Bienvenido Administrador</h1>
         <div>{componentes[selected]}</div>
       </div>

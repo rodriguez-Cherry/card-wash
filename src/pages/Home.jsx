@@ -41,7 +41,7 @@ export function Home() {
   const { userData } = useContext(CarWashContext)
 
   return (
-    <div className="flex p-6 gap-5">
+    <div style={{ width:"100%" }} className="flex p-3 gap-5">
       <NavBar options={options} setSelected={setSelected} />
       <div>
         <div>{componentes[selected]}</div>
