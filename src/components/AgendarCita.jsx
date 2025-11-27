@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useData } from "../util/useData";
 import Select from "react-select";
+import { toast } from "sonner";
 
 const horasPermitidas = [
   {
@@ -29,28 +30,33 @@ const horasMap = {
 export function AgendarCita({ servicio, userData, setOpen, userId }) {
   const [date, setDate] = useState(null);
   const [hour, setHour] = useState(8);
-  const [carro, setCarro] = useState(null);
+  const [carrosSelect, setCarrosSelect] = useState([]);
 
   const { isLoading, data: carros } = useData("/users/car/" + userId, "get");
 
+  console.log('40ec4295-c7b5-11f0-97fa-c03eba484fce'.length)
+  console.log(userData , "data")
+
   const onAgendar = async () => {
-    if (!hour || !carro || !date) return toast("Por favor agrega los campos");
+    if (!hour || !carrosSelect.length || !date) return toast("Por favor agrega los campos");
 
     const newDate = new Date(`${date}, ${hour}:00:00`);
 
     const payload = {
       fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
       user_id: userData?.id,
-      carro_id: carro,
+      carros_id: carrosSelect,
       servicio_id: servicio.id,
     };
     try {
       await axiosClient.post("/users/agendar", payload);
       setOpen(false);
     } catch (error) {
-      console.log(error);
+      toast(error)
     }
   };
+
+  console.log(carrosSelect)
 
   const navigate = useNavigate();
   return (
@@ -104,6 +110,13 @@ export function AgendarCita({ servicio, userData, setOpen, userId }) {
             </div>
             <div className="p-2 flex gap-2 items-center">
               <Select
+                isMulti={true}
+                onChange={(carrosSelected) => {
+                  let carrosId = carrosSelected.map(
+                    (selecionado) => selecionado.value
+                  );
+                  setCarrosSelect(carrosId);
+                }}
                 options={carros?.map((c) => ({
                   value: c.id,
                   label: c.modelo,

@@ -21,7 +21,6 @@ export function App() {
     async function checkAuth() {
       try {
         const { data } = await axiosClient.get("/access/verificar-token");
-        console.log(data);
         setUserAccess({
           ...userAccess,
           sessionEstado: "autenticado",
@@ -41,7 +40,6 @@ export function App() {
     ...userAccess,
     setUserAccess,
   };
-  console.log(contexValues);
 
   return (
     <CarWashContext.Provider value={{ ...contexValues }}>

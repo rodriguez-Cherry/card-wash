@@ -47,7 +47,6 @@ export function Login() {
       const ruta = roles[data?.data?.rol];
       navigate(ruta);
     } catch (error) {
-      console.log(error);
       toast(error.response.data.data);
     }
   };

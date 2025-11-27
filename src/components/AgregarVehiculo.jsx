@@ -30,7 +30,6 @@ export function AgregarVehiculo({ setOpenModal, setIsEliminado }) {
         ...carInfo,
         user_id: userData.id,
       });
-      console.log(data);
       setIsEliminado()
       setOpenModal(false);
     } catch (error) {
