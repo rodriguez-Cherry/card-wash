@@ -48,6 +48,7 @@ export function Perfil() {
       {openModal && (
         <Modal open={openModal} setOpen={setOpenModal}>
           <AgregarVehiculo
+            key={"agregado"}
             setOpenModal={setOpenModal}
             setActualisado={() => setActualisado(!actualisado)}
           />
@@ -74,7 +75,9 @@ export function Perfil() {
           </CardHeader>
           <CardContent>
             <div>
-              <h1 className="text-xl">{userData.nombre}</h1>
+              <h1 className="text-xl">
+                {userData.nombre} {userData.apellido}
+              </h1>
               <p className="text-sm">{userData.email}</p>
             </div>
           </CardContent>

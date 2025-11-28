@@ -7,6 +7,7 @@ export function Signup() {
   const { setUserAccess } = useContext(CarWashContext);
   const [userInfo, setUserInfo] = useState({
     nombre: "",
+    apellido: "",
     email: "",
     telefono: "",
     direccion: "",
@@ -29,13 +30,14 @@ export function Signup() {
     try {
       const { data } = await axiosClient.post("/access/signup", {
         nombre: userInfo.nombre,
+        apellido: userInfo.apellido,
         email: userInfo.email,
         contrasena: userInfo.password,
         telefono: userInfo.telefono,
         direccion: userInfo.direccion,
       });
       localStorage.setItem("token-value", data.token);
-      localStorage.setItem('userData', JSON.stringify(data.data))
+      localStorage.setItem("userData", JSON.stringify(data.data));
       setUserAccess((prev) => ({
         ...prev,
         sessionEstado: "autenticado",
@@ -53,6 +55,7 @@ export function Signup() {
   const estaDeshabilitado =
     !userInfo.email ||
     !userInfo.nombre ||
+    !userInfo.apellido ||
     !userInfo.password ||
     !userInfo.telefono ||
     !userInfo.direccion;
@@ -76,6 +79,23 @@ export function Signup() {
                 type="text"
                 name="nombre"
                 placeholder="Juan"
+                onChange={conseguirValores}
+                max={20}
+                required
+                className="block w-full border rounded-md px-3 py-1.5  outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="apellido" className="block text-sm/6 font-medium">
+              Apellido
+            </label>
+            <div className="mt-2">
+              <input
+                id="apellido"
+                type="text"
+                name="apellido"
+                placeholder="Perez"
                 onChange={conseguirValores}
                 max={20}
                 required

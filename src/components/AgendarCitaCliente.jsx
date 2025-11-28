@@ -27,7 +27,7 @@ const horasMap = {
   "11:00 AM - 12:00 AM": 11,
 };
 
-export function AgendarCita({ servicio, setOpen, userId }) {
+export function AgendarCitaCliente({ servicio, setOpen, userId }) {
   const [date, setDate] = useState(null);
   const [hour, setHour] = useState(8);
   const [carrosSelect, setCarrosSelect] = useState([]);
