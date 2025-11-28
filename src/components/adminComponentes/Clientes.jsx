@@ -34,12 +34,14 @@ export function Clientes() {
   );
   return (
     <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
-      <Modal setOpen={setOpenModal} open={openModal}>
-        <AgregarCliente
-          setOpenModal={setOpenModal}
-          setActualizado={setActualizado}
-        />
-      </Modal>
+      {openModal && (
+        <Modal setOpen={setOpenModal} open={openModal}>
+          <AgregarCliente
+            setOpenModal={setOpenModal}
+            setActualizado={setActualizado}
+          />
+        </Modal>
+      )}
 
       <div className="w-full text-right">
         <input

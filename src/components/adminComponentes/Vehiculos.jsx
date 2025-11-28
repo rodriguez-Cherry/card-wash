@@ -37,14 +37,15 @@ export function Vehiculos() {
   });
   return (
     <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
-      <Modal key={"normal"} setOpen={setOpenModal} open={openModal}>
-        <AgregarVehiculoCliente
-          setOpenModal={setOpenModal}
-          setActualisado={setActualizadoS}
-          key={"Actualisado"}
-        />
-      </Modal>
-
+      {openModal && (
+        <Modal setOpen={setOpenModal} open={openModal}>
+          <AgregarVehiculoCliente
+            setOpenModal={setOpenModal}
+            setActualisado={setActualizadoS}
+            key={"Actualisado"}
+          />
+        </Modal>
+      )}
       <div className="w-full text-right">
         <input
           onChange={(e) => setSearch(e.target.value)}

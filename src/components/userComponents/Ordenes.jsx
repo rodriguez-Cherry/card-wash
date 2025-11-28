@@ -56,7 +56,6 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
     }
   };
 
-
   return (
     <div
       style={{ width: "100%" }}
@@ -68,10 +67,12 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
         </>
       )}
 
-      <Modal setOpen={setOpen} open={open}>
-        <OrdenDetalle info={orderSeleccionada} />
-      </Modal>
-
+      {open && (
+        <Modal setOpen={setOpen} open={open}>
+          <OrdenDetalle info={orderSeleccionada} />
+        </Modal>
+      )}
+    
       {ordenes?.length > 0 && (
         <div style={{ width: "100%" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>

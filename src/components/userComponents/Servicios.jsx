@@ -30,7 +30,6 @@ export function Servicios() {
     error,
   } = useData("/users/servicios", "get");
 
-
   const [servicioSeleccionado, setServicioSeleccionado] = useState({});
   const [open, setOpen] = useState(false);
 
@@ -49,14 +48,16 @@ export function Servicios() {
           gap: "20px",
         }}
       >
-        <Modal open={open} setOpen={setOpen}>
-          <AgendarCita
-            key={servicioSeleccionado.id}
-            userId={userData?.id}
-            servicio={servicioSeleccionado}
-            setOpen={setOpen}
-          />
-        </Modal>
+        {open && (
+          <Modal open={open} setOpen={setOpen}>
+            <AgendarCita
+              key={servicioSeleccionado.id}
+              userId={userData?.id}
+              servicio={servicioSeleccionado}
+              setOpen={setOpen}
+            />
+          </Modal>
+        )}
         {isLoading && <Loading />}
         {servicios?.map((servicio, index) => (
           <Servicio

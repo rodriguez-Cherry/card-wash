@@ -51,16 +51,16 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   );
 
   const clientesNoRegistrados = clientes?.map((cliente) => ({
-    value: cliente.id,
-    label: cliente.nombre,
+    value: cliente?.id,
+    label: cliente?.nombre,
   }));
   const carrosDelUserSeleccionado = carros?.map((carro) => ({
-    value: carro.id,
-    label: carro.marca + " " + carro.modelo,
+    value: carro?.id,
+    label: carro?.marca + " " + carro?.modelo,
   }));
   const serviciosSeleccionado = servicios?.map((servicio) => ({
-    value: servicio.id,
-    label: servicio.tipo + " " + servicio.precio,
+    value: servicio?.id,
+    label: servicio?.tipo + " " + servicio?.precio,
   }));
 
 
@@ -90,7 +90,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
     const payload = {
       fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
       user_id: clienteIdSeleccionado,
-      carros_id: carrosSelect.join("|"),
+      carros_id: carrosSelect?.join("|"),
       servicio_id: servicioIdSeleccionado,
     };
     try {

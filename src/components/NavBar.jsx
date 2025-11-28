@@ -4,7 +4,8 @@ export const NavBar = ({ setSelected, options }) => {
       {options.map((item) => (
         <div
           onClick={() => setSelected(item.name)}
-          className="flex gap-2 border rounded items-center cursor-pointer"
+          className="flex gap-2 border rounded items-center"
+          style={{ cursor:"pointer" }}
           id={item.id}
         >
           {item.icon}

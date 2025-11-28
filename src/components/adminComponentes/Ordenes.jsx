@@ -24,10 +24,10 @@ export function Ordenes() {
 
     try {
       await axiosClient.delete("/admin/eliminar-cita/" + orden.id);
-      toast("Orden eliminado");
+      toast("Orden eliminada");
       setActualizado((prev) => !prev);
     } catch (error) {
-      toast("Error al eliminar el cliente");
+      toast("Error al eliminar la orden");
     }
   };
 
@@ -36,37 +36,44 @@ export function Ordenes() {
     setOpen(true);
   };
 
-  console.log(orderSeleccionada)
+  console.log(orderSeleccionada);
 
   const resultados = ordenes?.filter((orden) =>
     orden.nombre.toLowerCase().includes(search.toLowerCase())
   );
 
-  console.log(resultados)
+  console.log(resultados);
   return (
     <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
-      <Modal setOpen={setOpenModal} open={openModal}>
-        <AgendarCitaCliente
-          setOpenModal={setOpenModal}
-          setActualizado={setActualizado}
-        />
-      </Modal>
-      <Modal setOpen={setOpen} open={open}>
-        <OrdenDetalle info={orderSeleccionada} />
-      </Modal>
+      {openModal && (
+        <Modal setOpen={setOpenModal} open={openModal}>
+          <AgendarCitaCliente
+            setOpenModal={setOpenModal}
+            setActualizado={setActualizado}
+          />
+        </Modal>
+      )}
+      {open && (
+        <Modal setOpen={setOpen} open={open}>
+          <OrdenDetalle info={orderSeleccionada} />
+        </Modal>
+      )}
 
-      <div className="w-full text-right mb-3">
-        <input
-          onChange={(e) => setSearch(e.target.value)}
-          className="border rounded me-3"
-          placeholder="Buscar por nombre"
-        />
-        <button
-          onClick={() => setOpenModal(true)}
-          className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm"
-        >
-          Agregar
-        </button>
+      <div className="w-full flex justify-between mb-3">
+        <h1 className="font-semibold">Ordenes</h1>
+        <div className="flex">
+          <input
+            onChange={(e) => setSearch(e.target.value)}
+            className="border rounded me-3"
+            placeholder="Buscar por nombre"
+          />
+          <button
+            onClick={() => setOpenModal(true)}
+            className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm"
+          >
+            Agregar
+          </button>
+        </div>
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-body">
         <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
@@ -109,11 +116,13 @@ export function Ordenes() {
               <td className="flex gap-4 items-center">
                 <button
                   onClick={() => eliminarOrden(orden)}
+                  style={{ cursor: "pointer" }}
                   className="bg-red-600 text-white p-1 border rounded font-semibold mt-2"
                 >
                   Eliminar
                 </button>
                 <button
+                  style={{ cursor: "pointer" }}
                   onClick={() => verDetalles(orden)}
                   className="bg-blue-600 text-white p-1 border rounded font-semibold mt-2"
                 >

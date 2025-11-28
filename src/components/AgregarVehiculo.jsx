@@ -33,7 +33,7 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
       setActualisado(prev => !prev)
       setOpenModal(false);
     } catch (error) {
-      console.log(error);
+      toast('Error al agregar vehiculo')
     }
   }
 

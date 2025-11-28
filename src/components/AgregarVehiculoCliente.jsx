@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { axiosClient } from "../api/ApiCliente";
 import { toast } from "sonner";
 import Select from "react-select";
@@ -53,7 +53,6 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
     }
   }
 
-  console.log(carInfo, "card");
   return (
     <div className="w-full flex flex-col gap-3">
       <h2 className="text-lg font-semibold">Agregue su vehiculo fff 3</h2>

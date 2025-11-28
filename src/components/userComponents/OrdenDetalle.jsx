@@ -5,8 +5,6 @@ export const OrdenDetalle = ({ info }) => {
   const carrosIds = info.carros_ids.split("|");
   const [carrosPorOrden, setCarrosPorOrden] = useState([]);
 
-  
-
   useEffect(() => {
     async function getCarros() {
       try {
@@ -23,7 +21,7 @@ export const OrdenDetalle = ({ info }) => {
     }
 
     getCarros();
-  }, [info?.carros_ids]);
+  }, []);
 
   return (
     <div>
@@ -35,7 +33,7 @@ export const OrdenDetalle = ({ info }) => {
         <div className="flex gap-4">
           <p className="font-semibold">Vehiculos: </p>
           {carrosPorOrden.map((carro) => (
-            <div className="flex gap-3" key={carro.id}>
+            <div className="flex gap-3" key={carro?.id}>
               <p>{carro?.marca}</p>
               <p>{carro?.modelo}</p>
             </div>
