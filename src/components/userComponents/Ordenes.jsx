@@ -56,15 +56,6 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
     }
   };
 
-  // useEffect(() => {
-
-  //   if(open && orderSeleccionada) {
-
-  //  const carIds = orderSeleccionada?.carros_ids.split('|');
-
-  //   }
-
-  // },[orderSeleccionada])
 
   return (
     <div

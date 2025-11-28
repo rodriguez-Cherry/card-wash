@@ -13,4 +13,4 @@ export const NavBar = ({ setSelected, options }) => {
       ))}
     </div>
   );
-};
+}

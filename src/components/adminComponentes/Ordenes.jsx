@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
-import { AgregarCliente } from "../AgregarCliente";
+import { AgendarCitaCliente } from "../AgendarCitaCliente";
 import { axiosClient } from "../../api/ApiCliente";
+import { OrdenDetalle } from "../userComponents/OrdenDetalle";
 import { toast } from "sonner";
 
 export function Ordenes() {
@@ -13,32 +14,45 @@ export function Ordenes() {
     isLoading,
     error,
   } = useData("/admin/ordenes", "get", actualizado);
-
+  const [orderSeleccionada, setOrdenSeleccionada] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const eliminarCliente = async (cliente) => {
-    let result = window.confirm("Estas seguro de eliminar este cliente ?");
+  const eliminarOrden = async (orden) => {
+    let result = window.confirm("Estas seguro de eliminar esta orden ?");
     if (!result) return null;
 
     try {
-      await axiosClient.delete("/admin/eliminar-cliente/" + cliente.id);
-      toast("Cliente eliminado");
+      await axiosClient.delete("/admin/eliminar-cita/" + orden.id);
+      toast("Orden eliminado");
       setActualizado((prev) => !prev);
     } catch (error) {
       toast("Error al eliminar el cliente");
     }
   };
 
-  //   const resultados = ordenes?.filter((cliente) =>
-  //     cliente.nombre.toLowerCase().includes(search.toLowerCase())
-  //   );
+  const verDetalles = (orden) => {
+    setOrdenSeleccionada(orden);
+    setOpen(true);
+  };
+
+  console.log(orderSeleccionada)
+
+  const resultados = ordenes?.filter((orden) =>
+    orden.nombre.toLowerCase().includes(search.toLowerCase())
+  );
+
+  console.log(resultados)
   return (
     <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
       <Modal setOpen={setOpenModal} open={openModal}>
-        <AgregarCliente
+        <AgendarCitaCliente
           setOpenModal={setOpenModal}
           setActualizado={setActualizado}
         />
+      </Modal>
+      <Modal setOpen={setOpen} open={open}>
+        <OrdenDetalle info={orderSeleccionada} />
       </Modal>
 
       <div className="w-full text-right mb-3">
@@ -54,35 +68,35 @@ export function Ordenes() {
           Agregar
         </button>
       </div>
-      <table class="w-full text-sm text-left rtl:text-right text-body">
-        <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
+      <table className="w-full text-sm text-left rtl:text-right text-body">
+        <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
           <tr>
-            <th scope="col" class="px-6 py-3 font-medium">
+            <th scope="col" className="px-6 py-3 font-medium">
               #
             </th>
-            <th scope="col" class="px-6 py-3 font-medium">
+            <th scope="col" className="px-6 py-3 font-medium">
               Fecha
             </th>
-            <th scope="col" class="px-6 py-3 font-medium">
+            <th scope="col" className="px-6 py-3 font-medium">
               Estado
             </th>
-            <th scope="col" class="px-6 py-3 font-medium">
+            <th scope="col" className="px-6 py-3 font-medium">
               Pertenece a
             </th>
-            <th scope="col" class="px-6 py-3 font-medium">
+            <th scope="col" className="px-6 py-3 font-medium">
               Acciones
             </th>
           </tr>
         </thead>
         <tbody>
-          {ordenes?.map((orden, index) => (
+          {resultados?.map((orden, index) => (
             <tr
               id={orden.id}
-              class="bg-neutral-primary border-b border-default"
+              className="bg-neutral-primary border-b border-default"
             >
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-heading whitespace-nowrap"
+                className="px-6 py-4 font-medium text-heading whitespace-nowrap"
               >
                 {index + 1}
               </th>
@@ -92,16 +106,23 @@ export function Ordenes() {
               </td>
               <td className="px-6 py-4"> {orden.estado}</td>
               <td className="px-6 py-4">{orden.nombre}</td>
-              <td>
+              <td className="flex gap-4 items-center">
                 <button
-                  onClick={() => eliminarCliente(orden)}
-                  className="bg-red-600 text-white p-1"
+                  onClick={() => eliminarOrden(orden)}
+                  className="bg-red-600 text-white p-1 border rounded font-semibold mt-2"
                 >
                   Eliminar
+                </button>
+                <button
+                  onClick={() => verDetalles(orden)}
+                  className="bg-blue-600 text-white p-1 border rounded font-semibold mt-2"
+                >
+                  Ver
                 </button>
               </td>
             </tr>
           ))}
+          {resultados?.length === 0 && <div>No hay orden</div>}
         </tbody>
       </table>
     </div>

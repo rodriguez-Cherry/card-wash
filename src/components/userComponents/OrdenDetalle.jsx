@@ -5,6 +5,8 @@ export const OrdenDetalle = ({ info }) => {
   const carrosIds = info.carros_ids.split("|");
   const [carrosPorOrden, setCarrosPorOrden] = useState([]);
 
+  
+
   useEffect(() => {
     async function getCarros() {
       try {
@@ -21,7 +23,7 @@ export const OrdenDetalle = ({ info }) => {
     }
 
     getCarros();
-  }, []);
+  }, [info?.carros_ids]);
 
   return (
     <div>

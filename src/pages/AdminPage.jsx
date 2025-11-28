@@ -12,7 +12,7 @@ const componentes = {
   Tablero: <Tablero />,
   Clientes: <Clientes />,
   Vehiculos: <Vehiculos />,
-  Servicios: <Servicios />,
+  // Servicios: <Servicios />,
   Ordenes: <Ordenes />,
 };
   const options = [
@@ -31,11 +31,11 @@ const componentes = {
       name: "Vehiculos",
       icon: <FontAwesomeIcon icon={faCarTunnel} />,
     },
-    {
-      id: 4,
-      name: "Servicios",
-      icon: <FontAwesomeIcon icon={faSquareRootVariable} />,
-    },
+    // {
+    //   id: 4,
+    //   name: "Servicios",
+    //   icon: <FontAwesomeIcon icon={faSquareRootVariable} />,
+    // },
     {
       id: 5,
       name: "Ordenes",

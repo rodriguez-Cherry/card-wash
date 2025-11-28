@@ -4,11 +4,13 @@ import { Authenticated } from "./components/Authenticated";
 
 import { CarWashContext } from "./contex/Context";
 import { axiosClient } from "./api/ApiCliente";
+import { useNavigate } from "react-router";
 
 export function App() {
   const userToken = localStorage.getItem("token-value");
 
   // checking - autenticado - no-autenticado
+  const navigate = useNavigate()
 
   const userDataPersistent = localStorage.getItem("userData");
 
@@ -31,6 +33,8 @@ export function App() {
           sessionEstado: "no-autenticado",
         });
         localStorage.clear();
+        navigate("/")
+
       }
     }
     checkAuth();
@@ -42,8 +46,12 @@ export function App() {
   };
 
   return (
+    <div className="h-full">
+
+
     <CarWashContext.Provider value={{ ...contexValues }}>
         <Authenticated />
     </CarWashContext.Provider>
+        </div>
   );
 }

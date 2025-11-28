@@ -19,9 +19,9 @@ export function PrivateRoute({ estado, Component, correctRole, rol }) {
   }
 
   return (
-    <div id="private" style={{ backgroundColor: "#EFF5FC", width: "100%" }}>
+    <div style={{ backgroundColor: "#EFF5FC", width: "100%", height: "100%" }}>
       <Header />
-      <Component />;
+      <Component />
     </div>
   );
 }
