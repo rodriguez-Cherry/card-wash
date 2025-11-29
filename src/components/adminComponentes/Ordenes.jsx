@@ -44,7 +44,7 @@ export function Ordenes() {
 
   console.log(resultados);
   return (
-    <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
+    <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
       {openModal && (
         <Modal setOpen={setOpenModal} open={openModal}>
           <AgendarCitaCliente
@@ -59,13 +59,16 @@ export function Ordenes() {
         </Modal>
       )}
 
-      <div className="w-full flex justify-between mb-3">
-        <h1 className="font-semibold">Ordenes</h1>
+      <div className="w-full flex justify-between ">
+        <h1 className="font-semibold ms-6">Ordenes</h1>
         <div className="flex">
           <input
             onChange={(e) => setSearch(e.target.value)}
-            className="border rounded me-3"
-            placeholder="Buscar por nombre"
+            type="search"
+            id="search"
+            className="block w-full p-2 rounded ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand shadow-xs placeholder:text-body me-2"
+            placeholder="Search"
+
           />
           <button
             onClick={() => setOpenModal(true)}
@@ -75,7 +78,7 @@ export function Ordenes() {
           </button>
         </div>
       </div>
-      <table className="w-full text-sm text-left rtl:text-right text-body">
+      <table className="w-full text-sm text-left rtl:text-right text-body ">
         <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
           <tr>
             <th scope="col" className="px-6 py-3 font-medium">

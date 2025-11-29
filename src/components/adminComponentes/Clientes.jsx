@@ -29,11 +29,13 @@ export function Clientes() {
     }
   };
 
+  console.log(clientes);
+
   const resultados = clientes?.filter((cliente) =>
-    cliente.nombre.toLowerCase().includes(search.toLowerCase())
+    cliente?.nombre?.toLowerCase().includes(search?.toLowerCase())
   );
   return (
-    <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
+    <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
       {openModal && (
         <Modal setOpen={setOpenModal} open={openModal}>
           <AgregarCliente
@@ -43,18 +45,21 @@ export function Clientes() {
         </Modal>
       )}
 
-      <div className="w-full text-right">
-        <input
-          onChange={(e) => setSearch(e.target.value)}
-          className="border rounded me-3"
-          placeholder="Buscar por nombre"
-        />
-        <button
-          onClick={() => setOpenModal(true)}
-          className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm"
-        >
-          Agregar
-        </button>
+      <div className="w-full flex justify-between mb-3">
+        <h1 className="font-semibold ms-6">Clientes</h1>
+        <div>
+          <input
+            onChange={(e) => setSearch(e.target.value)}
+            className="border rounded me-3"
+            placeholder="Buscar por nombre"
+          />
+          <button
+            onClick={() => setOpenModal(true)}
+            className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm"
+          >
+            Agregar
+          </button>
+        </div>
       </div>
       <table class="w-full text-sm text-left rtl:text-right text-body">
         <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
@@ -62,9 +67,9 @@ export function Clientes() {
             <th scope="col" class="px-6 py-3 font-medium">
               Nombre
             </th>
-            <th scope="col" class="px-6 py-3 font-medium">
+            {/* <th scope="col" class="px-6 py-3 font-medium">
               Cantidad de vehiculo
-            </th>
+            </th> */}
             <th scope="col" class="px-6 py-3 font-medium">
               Registrado
             </th>
@@ -88,7 +93,7 @@ export function Clientes() {
               >
                 {usuario.nombre}
               </th>
-              <td className="px-6 py-4"> {5}</td>
+              {/* <td className="px-6 py-4"> {5}</td> */}
               <td className="px-6 py-4"> {usuario.logueado ? "Si" : "NO"}</td>
               <td className="px-6 py-4">
                 {" "}

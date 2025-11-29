@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { Tablero } from "../components/adminComponentes/Tablero";
 import { Clientes } from "../components/adminComponentes/Clientes";
@@ -7,20 +7,21 @@ import { Servicios } from "../components/adminComponentes/Servicios";
 import { Ordenes } from "../components/adminComponentes/Ordenes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKeyboard, faUserCircle, faCarTunnel, faSquareRootVariable, faDatabase } from "@fortawesome/free-solid-svg-icons";
+import { CarWashContext } from "../contex/Context";
 
 const componentes = {
-  Tablero: <Tablero />,
+  // Tablero: <Tablero />,
   Clientes: <Clientes />,
   Vehiculos: <Vehiculos />,
   // Servicios: <Servicios />,
   Ordenes: <Ordenes />,
 };
   const options = [
-    {
-      id: 1,
-      name: "Tablero",
-      icon: <FontAwesomeIcon icon={faKeyboard} />,
-    },
+    // {
+    //   id: 1,
+    //   name: "Tablero",
+    //   icon: <FontAwesomeIcon icon={faKeyboard} />,
+    // },
     {
       id: 2,
       name: "Clientes",
@@ -45,14 +46,15 @@ const componentes = {
 
 
 export const AdminPage = () => {
-  const [selected, setSelected] = useState("Tablero");
+
+   const {selectedAdmin, setSelectedAdmin } = useContext(CarWashContext)
 
 
   return (
     <div className="flex gap-2 p-8">
-      <NavBar options={options} selected={selected} setSelected={setSelected} />
+      <NavBar options={options} selected={selectedAdmin} setSelected={setSelectedAdmin} />
       <div style={{ width:"100%"}}>
-        <div>{componentes[selected]}</div>
+        <div>{componentes[selectedAdmin]}</div>
       </div>
     </div>
   );

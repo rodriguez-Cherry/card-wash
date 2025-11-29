@@ -1,9 +1,10 @@
 import { axiosClient } from "../api/ApiCliente";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useData } from "../util/useData";
 import Select from "react-select";
 import { toast } from "sonner";
+import { CarWashContext } from "../contex/Context";
 
 const horasPermitidas = [
   {
@@ -64,6 +65,8 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   }));
 
 
+ const {setSelectedAdmin } =  useContext(CarWashContext)
+
   console.log()
 
   const onResetValues = () => {
@@ -109,9 +112,6 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   const onCancel = () => {
     onResetValues();
   };
-  const navigate = useNavigate();
-
-  console.log(clienteIdSeleccionado);
   return (
     <div>
       <h1 className="text-lg font-semibold mb-3">Agendar cita</h1>
@@ -129,8 +129,9 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
       )}
       {clienteIdSeleccionado && !carros?.length && (
         <div className="font-semibold text-sm mt-4">
-          Este cliente no posee vehiculos por favor agregue vehiculo para este
-          cliente en la seccion de vehiculos
+        <p>  Este cliente no posee vehiculos por favor agregue vehiculo para este
+          cliente en la seccion de vehiculos</p>
+          <button className="border rounded mt-2 p-2" onClick={() => setSelectedAdmin('Vehiculos')}>Ir a Vehiculos</button>
         </div>
       )}
       {carros?.length > 0 && (

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Authenticated } from "./components/Authenticated";
 
-
 import { CarWashContext } from "./contex/Context";
 import { axiosClient } from "./api/ApiCliente";
 import { useNavigate } from "react-router";
@@ -10,7 +9,7 @@ export function App() {
   const userToken = localStorage.getItem("token-value");
 
   // checking - autenticado - no-autenticado
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const userDataPersistent = localStorage.getItem("userData");
 
@@ -18,6 +17,9 @@ export function App() {
     sessionEstado: userToken?.length > 0 ? "autenticado" : "no-autenticado",
     userData: JSON.parse(userDataPersistent) || null,
   });
+
+  const [selectedHome, setSelectedHome] = useState("Perfil");
+    const [selectedAdmin, setSelectedAdmin] = useState("Clientes");
 
   useEffect(() => {
     async function checkAuth() {
@@ -33,8 +35,7 @@ export function App() {
           sessionEstado: "no-autenticado",
         });
         localStorage.clear();
-        navigate("/")
-
+        navigate("/");
       }
     }
     checkAuth();
@@ -43,15 +44,17 @@ export function App() {
   const contexValues = {
     ...userAccess,
     setUserAccess,
+    setSelectedHome,
+    selectedHome,
+    selectedAdmin,
+    setSelectedAdmin
   };
 
   return (
     <div className="h-full">
-
-
-    <CarWashContext.Provider value={{ ...contexValues }}>
+      <CarWashContext.Provider value={{ ...contexValues }}>
         <Authenticated />
-    </CarWashContext.Provider>
-        </div>
+      </CarWashContext.Provider>
+    </div>
   );
 }

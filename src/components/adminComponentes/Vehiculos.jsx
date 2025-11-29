@@ -36,7 +36,7 @@ export function Vehiculos() {
     );
   });
   return (
-    <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base  mt-5">
+    <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base ">
       {openModal && (
         <Modal setOpen={setOpenModal} open={openModal}>
           <AgregarVehiculoCliente
@@ -46,18 +46,21 @@ export function Vehiculos() {
           />
         </Modal>
       )}
-      <div className="w-full text-right">
-        <input
-          onChange={(e) => setSearch(e.target.value)}
-          className="border rounded me-3"
-          placeholder="Buscar por modelo"
-        />
-        <button
-          onClick={() => setOpenModal(true)}
-          className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm"
-        >
-          Agregar
-        </button>
+      <div className="w-full flex justify-between mb-3">
+        <h1 className="font-semibold ms-6">Vehiculos</h1>
+        <div>
+          <input
+            onChange={(e) => setSearch(e.target.value)}
+            className="border rounded me-3"
+            placeholder="Buscar por modelo"
+          />
+          <button
+            onClick={() => setOpenModal(true)}
+            className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm"
+          >
+            Agregar
+          </button>
+        </div>
       </div>
       <table class="w-full text-sm text-left rtl:text-right text-body">
         <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">

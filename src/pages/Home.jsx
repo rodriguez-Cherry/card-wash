@@ -36,13 +36,14 @@ const componentes = {
 };
 
 export function Home() {
-  const [selected, setSelected] = useState("Perfil");
-  const { userData } = useContext(CarWashContext);
+
+ const {setSelectedHome, selectedHome} =  useContext(CarWashContext)
+
 
   return (
     <div style={{ width: "100%" }} className="flex p-3 gap-5">
-      <NavBar options={options} setSelected={setSelected} />
-      <div>{componentes[selected]}</div>
+      <NavBar options={options} setSelected={setSelectedHome} />
+      <div>{componentes[selectedHome]}</div>
     </div>
   );
 }

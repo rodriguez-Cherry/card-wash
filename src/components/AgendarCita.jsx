@@ -1,9 +1,10 @@
 import { axiosClient } from "../api/ApiCliente";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useData } from "../util/useData";
 import Select from "react-select";
 import { toast } from "sonner";
+import { CarWashContext } from "../contex/Context";
 
 const horasPermitidas = [
   {
@@ -33,6 +34,7 @@ export function AgendarCita({ servicio, setOpen, userId }) {
   const [carrosSelect, setCarrosSelect] = useState([]);
 
   const { isLoading, data: carros } = useData("/users/car/" + userId, "get");
+   const { setSelectedHome } =  useContext(CarWashContext)
 
   const onAgendar = async () => {
     if (!hour || !carrosSelect.length || !date)
@@ -79,10 +81,10 @@ export function AgendarCita({ servicio, setOpen, userId }) {
             className="border rounded p-1 mt-4 bg-blue-300 text-white font-semibold shadow"
             onClick={() => {
               setOpen(false);
-              navigate("/home");
+              setSelectedHome('Perfil')
             }}
           >
-            Cerrar
+            Ir a Perfil
           </button>
         </div>
       )}
@@ -124,6 +126,9 @@ export function AgendarCita({ servicio, setOpen, userId }) {
                   value: c.id,
                   label: c.marca + " " + c.modelo ,
                 }))}
+                isDisabled={carrosSelect?.length > 2}
+             
+                
               />
             </div>
           </div>
