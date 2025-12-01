@@ -54,6 +54,9 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
     }
   };
 
+
+  // console.log(new Date(ordenes[0].fecha).getHours())
+
   return (
     <div
       style={{ width: "100%" }}
