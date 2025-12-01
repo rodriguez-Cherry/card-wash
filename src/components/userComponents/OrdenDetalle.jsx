@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { axiosClient } from "../../api/ApiCliente";
+import { CarWashContext } from "../../contex/Context";
+import { Badge } from "@chakra-ui/react";
+import Select from "react-select";
+import { toast } from "sonner";
 
-export const OrdenDetalle = ({ info }) => {
+export const OrdenDetalle = ({ info, setActualizado }) => {
   const carrosIds = info.carros_ids.split("|");
   const [carrosPorOrden, setCarrosPorOrden] = useState([]);
+  const [cambio, setCambio] = useState("");
+
+  const { userData } = useContext(CarWashContext);
 
   useEffect(() => {
     async function getCarros() {
@@ -22,6 +29,26 @@ export const OrdenDetalle = ({ info }) => {
 
     getCarros();
   }, []);
+  
+  const cambiarEstado = async () => {
+    if (!cambio) return toast("Por favor seleccione una opcion");
+    try {
+      const payload = {
+        id: info?.id,
+        fecha: info?.fecha,
+        estado: cambio,
+        user_id: info?.user_id,
+        servicio_id: info?.servicio_id,
+        carros_ids: info?.carros_ids,
+      };
+
+      await axiosClient.put("/admin/update-ordenes", payload);
+      setActualizado((prev) => !prev);
+      toast("Estado de orden cambiado exitosamente!");
+    } catch (error) {
+      toast("Hubo un error al cambiar el estado");
+    }
+  };
 
   return (
     <div>
@@ -29,8 +56,10 @@ export const OrdenDetalle = ({ info }) => {
         <h1 className="text-lg font-semibold"> Tipo: {info?.tipo}</h1>
 
         <p> Tiempo estimado: {info?.tiempo_estimado}</p>
-        <p>Estado: {info?.estado}</p>
-        <div className="flex gap-4">
+        <p className="mt-2">
+          Estado: <Badge variant="outline">{info?.estado?.toUpperCase()}</Badge>
+        </p>
+        <div className="flex gap-4 mt-2">
           <p className="font-semibold">Vehiculos: </p>
           {carrosPorOrden.map((carro) => (
             <div className="flex gap-3" key={carro?.id}>
@@ -39,6 +68,28 @@ export const OrdenDetalle = ({ info }) => {
             </div>
           ))}
         </div>
+        {userData?.rol === "cajero" && (
+          <div className="border p-3">
+            <h1>Cambiar estado de la orden </h1>
+            <div className="mt-2">
+              <Select
+                onChange={(item) => setCambio(item.value)}
+                options={[
+                  { value: "En proceso", label: "En proceso" },
+                  { value: "Completado", label: "Completado" },
+                  { value: "Cancelado", label: "Cancelado" },
+                ]}
+              />
+
+              <button
+                onClick={cambiarEstado}
+                className="border p-1 mt-2 rounded"
+              >
+                Guardar cambios
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

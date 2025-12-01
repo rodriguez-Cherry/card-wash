@@ -8,6 +8,7 @@ import { SignupPage } from "../pages/SignupPage";
 import { useContext } from "react";
 import { CarWashContext } from "../contex/Context";
 import { AdminPage } from "../pages/AdminPage";
+import { CarejoPage } from "../pages/CajeroPage";
 
 export function Authenticated() {
   const data = useContext(CarWashContext);
@@ -35,6 +36,17 @@ export function Authenticated() {
               rol={data?.userData?.rol}
               correctRole={data?.userData?.rol === "admin"}
               Component={AdminPage}
+            />
+          }
+        />
+        <Route
+          path="/cajero"
+          element={
+            <PrivateRoute
+              estado={data?.sessionEstado}
+              rol={data?.userData?.rol}
+              correctRole={data?.userData?.rol === "cajero"}
+              Component={CarejoPage}
             />
           }
         />

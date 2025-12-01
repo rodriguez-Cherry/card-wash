@@ -1,4 +1,13 @@
+import { useContext } from "react";
+import { Link } from "react-router";
+import { CarWashContext } from "../contex/Context";
 export function HeroSection() {
+
+ const { sessionEstado } = useContext(CarWashContext);
+
+ const reservarEnLineaRuta = sessionEstado === "autenticado" ? "/home" : "/login"
+
+
   return (
     <section class="hero-bg text-white py-20 md:py-32">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,12 +19,12 @@ export function HeroSection() {
             Experimente lo último en limpieza de automóviles con nuestros paquetes de lavado premium y servicios de detallado.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a
-              href="#book"
+            <Link
+              to={reservarEnLineaRuta}
               class="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-md text-lg font-semibold text-center"
             >
               Reserva en línea
-            </a>
+            </Link>
             <a
               href="#services"
               class="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-md text-lg font-semibold text-center"

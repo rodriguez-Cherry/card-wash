@@ -4,6 +4,7 @@ import { Header } from "./Header";
 const roles = {
   cliente: "/home",
   admin: "/admin",
+  cajero: "/cajero"
 };
 
 export function PrivateRoute({ estado, Component, correctRole, rol }) {

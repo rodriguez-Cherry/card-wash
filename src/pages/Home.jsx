@@ -36,9 +36,7 @@ const componentes = {
 };
 
 export function Home() {
-
- const {setSelectedHome, selectedHome} =  useContext(CarWashContext)
-
+  const { setSelectedHome, selectedHome } = useContext(CarWashContext);
 
   return (
     <div style={{ width: "100%" }} className="flex p-3 gap-5">

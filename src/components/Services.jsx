@@ -92,3 +92,29 @@ export function Services() {
     </section>
   );
 }
+
+
+const ServicioCaja = ({ tipo,  }) => {
+
+  return (
+       <div class="service-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+            <div class="h-48 bg-gray-200 flex items-center justify-center">
+              <i data-feather="shield" class="h-16 w-16 text-blue-500"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-2">
+                Revestimiento cerámico
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Protección avanzada de pintura que dura años con el mantenimiento adecuado.
+              </p>
+              <a
+                href="#book"
+                class="text-blue-500 font-semibold hover:text-blue-700 flex items-center"
+              >
+                Reserva ahora  <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
+              </a>
+            </div>
+          </div>
+  )
+}

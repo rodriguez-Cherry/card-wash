@@ -21,6 +21,7 @@ export function App() {
   const [selectedHome, setSelectedHome] = useState("Perfil");
     const [selectedAdmin, setSelectedAdmin] = useState("Clientes");
 
+
   useEffect(() => {
     async function checkAuth() {
       try {

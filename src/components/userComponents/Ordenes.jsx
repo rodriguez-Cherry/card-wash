@@ -16,8 +16,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { axiosClient } from "../../api/ApiCliente";
 import { toast } from "sonner";
 import { Modal } from "../Modal";
-import js from "@eslint/js";
-import { useEditable } from "@chakra-ui/react";
 import { OrdenDetalle } from "./OrdenDetalle";
 
 const estadoMap = {
