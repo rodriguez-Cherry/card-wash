@@ -27,7 +27,7 @@ export function Navigation() {
             </a>
           </div>
           <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-            <a
+            {/* <a
               href="#"
               class="text-blue-600 border-b-2 border-blue-500 px-3 py-2 text-sm font-medium"
             >
@@ -51,7 +51,7 @@ export function Navigation() {
               class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
             >
               Contacto
-            </a>
+            </a> */}
             <Link
               to="/login"
               class="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
