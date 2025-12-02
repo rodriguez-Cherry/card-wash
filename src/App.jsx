@@ -52,7 +52,7 @@ export function App() {
   };
 
   return (
-    <div className="h-full">
+    <div style={{ height:"100vh"}}>
       <CarWashContext.Provider value={{ ...contexValues }}>
         <Authenticated />
       </CarWashContext.Provider>

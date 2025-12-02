@@ -20,7 +20,7 @@ export function PrivateRoute({ estado, Component, correctRole, rol }) {
   }
 
   return (
-    <div>
+    <div  className="bg-blue-100 h-full">
       <Header />
       <Component />
     </div>

@@ -14,7 +14,7 @@ export function Authenticated() {
   const data = useContext(CarWashContext);
 
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route

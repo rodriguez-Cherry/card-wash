@@ -2,21 +2,24 @@ import { useContext } from "react";
 import { Link } from "react-router";
 import { CarWashContext } from "../contex/Context";
 export function HeroSection() {
+  const { sessionEstado } = useContext(CarWashContext);
 
- const { sessionEstado } = useContext(CarWashContext);
-
- const reservarEnLineaRuta = sessionEstado === "autenticado" ? "/home" : "/login"
-
+  const reservarEnLineaRuta =
+    sessionEstado === "autenticado" ? "/home" : "/login";
 
   return (
-    <section class="hero-bg text-white py-20 md:py-32">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+
+      className="text-white py-20 md:py-32"
+    >
+      <div       style={{ backgroundImage: `url('../assets/imgs/pantalla-inicio.jpg')` }} class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="md:w-2/3 lg:w-1/2">
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             Cuidado profesional del automóvil que brilla
           </h1>
           <p class="text-lg md:text-xl mb-8">
-            Experimente lo último en limpieza de automóviles con nuestros paquetes de lavado premium y servicios de detallado.
+            Experimente lo último en limpieza de automóviles con nuestros
+            paquetes de lavado premium y servicios de detallado.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <Link

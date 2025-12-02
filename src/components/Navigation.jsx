@@ -1,5 +1,5 @@
 // import { useContext } from "react";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 // import { CarWashContext } from "../contex/Context";
 
 export function Navigation() {
@@ -20,38 +20,13 @@ export function Navigation() {
         <div class="flex justify-between h-16">
           <div class="flex items-center">
             <a href="#" class="flex-shrink-0 flex items-center">
-              <i data-feather="droplet" class="h-8 w-8 text-blue-500"></i>
+              {/* <i data-feather="droplet" class="h-8 w-8 text-blue-500"></i> */}
               <span class="ml-2 text-xl font-bold text-gray-900">
                 Brillo y resplandor
               </span>
             </a>
           </div>
           <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-            {/* <a
-              href="#"
-              class="text-blue-600 border-b-2 border-blue-500 px-3 py-2 text-sm font-medium"
-            >
-              Inicio
-            </a>
-            <a
-              href="#services"
-              class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
-            >
-              Servicios
-            </a>
-            <a
-              href="#pricing"
-              class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
-            >
-              Precios
-            </a>
-
-            <a
-              href="#contact"
-              class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
-            >
-              Contacto
-            </a> */}
             <Link
               to="/login"
               class="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
@@ -64,7 +39,7 @@ export function Navigation() {
               type="button"
               class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
             >
-              <i data-feather="menu" class="h-6 w-6"></i>
+              {/* <i data-feather="menu" class="h-6 w-6"></i> */}
             </button>
           </div>
         </div>
@@ -81,31 +56,6 @@ export function Navigation() {
         x-transition:leave-end="opacity-0 scale-95"
       >
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-          <a
-            href="#"
-            class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50"
-          >
-            Inicio
-          </a>
-          <a
-            href="#services"
-            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-          >
-            Servicios
-          </a>
-          <a
-            href="#pricing"
-            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-          >
-            Precios
-          </a>
-
-          <a
-            href="#contact"
-            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-          >
-            Contacto
-          </a>
           <Link
             to="/login"
             class="block w-full px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700 text-center"
