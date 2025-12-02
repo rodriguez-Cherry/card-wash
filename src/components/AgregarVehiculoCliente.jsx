@@ -26,7 +26,7 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
 
   const opcionesSelect = clientes?.map((cliente) => ({
     value: cliente.id,
-    label: cliente.nombre,
+    label: cliente.id?.slice(0,6) + " - "+ cliente.nombre + " " +cliente.apellido,
   }));
 
   async function guardarVehiculo() {
@@ -55,7 +55,7 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
 
   return (
     <div className="w-full flex flex-col gap-3">
-      <h2 className="text-lg font-semibold">Agregue su vehiculo fff 3</h2>
+      <h2 className="text-lg font-semibold">Agregue su vehiculo</h2>
       <label className="font-semibold">Marca</label>
       <input
         name="marca"

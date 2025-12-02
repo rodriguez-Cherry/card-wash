@@ -53,7 +53,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
 
   const clientesNoRegistrados = clientes?.map((cliente) => ({
     value: cliente?.id,
-    label: cliente?.nombre,
+    label: cliente.id?.slice(0,6) + " - "+ cliente.nombre + " " +cliente.apellido,
   }));
   const carrosDelUserSeleccionado = carros?.map((carro) => ({
     value: carro?.id,

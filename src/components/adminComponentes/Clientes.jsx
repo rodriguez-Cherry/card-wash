@@ -161,7 +161,7 @@ export function Clientes() {
           key={usuario.id}
           className="border-b hover:bg-gray-50 transition"
         >
-          <td className="px-6 py-4 font-medium">{usuario.nombre}</td>
+          <td className="px-6 py-4 font-medium">{usuario.nombre + " " + usuario.apellido}</td>
 
           <td className="px-6 py-4">
             <span

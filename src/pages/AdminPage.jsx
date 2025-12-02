@@ -8,6 +8,7 @@ import { Ordenes } from "../components/adminComponentes/Ordenes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKeyboard, faUserCircle, faCarTunnel, faSquareRootVariable, faDatabase } from "@fortawesome/free-solid-svg-icons";
 import { CarWashContext } from "../contex/Context";
+import { HistorialOrdenes } from "../components/adminComponentes/HistorialOrdenes";
 
 const componentes = {
   // Tablero: <Tablero />,
@@ -15,6 +16,8 @@ const componentes = {
   Vehiculos: <Vehiculos />,
   // Servicios: <Servicios />,
   Ordenes: <Ordenes />,
+  "Historial Ordenes": <HistorialOrdenes />
+
 };
   const options = [
     // {
@@ -41,6 +44,11 @@ const componentes = {
       id: 5,
       name: "Ordenes",
       icon: <FontAwesomeIcon icon={faDatabase} />,
+    },
+        {
+      id: 5,
+      name: "Historial Ordenes",
+      icon: <FontAwesomeIcon icon={faKeyboard} />,
     },
   ];
 
