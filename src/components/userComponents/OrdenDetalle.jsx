@@ -45,7 +45,7 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
       const payload = {
         id: info?.id,
         fecha: `${correctDate} ${hour}:00:00`,
-        estado: cambio,
+        estado: cambio?.toLocaleLowerCase(),
         user_id: info?.user_id,
         servicio_id: info?.servicio_id,
         carros_ids: info?.carros_ids,

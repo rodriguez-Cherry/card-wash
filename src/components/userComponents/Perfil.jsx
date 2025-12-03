@@ -32,9 +32,17 @@ export function Perfil() {
     actualisado
   );
 
+  // en realidad no se elimina se actualiza a estado inactivo en la base de datos y no aparece en la pantalla
   const eliminarVehiculo = async (carro) => {
+    const result = confirm("Esta seguro de eliminar este vehiculo ?");
+
+    if (!result) return null;
     try {
-      await axiosClient.post("/users/eliminar/" + carro.id);
+      const payload = {
+        ...carro,
+        estado: "inactivo",
+      };
+      await axiosClient.put("/users/update-car/" + carro.id, payload);
       setActualisado(!actualisado);
     } catch (error) {}
   };
@@ -108,8 +116,8 @@ export function Perfil() {
         </CardContent>
       </Card>
       {/* <Card> */}
-        {/* <CardHeader> */}
-          {/* <div className="flex justify-between gap-5">
+      {/* <CardHeader> */}
+      {/* <div className="flex justify-between gap-5">
             <h1 className="text-xl text-blue-900">Mis vehiculos</h1>
             <button
               className="border rounded p-1 bg-blue-600 text-white"
@@ -118,9 +126,9 @@ export function Perfil() {
               Agregar
             </button>
           </div> */}
-        {/* </CardHeader> */}
-        {/* <CardContent> */}
-          {/* <div>
+      {/* </CardHeader> */}
+      {/* <CardContent> */}
+      {/* <div>
             {data?.length === 0 && (
               <p className="text-zinc-400">
                 {" "}
@@ -170,79 +178,89 @@ export function Perfil() {
             )}
           </div> */}
 
-<div className="w-full bg-white rounded-xl shadow-md border border-neutral-200 p-6">
-  <div className="flex justify-between flex-wrap gap-3 mb-5">
-    <h1 className="text-xl font-semibold text-blue-900">Mis Vehículos</h1>
+      <div className="w-full bg-white rounded-xl shadow-md border border-neutral-200 p-6">
+        <div className="flex justify-between flex-wrap gap-3 mb-5">
+          <h1 className="text-xl font-semibold text-blue-900">Mis Vehículos</h1>
 
-    <button
-      className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
-      onClick={() => setOpenModal(true)}
-    >
-      Agregar
-    </button>
-  </div>
+          <button
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+            onClick={() => setOpenModal(true)}
+          >
+            Agregar
+          </button>
+        </div>
 
-  {/* Si no tiene vehículos */}
-  {data?.length === 0 && (
-    <p className="text-neutral-500 text-sm">
-      Por el momento no posee vehículos. Puede agregar un vehículo.
-    </p>
-  )}
+        {/* Si no tiene vehículos */}
+        {data?.length === 0 && (
+          <p className="text-neutral-500 text-sm">
+            Por el momento no posee vehículos. Puede agregar un vehículo.
+          </p>
+        )}
 
-  {/* Tabla */}
-  {data?.length > 0 && (
-    <div className="overflow-x-auto">
-      <table className="w-full text-left text-sm">
-        {/* Encabezado */}
-        <thead>
-          <tr className="bg-neutral-100 border-b border-neutral-300">
-            <th className="py-2 px-3 font-medium text-neutral-700">#</th>
-            <th className="py-2 px-3 font-medium text-neutral-700">Color</th>
-            <th className="py-2 px-3 font-medium text-neutral-700">Marca</th>
-            <th className="py-2 px-3 font-medium text-neutral-700">Modelo</th>
-            <th className="py-2 px-3 font-medium text-neutral-700">Año</th>
-            <th className="py-2 px-3 font-medium text-neutral-700">Acciones</th>
-          </tr>
-        </thead>
+        {/* Tabla */}
+        {data?.length > 0 && (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              {/* Encabezado */}
+              <thead>
+                <tr className="bg-neutral-100 border-b border-neutral-300">
+                  <th className="py-2 px-3 font-medium text-neutral-700">#</th>
+                  <th className="py-2 px-3 font-medium text-neutral-700">
+                    Color
+                  </th>
+                  <th className="py-2 px-3 font-medium text-neutral-700">
+                    Marca
+                  </th>
+                  <th className="py-2 px-3 font-medium text-neutral-700">
+                    Modelo
+                  </th>
+                  <th className="py-2 px-3 font-medium text-neutral-700">
+                    Año
+                  </th>
+                  <th className="py-2 px-3 font-medium text-neutral-700">
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
 
-        {/* Filas */}
-        <tbody>
-          {data.map((carro, index) => (
-            <tr
-              key={carro.id}
-              className="border-b border-neutral-200 hover:bg-neutral-50 transition"
-            >
-              <td className="py-3 px-3">{index + 1}</td>
-              <td className="py-3 px-3">{carro.color}</td>
-              <td className="py-3 px-3">{carro.marca}</td>
-              <td className="py-3 px-3">{carro.modelo}</td>
-              <td className="py-3 px-3">{carro.año}</td>
+              {/* Filas */}
+              <tbody>
+                {data.map((carro, index) => (
+                  <tr
+                    key={carro.id}
+                    className="border-b border-neutral-200 hover:bg-neutral-50 transition"
+                  >
+                    <td className="py-3 px-3">{index + 1}</td>
+                    <td className="py-3 px-3">{carro.color}</td>
+                    <td className="py-3 px-3">{carro.marca}</td>
+                    <td className="py-3 px-3">{carro.modelo}</td>
+                    <td className="py-3 px-3">{carro.año}</td>
 
-              {/* Acciones */}
-              <td className="py-3 px-3 flex gap-3 flex-wrap">
-                <button
-                  onClick={() => editarCarro(carro)}
-                  className="px-3 py-1 rounded-lg bg-blue-200 text-blue-800 hover:bg-blue-300 transition"
-                >
-                  Editar
-                </button>
+                    {/* Acciones */}
+                    <td className="py-3 px-3 flex gap-3 flex-wrap">
+                      <button
+                        onClick={() => editarCarro(carro)}
+                        className="px-3 py-1 rounded-lg bg-blue-200 text-blue-800 hover:bg-blue-300 transition"
+                      >
+                        Editar
+                      </button>
 
-                <button
-                  onClick={() => eliminarVehiculo(carro)}
-                  className="px-3 py-1 rounded-lg bg-red-200 text-red-800 hover:bg-red-300 transition"
-                >
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )}
-</div>
+                      <button
+                        onClick={() => eliminarVehiculo(carro)}
+                        className="px-3 py-1 rounded-lg bg-red-200 text-red-800 hover:bg-red-300 transition"
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
 
-        {/* </CardContent> */}
+      {/* </CardContent> */}
       {/* </Card> */}
     </div>
   );

@@ -28,6 +28,7 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
     try {
       const { data } = await axiosClient.post("/users/add-car", {
         ...carInfo,
+        estado: "activo",
         user_id: userData.id,
       });
       setActualisado(prev => !prev)

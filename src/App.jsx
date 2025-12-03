@@ -20,6 +20,7 @@ export function App() {
 
   const [selectedHome, setSelectedHome] = useState("Perfil");
     const [selectedAdmin, setSelectedAdmin] = useState("Clientes");
+      const [selectedCajero, setSelectedCajero] = useState("Ordenes");
 
 
   useEffect(() => {
@@ -48,7 +49,9 @@ export function App() {
     setSelectedHome,
     selectedHome,
     selectedAdmin,
-    setSelectedAdmin
+    setSelectedAdmin,
+    selectedCajero,
+    setSelectedCajero
   };
 
   return (

@@ -34,6 +34,7 @@ export function EditarVehiculo({
     try {
       const { data } = await axiosClient.put("/users/update-car/" + carInfo.id, {
         ...carInfo,
+        estado:"activo",
         user_id: userData.id,
       });
       setActualisado();

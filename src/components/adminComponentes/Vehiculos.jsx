@@ -16,12 +16,18 @@ export function Vehiculos() {
 
   const [openModal, setOpenModal] = useState(false);
 
+   // en realidad no se elimina se actualiza y no aparece en la pantalla
   const eliminarVehiculo = async (carro) => {
     let result = window.confirm("Estas seguro de eliminar este carro ?");
     if (!result) return null;
 
     try {
-      await axiosClient.delete("/admin/eliminar-carro/" + carro.id);
+
+      const payload = {
+        ...carro,
+        estado: "inactivo"
+      }
+      await axiosClient.put("/users/update-car/" + carro.id, payload);
       toast("Carro eliminado!");
       setActualizadoS((prev) => !prev);
     } catch (error) {

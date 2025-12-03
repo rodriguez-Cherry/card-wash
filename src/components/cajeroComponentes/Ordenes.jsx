@@ -23,11 +23,16 @@ export function Ordenes() {
     setOpen(true);
   };
 
-  const resultados = ordenes?.filter((orden) =>
+  // const resultados = ordenes?.filter((orden) =>
+  //   orden.nombre.toLowerCase().includes(search.toLowerCase())
+  // );
+
+    const ordenesActivas = ordenes?.filter((orden) =>
+    ["pendiente", "en proceso"].includes(orden.estado.toLowerCase())
+  );
+  const resultados = ordenesActivas?.filter((orden) =>
     orden.nombre.toLowerCase().includes(search.toLowerCase())
   );
-
-  console.log(resultados);
   return (
     // <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
     //   {open && (

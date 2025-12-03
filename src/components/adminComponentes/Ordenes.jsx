@@ -35,7 +35,7 @@ export function Ordenes() {
       const payload = {
         id: orden?.id,
         fecha: `${correctDate} ${hour}:00:00`,
-        estado: "Cancelado",
+        estado: "cancelado",
         user_id: orden?.user_id,
         servicio_id: orden?.servicio_id,
         carros_ids: orden?.carros_ids,

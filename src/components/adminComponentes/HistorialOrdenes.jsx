@@ -19,35 +19,16 @@ export function HistorialOrdenes() {
   const [openModal, setOpenModal] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const cancelarOrden = async (orden) => {
-    let result = window.confirm("Estas seguro de cancelar esta orden ?");
+  const eliminarOrden = async (orden) => {
+    let result = window.confirm("Estas seguro de eliminar esta orden ?");
     if (!result) return null;
 
     try {
-      const hour = new Date(orden?.fecha).getHours();
-
-      const date = new Intl.DateTimeFormat("en-US")
-        .format(new Date(orden?.fecha))
-        ?.split("T")[0];
-
-      const splitDate = date.replaceAll("/", "-").split("-");
-      const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
-      const payload = {
-        id: orden?.id,
-        fecha: `${correctDate} ${hour}:00:00`,
-        estado: "Cancelado",
-        user_id: orden?.user_id,
-        servicio_id: orden?.servicio_id,
-        carros_ids: orden?.carros_ids,
-      };
-
-      await axiosClient.put("/admin/update-ordenes", payload);
-
-      // await axiosClient.delete("/admin/eliminar-cita/" + orden.id);
-      toast("Orden cancelada!");
+      await axiosClient.delete("/admin/eliminar-cita/" + orden.id);
+      toast("Orden eliminada!");
       setActualizado((prev) => !prev);
     } catch (error) {
-      toast("Error al cancelar la orden");
+      toast("Error al eliminar la orden");
     }
   };
 
@@ -56,14 +37,13 @@ export function HistorialOrdenes() {
     setOpen(true);
   };
 
-    const ordenesCanceladas = ordenes?.filter((orden) =>
-     ["cancelado", 'completado'].includes(orden.estado.toLowerCase())
+  const ordenesCanceladas = ordenes?.filter((orden) =>
+    ["cancelado", "completado"].includes(orden.estado.toLowerCase())
   );
   const resultados = ordenesCanceladas?.filter((orden) =>
-    orden.nombre.toLowerCase().includes(search.toLowerCase()) 
+    orden.nombre.toLowerCase().includes(search.toLowerCase())
   );
 
-  console.log(resultados);
   return (
     <div className="relative bg-white shadow-md rounded-lg p-4 overflow-x-auto">
       {openModal && (
@@ -83,7 +63,9 @@ export function HistorialOrdenes() {
 
       {/* HEADER */}
       <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4">
-        <h1 className="font-semibold text-xl text-heading ms-2">Historial Órdenes</h1>
+        <h1 className="font-semibold text-xl text-heading ms-2">
+          Historial Órdenes
+        </h1>
 
         <div className="flex w-full sm:w-auto gap-2">
           <input
@@ -157,10 +139,10 @@ export function HistorialOrdenes() {
               </td>
               <td className="px-6 py-4 flex gap-3 items-center">
                 <button
-                  onClick={() => cancelarOrden(orden)}
+                  onClick={() => eliminarOrden(orden)}
                   className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-red-700 transition"
                 >
-                  Cancelar
+                  Eliminar
                 </button>
 
                 <button

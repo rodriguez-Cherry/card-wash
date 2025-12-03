@@ -67,7 +67,6 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
 
  const {setSelectedAdmin } =  useContext(CarWashContext)
 
-  console.log()
 
   const onResetValues = () => {
     setOpenModal(false);
