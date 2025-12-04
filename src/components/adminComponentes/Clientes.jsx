@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
-import { AgregarCliente } from "../AgregarCliente";
+import { AgregarCliente } from "./AgregarCliente";
 import { axiosClient } from "../../api/ApiCliente";
 import { toast } from "sonner";
 

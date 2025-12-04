@@ -10,7 +10,7 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
   const [carrosPorOrden, setCarrosPorOrden] = useState([]);
   const [cambio, setCambio] = useState("");
 
-  const { userData } = useContext(CarWashContext);
+  const { userData, selectedCajero } = useContext(CarWashContext);
 
   useEffect(() => {
     async function getCarros() {
@@ -69,10 +69,10 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
         <p className="text-gray-600 text-base font-semibold">
           Tiempo estimado:
           <span className="font-medium text-gray-800 ml-1">
-            {info?.tiempo_estimado}
+            {info?.tiempo_estimado} minutos
           </span>
         </p>
-                <p className="text-gray-600 text-base font-semibold">
+        <p className="text-gray-600 text-base font-semibold">
           Telefono:
           <span className="font-medium text-gray-800 ml-1">
             {info?.telefono}
@@ -109,7 +109,7 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
           </div>
         </div>
 
-        {userData?.rol === "cajero" && (
+        {userData?.rol === "cajero" && selectedCajero === "Ordenes" && (
           <div className="text-gray-800 font-semibold p-3">
             <h1>Cambiar estado de la orden </h1>
             <div className="mt-2">

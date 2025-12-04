@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
-import { AgendarCitaCliente } from "../AgendarCitaCliente";
+import { AgendarCitaCliente } from "./AgendarCitaCliente";
 import { axiosClient } from "../../api/ApiCliente";
 import { OrdenDetalle } from "../userComponents/OrdenDetalle";
 import { toast } from "sonner";

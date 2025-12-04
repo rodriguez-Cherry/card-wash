@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { axiosClient } from "../api/ApiCliente";
+import { axiosClient } from "../../api/ApiCliente";
 import { toast } from "sonner";
 import Select from "react-select";
-import { useData } from "../util/useData";
+import { useData } from "../../util/useData";
 
 export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
   const [carInfo, setCarInfo] = useState({

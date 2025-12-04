@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router";
 import { useState } from "react";
-import { axiosClient } from "../api/ApiCliente";
+import { axiosClient } from "../../api/ApiCliente";
 import { useContext } from "react";
-import { CarWashContext } from "../contex/Context";
+import { CarWashContext } from "../../contex/Context";
 import { toast } from "sonner";
 
 const roles = {

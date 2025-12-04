@@ -19,9 +19,8 @@ export function App() {
   });
 
   const [selectedHome, setSelectedHome] = useState("Perfil");
-    const [selectedAdmin, setSelectedAdmin] = useState("Clientes");
-      const [selectedCajero, setSelectedCajero] = useState("Ordenes");
-
+  const [selectedAdmin, setSelectedAdmin] = useState("Clientes");
+  const [selectedCajero, setSelectedCajero] = useState("Ordenes");
 
   useEffect(() => {
     async function checkAuth() {
@@ -51,11 +50,11 @@ export function App() {
     selectedAdmin,
     setSelectedAdmin,
     selectedCajero,
-    setSelectedCajero
+    setSelectedCajero,
   };
 
   return (
-    <div style={{ height:"100vh"}}>
+    <div style={{ height: "100vh" }}>
       <CarWashContext.Provider value={{ ...contexValues }}>
         <Authenticated />
       </CarWashContext.Provider>

@@ -1,10 +1,9 @@
-import { axiosClient } from "../api/ApiCliente";
-import { useNavigate } from "react-router";
+import { axiosClient } from "../../api/ApiCliente";
 import { useContext, useEffect, useState } from "react";
-import { useData } from "../util/useData";
+import { useData } from "../../util/useData";
 import Select from "react-select";
 import { toast } from "sonner";
-import { CarWashContext } from "../contex/Context";
+import { CarWashContext } from "../../contex/Context";
 
 const horasPermitidas = [
   {

@@ -119,11 +119,16 @@
   }
 }
 
-
-
-
 [role="alertdialog"] {
-
   display: grid;
   place-items: center;
+}
+
+.background-image {
+  background-image: url("./assets//imgs//pantalla-inicio.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 10%;
+  max-width: max-content;
+  /* width: fit-content; */
 }

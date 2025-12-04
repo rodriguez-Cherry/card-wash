@@ -2,14 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useData } from "../../util/useData";
 import { CarWashContext } from "../../contex/Context";
 import { Badge } from "@/components/ui/badge";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

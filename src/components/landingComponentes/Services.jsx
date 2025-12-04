@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router";
-import { useData } from "../util/useData";
+import { useData } from "../../util/useData";
 
-import imagen1 from "../assets/imgs/1.jpg";
-import imagen2 from "../assets/imgs/2.jpg";
-import imagen3 from "../assets/imgs/3.jpg";
-import imagen4 from "../assets/imgs/4.jpg";
-import imagen5 from "../assets/imgs/5.jpg";
-import imagen6 from "../assets/imgs/6.jpg";
+import imagen1 from "../../assets/imgs/1.jpg";
+import imagen2 from "../../assets/imgs/2.jpg";
+import imagen3 from "../../assets/imgs/3.jpg";
+import imagen4 from "../../assets/imgs/4.jpg";
+import imagen5 from "../../assets/imgs/5.jpg";
+import imagen6 from "../../assets/imgs/6.jpg";
 
 const imagenesMap = {
   1: imagen1,
@@ -128,7 +128,7 @@ const ServicioCaja = ({ tipo, descripcion, index }) => {
         <p class="text-gray-600 mb-4">{descripcion}</p>
         <a
           onClick={() => navigate("/home")}
-          class="text-blue-500 font-semibold hover:text-blue-700 flex items-center"
+          class="text-blue-500 font-semibold hover:text-blue-700 flex items-center cursor-pointer"
         >
           Reserva ahora <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
         </a>

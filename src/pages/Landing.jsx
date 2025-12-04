@@ -1,7 +1,7 @@
-import { Navigation } from "../components/Navigation";
-import { HeroSection } from "../components/HeroSection";
-import { Services } from "../components/Services";
-import { Footer } from "../components/Footer";
+import { Navigation } from "../components/landingComponentes/Navigation";
+import { HeroSection } from "../components/landingComponentes/HeroSection";
+import { Services } from "../components/landingComponentes/Services";
+import { Footer } from "../components/landingComponentes/Footer";
 
 export function Landing() {
   return (

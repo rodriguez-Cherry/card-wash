@@ -16,9 +16,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
-import { AgregarVehiculo } from "../AgregarVehiculo";
-import { axiosClient } from "../../api/ApiCliente";
-import { EditarVehiculo } from "../EditarVehiculo";
+import { AgregarVehiculo } from "./AgregarVehiculo";
+import { axiosClient } from "../../api/ApiCliente"
+import { EditarVehiculo } from "./EditarVehiculo";
 
 export function Perfil() {
   const { userData } = useContext(CarWashContext);
@@ -26,6 +26,7 @@ export function Perfil() {
   const [carroSeleccionado, setCarroSeleccionado] = useState(false);
   const [openModalEditar, setOpenModalEditar] = useState(false);
   const [actualisado, setActualisado] = useState(false);
+  // conseguir autos por del usuario
   const { isLoading, data } = useData(
     "/users/car/" + userData.id,
     "get",
@@ -53,6 +54,8 @@ export function Perfil() {
   };
   return (
     <div className="flex flex-col gap-4 w-full">
+
+    {/* agregar vehiculo */}
       {openModal && (
         <Modal open={openModal} setOpen={setOpenModal}>
           <AgregarVehiculo
@@ -62,6 +65,8 @@ export function Perfil() {
           />
         </Modal>
       )}
+
+      {/* editar vehiculo */}
       {openModalEditar && (
         <Modal open={openModalEditar} setOpen={setOpenModalEditar}>
           <EditarVehiculo

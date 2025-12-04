@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { axiosClient } from "../api/ApiCliente";
-import { CarWashContext } from "../contex/Context";
+import { axiosClient } from "../../api/ApiCliente";
+import { CarWashContext } from "../../contex/Context";
 import { toast } from "sonner";
 
 export function AgregarVehiculo({ setOpenModal, setActualisado }) {

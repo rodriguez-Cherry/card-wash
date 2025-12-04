@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { axiosClient } from "../api/ApiCliente";
-import { CarWashContext } from "../contex/Context";
+import { axiosClient } from "../../api/ApiCliente";
+import { CarWashContext } from "../../contex/Context";
 import { toast } from "sonner";
 
 export function EditarVehiculo({
@@ -32,12 +32,12 @@ export function EditarVehiculo({
       return toast("Por favor llenar todos los campos");
 
     try {
-      const { data } = await axiosClient.put("/users/update-car/" + carInfo.id, {
+      const { data } = await axiosClient.put("/users/actualizar-carro/" + carInfo.id, {
         ...carInfo,
         estado:"activo",
         user_id: userData.id,
       });
-      setActualisado();
+      setActualisado(prev => !prev);
       setOpenModal(false);
     } catch (error) {
       console.log(error);

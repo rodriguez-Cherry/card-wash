@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router";
-import { axiosClient } from "../api/ApiCliente";
-import { CarWashContext } from "../contex/Context";
+import { axiosClient } from "../../api/ApiCliente";
+import { CarWashContext } from "../../contex/Context";
 
 export function Signup() {
   const { setUserAccess } = useContext(CarWashContext);

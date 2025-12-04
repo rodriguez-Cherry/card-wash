@@ -1,10 +1,9 @@
 import { Tooltip } from "@/components/ui/tooltip";
 import { useData } from "../../util/useData";
-import { Loading } from "../Loading";
 import { useContext, useState } from "react";
 import { CarWashContext } from "../../contex/Context";
 import { Modal } from "../Modal";
-import { AgendarCita } from "../AgendarCita";
+import { AgendarCita } from "./AgendarCita";
 
 import imagen1 from "../../assets/imgs/1.jpg";
 import imagen2 from "../../assets/imgs/2.jpg";
@@ -154,8 +153,6 @@ export function Servicios() {
             />
           </Modal>
         )}
-
-        {isLoading && <Loading />}
 
         {servicios?.map((servicio, index) => (
           <Servicio

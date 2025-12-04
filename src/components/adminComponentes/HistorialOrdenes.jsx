@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
-import { AgendarCitaCliente } from "../AgendarCitaCliente";
+// import { AgendarCitaCliente } from "./AgendarCitaCliente";
 import { axiosClient } from "../../api/ApiCliente";
 import { OrdenDetalle } from "../userComponents/OrdenDetalle";
 import { toast } from "sonner";
@@ -46,14 +46,14 @@ export function HistorialOrdenes() {
 
   return (
     <div className="relative bg-white shadow-md rounded-lg p-4 overflow-x-auto">
-      {openModal && (
+      {/* {openModal && (
         <Modal setOpen={setOpenModal} open={openModal}>
           <AgendarCitaCliente
             setOpenModal={setOpenModal}
             setActualizado={setActualizado}
           />
         </Modal>
-      )}
+      )} */}
 
       {open && (
         <Modal setOpen={setOpen} open={open}>
@@ -77,12 +77,12 @@ export function HistorialOrdenes() {
             placeholder="Buscar…"
           />
 
-          <button
+          {/* <button
             onClick={() => setOpenModal(true)}
             className=" bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow-sm hover:bg-brand-strong "
           >
             Agregar
-          </button>
+          </button> */}
         </div>
       </div>
 

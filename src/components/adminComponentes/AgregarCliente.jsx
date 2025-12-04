@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { useState } from "react";
-import { axiosClient } from "../api/ApiCliente";
+import { axiosClient } from "../../api/ApiCliente";
 
 export function AgregarCliente({ setOpenModal, setActualizado }) {
   const [userInfo, setUserInfo] = useState({

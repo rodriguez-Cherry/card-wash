@@ -3,7 +3,7 @@ import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
 import { axiosClient } from "../../api/ApiCliente";
 import { toast } from "sonner";
-import { AgregarVehiculoCliente } from "../AgregarVehiculoCliente";
+import { AgregarVehiculoCliente } from "./AgregarVehiculoCliente";
 
 export function Vehiculos() {
   const [actualizadoS, setActualizadoS] = useState(false);
