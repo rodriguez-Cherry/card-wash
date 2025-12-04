@@ -22,7 +22,7 @@ export function Navigation() {
             <a href="#" class="flex-shrink-0 flex items-center">
               {/* <i data-feather="droplet" class="h-8 w-8 text-blue-500"></i> */}
               <span class="ml-2 text-xl font-bold text-gray-900">
-                Brillo y resplandor
+                Car Wash
               </span>
             </a>
           </div>

@@ -125,10 +125,9 @@
 }
 
 .background-image {
-  background-image: url("./assets//imgs//pantalla-inicio.jpg");
+  background-image: url("./assets/imgs/pantalla-inicio.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 10%;
-  max-width: max-content;
+  background-position: 0%;
   /* width: fit-content; */
 }
