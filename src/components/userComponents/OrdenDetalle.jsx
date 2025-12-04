@@ -72,6 +72,12 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
             {info?.tiempo_estimado}
           </span>
         </p>
+                <p className="text-gray-600 text-base font-semibold">
+          Telefono:
+          <span className="font-medium text-gray-800 ml-1">
+            {info?.telefono}
+          </span>
+        </p>
 
         <p className="mt-3 text-gray-600 font-semibold">
           Estado:{" "}

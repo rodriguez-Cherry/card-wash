@@ -42,9 +42,7 @@ export function Ordenes() {
       };
 
       await axiosClient.put("/admin/update-ordenes", payload);
-
-      // await axiosClient.delete("/admin/eliminar-cita/" + orden.id);
-      toast("Orden cancelada!");
+     toast("Orden cancelada!");
       setActualizado((prev) => !prev);
     } catch (error) {
       toast("Error al cancelar la orden");
@@ -63,7 +61,6 @@ export function Ordenes() {
     orden.nombre.toLowerCase().includes(search.toLowerCase())
   );
 
-  console.log(resultados);
   return (
     // <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
     //   {openModal && (

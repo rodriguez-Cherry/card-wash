@@ -13,7 +13,10 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
     clienteId: "",
   });
 
-  const { data: clientes, isLoading } = useData("/admin/clientes-no-registrados", "get");
+  const { data: clientes, isLoading } = useData(
+    "/admin/clientes-no-registrados",
+    "get"
+  );
 
   const conseguirValores = (e) => {
     const { target } = e;
@@ -26,7 +29,8 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
 
   const opcionesSelect = clientes?.map((cliente) => ({
     value: cliente.id,
-    label: cliente.id?.slice(0,6) + " - "+ cliente.nombre + " " +cliente.apellido,
+    label:
+      cliente.id?.slice(0, 6) + " - " + cliente.nombre + " " + cliente.apellido,
   }));
 
   async function guardarVehiculo() {
@@ -52,6 +56,10 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
       toast("No de pudo agregar el carro");
     }
   }
+
+  const clienteSeleccionado = clientes?.find(
+    (cliente) => cliente.id === carInfo.clienteId
+  );
 
   return (
     <div className="w-full flex flex-col gap-3">
@@ -96,6 +104,11 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
         }}
         options={opcionesSelect}
       />
+
+      <div className="flex gap-2">
+        <h2 className="font-semibold">Telefono: </h2>
+        <p>{clienteSeleccionado?.telefono}</p>
+      </div>
 
       <button
         className="p-1 border rounded bg-blue-600 text-white"

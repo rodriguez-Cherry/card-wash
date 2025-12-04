@@ -53,7 +53,8 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
 
   const clientesNoRegistrados = clientes?.map((cliente) => ({
     value: cliente?.id,
-    label: cliente.id?.slice(0,6) + " - "+ cliente.nombre + " " +cliente.apellido,
+    label:
+      cliente.id?.slice(0, 6) + " - " + cliente.nombre + " " + cliente.apellido,
   }));
   const carrosDelUserSeleccionado = carros?.map((carro) => ({
     value: carro?.id,
@@ -64,9 +65,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
     label: servicio?.tipo + " " + servicio?.precio,
   }));
 
-
- const {setSelectedAdmin } =  useContext(CarWashContext)
-
+  const { setSelectedAdmin } = useContext(CarWashContext);
 
   const onResetValues = () => {
     setOpenModal(false);
@@ -111,6 +110,10 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   const onCancel = () => {
     onResetValues();
   };
+
+  const clienteSeleccionado = clientes?.find(
+    (cliente) => cliente?.id === clienteIdSeleccionado
+  );
   return (
     <div>
       <h1 className="text-lg font-semibold mb-3">Agendar cita</h1>
@@ -128,13 +131,26 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
       )}
       {clienteIdSeleccionado && !carros?.length && (
         <div className="font-semibold text-sm mt-4">
-        <p>  Este cliente no posee vehiculos por favor agregue vehiculo para este
-          cliente en la seccion de vehiculos</p>
-          <button className="border rounded mt-2 p-2" onClick={() => setSelectedAdmin('Vehiculos')}>Ir a Vehiculos</button>
+          <p>
+            {" "}
+            Este cliente no posee vehiculos por favor agregue vehiculo para este
+            cliente en la seccion de vehiculos
+          </p>
+          <button
+            className="border rounded mt-2 p-2"
+            onClick={() => setSelectedAdmin("Vehiculos")}
+          >
+            Ir a Vehiculos
+          </button>
         </div>
       )}
       {carros?.length > 0 && (
         <>
+          <div className="flex gap-2 mt-2">
+            <h2 className="font-semibold">Telefono: </h2>
+            <p>{clienteSeleccionado?.telefono}</p>
+          </div>
+
           <div className="flex flex-col gap-2">
             <label className="mt-4">Carros:</label>
             <Select

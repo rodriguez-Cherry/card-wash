@@ -16,17 +16,16 @@ export function Vehiculos() {
 
   const [openModal, setOpenModal] = useState(false);
 
-   // en realidad no se elimina se actualiza y no aparece en la pantalla
+  // en realidad no se elimina se actualiza y no aparece en la pantalla
   const eliminarVehiculo = async (carro) => {
     let result = window.confirm("Estas seguro de eliminar este carro ?");
     if (!result) return null;
 
     try {
-
       const payload = {
         ...carro,
-        estado: "inactivo"
-      }
+        estado: "inactivo",
+      };
       await axiosClient.put("/users/update-car/" + carro.id, payload);
       toast("Carro eliminado!");
       setActualizadoS((prev) => !prev);
@@ -157,6 +156,7 @@ export function Vehiculos() {
             <th className="px-6 py-3 font-semibold">Marca</th>
             <th className="px-6 py-3 font-semibold">Color</th>
             <th className="px-6 py-3 font-semibold">Pertenece a</th>
+            <th className="px-6 py-3 font-semibold">Telefono</th>
             <th className="px-6 py-3 font-semibold text-right">Acciones</th>
           </tr>
         </thead>
@@ -173,7 +173,7 @@ export function Vehiculos() {
               <td className="px-6 py-4">
                 {vehiculo.nombre + " " + vehiculo.apellido}
               </td>
-
+              <td className="px-6 py-4">{vehiculo.telefono}</td>
               <td className="px-6 py-4 text-right">
                 <button
                   onClick={() => eliminarVehiculo(vehiculo)}
