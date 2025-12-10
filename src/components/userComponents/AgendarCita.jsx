@@ -1,6 +1,5 @@
 import { axiosClient } from "../../api/ApiCliente";
-import { useNavigate } from "react-router";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useData } from "../../util/useData";
 import Select from "react-select";
 import { toast } from "sonner";
@@ -30,11 +29,11 @@ const horasMap = {
 
 export function AgendarCita({ servicio, setOpen, userId }) {
   const [date, setDate] = useState(null);
-  const [hour, setHour] = useState(8);
+  const [hour, setHour] = useState(null);
+  const [permitirCita, setPermitirCita] = useState(1);
   const [carrosSelect, setCarrosSelect] = useState([]);
 
   const { isLoading, data: carros } = useData("/users/car/" + userId, "get");
-  const { isLoadingOrdenes, data: ordenesF } = useData("/admin/ordenes", "get");
   const { setSelectedHome } = useContext(CarWashContext);
 
   const onAgendar = async () => {
@@ -50,7 +49,7 @@ export function AgendarCita({ servicio, setOpen, userId }) {
       fecha: `${date}`,
       // user_id: userId,
       hora_inicio: hour + "",
-      hora_fin: ( hour + 1 ) + "",
+      hora_fin: hour + 1 + "",
       estado: "pendiente",
       carro_placas: carrosSelect,
       servicio_id: servicio.servicio_id,
@@ -74,91 +73,37 @@ export function AgendarCita({ servicio, setOpen, userId }) {
     setCarrosSelect([]);
   };
 
-  // useEffect(() => {
-  //   const ordenes = [
-  //     {
-  //       id: "9449ebfd-ce4f-11f0-9a7a-c03eba484fce",
-  //       fecha: "2025-12-03T14:00:00.000Z",
-  //       estado: "pendiente",
-  //       user_id: "e9965bba-ccc6-11f0-b8da-c03eba484fce",
-  //       servicio_id: "f4fc059e-bcd8-11f0-8583-c03eba484fce",
-  //       carros_ids: "e87be5fa-cd36-11f0-9a7a-c03eba484fce",
-  //       tipo: "Lavado Rápido Estandar",
-  //       precio: 500,
-  //       tiempo_estimado: 60,
-  //     },
-  //     {
-  //       id: "9449ebfd-ce4f-11f0-9a7a-c03eba484fce",
-  //       fecha: "2025-12-03T14:00:00.000Z",
-  //       estado: "pendiente",
-  //       user_id: "e9965bba-ccc6-11f0-b8da-c03eba484fce",
-  //       servicio_id: "f4fc059e-bcd8-11f0-8583-c03eba484fce",
-  //       carros_ids: "e87be5fa-cd36-11f0-9a7a-c03eba484fce",
-  //       tipo: "Lavado Rápido Estandar",
-  //       precio: 500,
-  //       tiempo_estimado: 60,
-  //     },
-  //     {
-  //       id: "9449ebfd-ce4f-11f0-9a7a-c03eba484fce",
-  //       fecha: "2025-12-03T14:00:00.000Z",
-  //       estado: "pendiente",
-  //       user_id: "e9965bba-ccc6-11f0-b8da-c03eba484fce",
-  //       servicio_id: "f4fc059e-bcd8-11f0-8583-c03eba484fce",
-  //       carros_ids: "e87be5fa-cd36-11f0-9a7a-c03eba484fce",
-  //       tipo: "Lavado Rápido Estandar",
-  //       precio: 500,
-  //       tiempo_estimado: 60,
-  //     },
-  //     {
-  //       id: "9449ebfd-ce4f-11f0-9a7a-c03eba484fce",
-  //       fecha: "2025-12-03T14:00:00.000Z",
-  //       estado: "pendiente",
-  //       user_id: "e9965bba-ccc6-11f0-b8da-c03eba484fce",
-  //       servicio_id: "f4fc059e-bcd8-11f0-8583-c03eba484fce",
-  //       carros_ids: "e87be5fa-cd36-11f0-9a7a-c03eba484fce",
-  //       tipo: "Lavado Rápido Estandar",
-  //       precio: 500,
-  //       tiempo_estimado: 60,
-  //     },
-  //     {
-  //       id: "9449ebfd-ce4f-11f0-9a7a-c03eba484fce",
-  //       fecha: "2025-12-03T14:00:00.000Z",
-  //       estado: "pendiente",
-  //       user_id: "e9965bba-ccc6-11f0-b8da-c03eba484fce",
-  //       servicio_id: "f4fc059e-bcd8-11f0-8583-c03eba484fce",
-  //       carros_ids: "e87be5fa-cd36-11f0-9a7a-c03eba484fce",
-  //       tipo: "Lavado Rápido Estandar",
-  //       precio: 500,
-  //       tiempo_estimado: 60,
-  //     },
-  //     {
-  //       id: "9449ebfd-ce4f-11f0-9a7a-c03eba484fce",
-  //       fecha: "2025-12-03T14:00:00.000Z",
-  //       estado: "pendiente",
-  //       user_id: "e9965bba-ccc6-11f0-b8da-c03eba484fce",
-  //       servicio_id: "f4fc059e-bcd8-11f0-8583-c03eba484fce",
-  //       carros_ids: "e87be5fa-cd36-11f0-9a7a-c03eba484fce",
-  //       tipo: "Lavado Rápido Estandar",
-  //       precio: 500,
-  //       tiempo_estimado: 60,
-  //     },
-  //     {
-  //       id: "9449ebfd-ce4f-11f0-9a7a-c03eba484fce",
-  //       fecha: "2025-12-03T14:00:00.000Z",
-  //       estado: "pendiente",
-  //       user_id: "e9965bba-ccc6-11f0-b8da-c03eba484fce",
-  //       servicio_id: "f4fc059e-bcd8-11f0-8583-c03eba484fce",
-  //       carros_ids: "e87be5fa-cd36-11f0-9a7a-c03eba484fce",
-  //       tipo: "Lavado Rápido Estandar",
-  //       precio: 500,
-  //       tiempo_estimado: 60,
-  //     },
-  //   ];
+  useEffect(() => {
+    async function getHorasPermitidas() {
+      try {
+        const payload = {
+          fecha: date,
+          hora_inicio: hour + "",
+          hora_fin: hour + 1 + "",
+        };
 
-  //   const resultado = conseguirHorasPermitidas(ordenes);
-  //   console.log(resultado);
-  // }, []);
-  const navigate = useNavigate();
+        const { data } = await axiosClient.post(
+          "/users/horarios-disponibles",
+          payload
+        );
+        setPermitirCita(data?.canditad);
+      } catch (error) {
+        console.log("error");
+      }
+    }
+
+    if (hour && date) {
+      getHorasPermitidas();
+    }
+  }, [hour, date]);
+
+  const puedeAgendar = permitirCita === 0;
+  const elUsuarioHaSeleccionadoFecha = date && hour;
+
+  const estaDeshabilitado =
+    elUsuarioHaSeleccionadoFecha && permitirCita >= 3
+      ? carrosSelect?.length > 2
+      : carrosSelect?.length >= permitirCita;
   return (
     // <div>
     //   {isLoading && <div> Loading cars</div>}
@@ -312,6 +257,11 @@ export function AgendarCita({ servicio, setOpen, userId }) {
               <label className="font-semibold min-w-[80px] text-gray-700">
                 Vehículos:
               </label>
+              {permitirCita < 3 && elUsuarioHaSeleccionadoFecha && (
+                <div>
+                  <p>Puede agendar hasta {permitirCita} vehiculos</p>
+                </div>
+              )}
               <div className="w-full md:w-80">
                 <Select
                   isMulti
@@ -325,10 +275,21 @@ export function AgendarCita({ servicio, setOpen, userId }) {
                     value: c.placa,
                     label: `${c.marca} ${c.modelo}`,
                   }))}
-                  isDisabled={carrosSelect?.length > 2}
+                  isDisabled={estaDeshabilitado}
+                  isClearable
                 />
+                
               </div>
             </div>
+
+            {puedeAgendar && elUsuarioHaSeleccionadoFecha && (
+              <div>
+                <p>
+                  Lo lamento nuestros servicios no estan disponibles en esta
+                  fecha, seleccione otra fecha
+                </p>
+              </div>
+            )}
           </div>
 
           {/* BOTONES */}
