@@ -17,8 +17,9 @@ import {
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
 import { AgregarVehiculo } from "./AgregarVehiculo";
-import { axiosClient } from "../../api/ApiCliente"
+import { axiosClient } from "../../api/ApiCliente";
 import { EditarVehiculo } from "./EditarVehiculo";
+import { toast } from "sonner";
 
 export function Perfil() {
   const { userData } = useContext(CarWashContext);
@@ -39,13 +40,12 @@ export function Perfil() {
 
     if (!result) return null;
     try {
-      const payload = {
-        ...carro,
-        estado: "inactivo",
-      };
-      await axiosClient.put("/users/update-car/" + carro.id, payload);
+      await axiosClient.delete("/users/eliminar-carro/" + carro.placa);
       setActualisado(!actualisado);
-    } catch (error) {}
+      toast("Carro Eliminado!");
+    } catch (error) {
+      toast("el Carro no pudo ser eliminado!");
+    }
   };
 
   const editarCarro = (carro) => {
@@ -54,8 +54,7 @@ export function Perfil() {
   };
   return (
     <div className="flex flex-col gap-4 w-full">
-
-    {/* agregar vehiculo */}
+      {/* agregar vehiculo */}
       {openModal && (
         <Modal open={openModal} setOpen={setOpenModal}>
           <AgregarVehiculo
@@ -232,7 +231,7 @@ export function Perfil() {
               <tbody>
                 {data.map((carro, index) => (
                   <tr
-                    key={carro.id}
+                    key={carro.placa}
                     className="border-b border-neutral-200 hover:bg-neutral-50 transition"
                   >
                     <td className="py-3 px-3">{index + 1}</td>

@@ -38,34 +38,33 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
   const [orderSeleccionada, setOrdenSeleccionada] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const cancelarOrden = async (orden) => {
+  const eliminarOrden = async (orden) => {
     const result = confirm("Esta seguro de eliminar esta orden ?");
 
     if (!result) return null;
-    const hour = new Date(orden?.fecha).getHours();
+    // const hour = new Date(orden?.fecha).getHours();
 
-    const date = new Intl.DateTimeFormat("en-US")
-      .format(new Date(orden?.fecha))
-      ?.split("T")[0];
+    // const date = new Intl.DateTimeFormat("en-US")
+    //   .format(new Date(orden?.fecha))
+    //   ?.split("T")[0];
 
-    const splitDate = date.replaceAll("/", "-").split("-");
-    const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
-    const payload = {
-      id: orden?.id,
-      fecha: `${correctDate} ${hour}:00:00`,
-      estado: "cancelado",
-      user_id: orden?.user_id,
-      servicio_id: orden?.servicio_id,
-      carros_ids: orden?.carros_ids,
-    };
+    // const splitDate = date.replaceAll("/", "-").split("-");
+    // const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+    // const payload = {
+    //   id: orden?.id,
+    //   fecha: `${correctDate} ${hour}:00:00`,
+    //   estado: "cancelado",
+    //   user_id: orden?.user_id,
+    //   servicio_id: orden?.servicio_id,
+    //   carros_ids: orden?.carros_ids,
+    // };
 
     try {
-      await axiosClient.put("/admin/update-ordenes", payload);
+      await axiosClient.delete("/users/eliminar-cita/" + orden.cita_id);
       toast("Orden cancelada!");
       setEliminadoOrden((prev) => !prev);
     } catch (error) {
       toast("Error al cancelar la orden");
-      toast(error.response.data);
     }
   };
 
@@ -335,7 +334,7 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
           <tbody>
             {ordenesActivas?.map((orden, index) => (
               <tr
-                key={orden.id}
+                key={orden.servicio_id}
                 className="border-b border-neutral-200 hover:bg-neutral-50 transition"
               >
                 <td className="px-4 py-3 text-neutral-700">{index + 1}</td>
@@ -371,7 +370,7 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      cancelarOrden(orden);
+                      eliminarOrden(orden);
                     }}
                     className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition"
                   >

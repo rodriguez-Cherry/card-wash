@@ -8,10 +8,9 @@ export function EditarVehiculo({
   setActualisado,
   carroSeleccionado,
 }) {
-  console.log(carroSeleccionado);
   const { userData } = useContext(CarWashContext);
   const [carInfo, setCarInfo] = useState({
-    id: carroSeleccionado?.id,
+    placa: carroSeleccionado?.placa,
     modelo: carroSeleccionado?.modelo || "",
     marca: carroSeleccionado?.marca || "",
     año: carroSeleccionado?.año || "",
@@ -28,16 +27,24 @@ export function EditarVehiculo({
   };
 
   async function actualizarVehiculo() {
-    if (!carInfo.modelo || !carInfo.marca || !carInfo.año || !carInfo.color)
+    if (
+      !carInfo.placa ||
+      !carInfo.modelo ||
+      !carInfo.marca ||
+      !carInfo.año ||
+      !carInfo.color
+    )
       return toast("Por favor llenar todos los campos");
 
     try {
-      const { data } = await axiosClient.put("/users/actualizar-carro/" + carInfo.id, {
-        ...carInfo,
-        estado:"activo",
-        user_id: userData.id,
-      });
-      setActualisado(prev => !prev);
+      const { data } = await axiosClient.put(
+        "/users/actualizar-carro/" + carInfo.placa,
+        {
+          ...carInfo,
+          user_id: userData.id,
+        }
+      );
+      setActualisado((prev) => !prev);
       setOpenModal(false);
     } catch (error) {
       console.log(error);
@@ -47,6 +54,18 @@ export function EditarVehiculo({
   return (
     <div className="w-full flex flex-col gap-3">
       <h2 className="text-lg font-semibold">Agregue su vehiculo</h2>
+      <label className="font-semibold" id="placa">
+        Placa
+      </label>
+      <input
+        id="placa"
+        type="text"
+        name="placa"
+        value={carInfo?.placa}
+        onChange={conseguirValores}
+        required
+        className=" block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+      />
       <label className="font-semibold" id="marca">
         Marca
       </label>

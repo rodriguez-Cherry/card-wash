@@ -6,6 +6,7 @@ import { useData } from "../../util/useData";
 
 export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
   const [carInfo, setCarInfo] = useState({
+    placa: "",
     modelo: "",
     marca: "",
     año: "",
@@ -34,20 +35,19 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
   }));
 
   async function guardarVehiculo() {
-    if (!carInfo.modelo || !carInfo.marca || !carInfo.año || !carInfo.color)
+    if (
+      !carInfo.placa ||
+      !carInfo.modelo ||
+      !carInfo.marca ||
+      !carInfo.año ||
+      !carInfo.color
+    )
       return toast("Por favor llenar todos los campos");
 
     try {
       await axiosClient.post("/admin/add-car", {
         ...carInfo,
         user_id: carInfo.clienteId,
-      });
-      setCarInfo({
-        modelo: "",
-        marca: "",
-        año: "",
-        color: "",
-        clienteId: "",
       });
       setActualisado((prev) => !prev);
       setOpenModal(false);
@@ -64,6 +64,16 @@ export function AgregarVehiculoCliente({ setOpenModal, setActualisado }) {
   return (
     <div className="w-full flex flex-col gap-3">
       <h2 className="text-lg font-semibold">Agregue su vehiculo</h2>
+      <label className="font-semibold" id="placa">
+        Placa
+      </label>
+      <input
+        name="placa"
+        value={carInfo.placa}
+        onChange={conseguirValores}
+        required
+        className=" block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+      />
       <label className="font-semibold">Marca</label>
       <input
         name="marca"

@@ -28,7 +28,7 @@ export function Clientes() {
       toast("Error al eliminar el cliente");
     }
   };
-
+   //filtrar clientes
   const resultados = clientes?.filter((cliente) =>
     cliente?.nombre?.toLowerCase().includes(search?.toLowerCase())
   );

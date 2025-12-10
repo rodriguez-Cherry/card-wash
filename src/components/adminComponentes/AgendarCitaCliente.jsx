@@ -56,24 +56,24 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
       cliente.id?.slice(0, 6) + " - " + cliente.nombre + " " + cliente.apellido,
   }));
   const carrosDelUserSeleccionado = carros?.map((carro) => ({
-    value: carro?.id,
+    value: carro?.placa,
     label: carro?.marca + " " + carro?.modelo,
   }));
   const serviciosSeleccionado = servicios?.map((servicio) => ({
-    value: servicio?.id,
+    value: servicio?.servicio_id,
     label: servicio?.tipo + " " + servicio?.precio,
   }));
 
   const { setSelectedAdmin } = useContext(CarWashContext);
 
-  const onResetValues = () => {
-    setOpenModal(false);
-    setDate(null);
-    setHour(8);
-    setCarrosSelect([]);
-    setClienteIdSeleccionado("");
-    setServicioIdSeleccionado("");
-  };
+  // const onResetValues = () => {
+  //   setOpenModal(false);
+  //   setDate(null);
+  //   setHour(8);
+  //   setCarrosSelect([]);
+  //   setClienteIdSeleccionado("");
+  //   setServicioIdSeleccionado("");
+  // };
 
   const onAgendar = async () => {
     if (
@@ -84,24 +84,26 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
       !servicioIdSeleccionado
     )
       return toast("Por favor agrega los campos");
-
-    const newDate = new Date(`${date}, ${hour}:00:00`);
-
+    let horaFin = hour + 1;
     const payload = {
-      fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
+      // fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
+      fecha: `${date}`,
+      hora_inicio: hour + "",
+      hora_fin: horaFin + "",
+      estado: "pendiente",
       user_id: clienteIdSeleccionado,
-      carros_id: carrosSelect?.join("|"),
+      carro_placas: carrosSelect,
       servicio_id: servicioIdSeleccionado,
     };
     try {
       await axiosClient.post("/users/agendar", payload);
 
       setActualizado((prev) => !prev);
-      onResetValues();
+      // onResetValues();
       toast("La cita ha sido agendada!");
     } catch (error) {
-      onResetValues();
-      toast(error.response.data);
+      // onResetValues();
+      toast("La cita no pudo ser agendada!");
     }
     setOpenModal(false);
   };

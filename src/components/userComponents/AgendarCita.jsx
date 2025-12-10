@@ -47,20 +47,23 @@ export function AgendarCita({ servicio, setOpen, userId }) {
 
     const payload = {
       // fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
-      fecha: `${date} ${hour}:00:00`,
-      user_id: userId,
-      carros_id: carrosSelect.join("|"),
-      servicio_id: servicio.id,
+      fecha: `${date}`,
+      // user_id: userId,
+      hora_inicio: hour + "",
+      hora_fin: ( hour + 1 ) + "",
+      estado: "pendiente",
+      carro_placas: carrosSelect,
+      servicio_id: servicio.servicio_id,
     };
     try {
       await axiosClient.post("/users/agendar", payload);
       setOpen(false);
-      setDate(null);
-      setCarrosSelect([]);
+      // setDate(null);
+      // setCarrosSelect([]);
       toast("Su cita ha sido agendada!");
     } catch (error) {
-      setDate(null);
-      setCarrosSelect([]);
+      // setDate(null);
+      // setCarrosSelect([]);
       toast(error.response.data);
     }
   };
@@ -242,110 +245,110 @@ export function AgendarCita({ servicio, setOpen, userId }) {
     //     </div>
     //   )}
     // </div>
-<div className="w-full">
-  {isLoading && <div className="text-center py-6">Cargando vehículos...</div>}
+    <div className="w-full">
+      {isLoading && (
+        <div className="text-center py-6">Cargando vehículos...</div>
+      )}
 
-  {carros?.length === 0 && (
-    <div className="text-center p-6 bg-white rounded-xl shadow">
-      <p className="mt-4 text-gray-700 text-lg">
-        No posee vehículos por el momento. Diríjase a su perfil y agregue uno
-        para poder agendar su cita.
-      </p>
+      {carros?.length === 0 && (
+        <div className="text-center p-6 bg-white rounded-xl shadow">
+          <p className="mt-4 text-gray-700 text-lg">
+            No posee vehículos por el momento. Diríjase a su perfil y agregue
+            uno para poder agendar su cita.
+          </p>
 
-      <button
-        className="mt-5 bg-[#017BCA] hover:bg-[#0EA5E9] text-white font-semibold px-4 py-2 rounded-xl shadow transition"
-        onClick={() => {
-          setOpen(false);
-          setSelectedHome("Perfil");
-        }}
-      >
-        Ir a Perfil
-      </button>
-    </div>
-  )}
-
-  {carros?.length > 0 && (
-    <div className="w-full p-4">
-      <h1 className="font-semibold text-2xl text-center mb-4 text-[#017BCA]">
-        Agenda tu cita
-      </h1>
-
-      {/* CONTENEDOR DE FORMULARIO */}
-      <div className="flex flex-col gap-4 border rounded-xl bg-white shadow p-4">
-
-        {/* Fecha */}
-        <div className="flex flex-col md:flex-row gap-3 items-center">
-          <label className="font-semibold min-w-[80px] text-gray-700">
-            Fecha:
-          </label>
-          <input
-            className="border rounded-lg p-2 w-full md:w-auto focus:ring-2 focus:ring-[#38BDF8]"
-            type="date"
-            onChange={(e) => setDate(e.target.value)}
-          />
+          <button
+            className="mt-5 bg-[#017BCA] hover:bg-[#0EA5E9] text-white font-semibold px-4 py-2 rounded-xl shadow transition"
+            onClick={() => {
+              setOpen(false);
+              setSelectedHome("Perfil");
+            }}
+          >
+            Ir a Perfil
+          </button>
         </div>
+      )}
 
-        {/* Horas */}
-        <div className="flex flex-col md:flex-row gap-3 items-center">
-          <label className="font-semibold min-w-[80px] text-gray-700">
-            Horas:
-          </label>
-          <div className="w-full md:w-60">
-            <Select
-              onChange={(rangoHora) => {
-                setHour(rangoHora.value);
-              }}
-              options={horasPermitidas?.map((hora) => ({
-                value: horasMap[hora.hora],
-                label: hora.hora,
-              }))}
-            />
+      {carros?.length > 0 && (
+        <div className="w-full p-4">
+          <h1 className="font-semibold text-2xl text-center mb-4 text-[#017BCA]">
+            Agenda tu cita
+          </h1>
+
+          {/* CONTENEDOR DE FORMULARIO */}
+          <div className="flex flex-col gap-4 border rounded-xl bg-white shadow p-4">
+            {/* Fecha */}
+            <div className="flex flex-col md:flex-row gap-3 items-center">
+              <label className="font-semibold min-w-[80px] text-gray-700">
+                Fecha:
+              </label>
+              <input
+                className="border rounded-lg p-2 w-full md:w-auto focus:ring-2 focus:ring-[#38BDF8]"
+                type="date"
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+
+            {/* Horas */}
+            <div className="flex flex-col md:flex-row gap-3 items-center">
+              <label className="font-semibold min-w-[80px] text-gray-700">
+                Horas:
+              </label>
+              <div className="w-full md:w-60">
+                <Select
+                  onChange={(rangoHora) => {
+                    setHour(rangoHora.value);
+                  }}
+                  options={horasPermitidas?.map((hora) => ({
+                    value: horasMap[hora.hora],
+                    label: hora.hora,
+                  }))}
+                />
+              </div>
+            </div>
+
+            {/* Vehículos */}
+            <div className="flex flex-col md:flex-row gap-3 items-center">
+              <label className="font-semibold min-w-[80px] text-gray-700">
+                Vehículos:
+              </label>
+              <div className="w-full md:w-80">
+                <Select
+                  isMulti
+                  onChange={(carrosSelected) => {
+                    let carrosPlaca = carrosSelected.map(
+                      (selecionado) => selecionado.value
+                    );
+                    setCarrosSelect(carrosPlaca);
+                  }}
+                  options={carros?.map((c) => ({
+                    value: c.placa,
+                    label: `${c.marca} ${c.modelo}`,
+                  }))}
+                  isDisabled={carrosSelect?.length > 2}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* BOTONES */}
+          <div className="flex justify-end gap-3 mt-6">
+            <button
+              onClick={onAgendar}
+              className="px-5 py-2 bg-[#017BCA] hover:bg-[#0EA5E9] text-white font-semibold rounded-xl shadow transition"
+            >
+              Agendar
+            </button>
+
+            <button
+              onClick={onCancel}
+              className="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow transition"
+            >
+              Cancelar
+            </button>
           </div>
         </div>
-
-        {/* Vehículos */}
-        <div className="flex flex-col md:flex-row gap-3 items-center">
-          <label className="font-semibold min-w-[80px] text-gray-700">
-            Vehículos:
-          </label>
-          <div className="w-full md:w-80">
-            <Select
-              isMulti
-              onChange={(carrosSelected) => {
-                let carrosId = carrosSelected.map(
-                  (selecionado) => selecionado.value
-                );
-                setCarrosSelect(carrosId);
-              }}
-              options={carros?.map((c) => ({
-                value: c.id,
-                label: `${c.marca} ${c.modelo}`,
-              }))}
-              isDisabled={carrosSelect?.length > 2}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* BOTONES */}
-      <div className="flex justify-end gap-3 mt-6">
-        <button
-          onClick={onAgendar}
-          className="px-5 py-2 bg-[#017BCA] hover:bg-[#0EA5E9] text-white font-semibold rounded-xl shadow transition"
-        >
-          Agendar
-        </button>
-
-        <button
-          onClick={onCancel}
-          className="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow transition"
-        >
-          Cancelar
-        </button>
-      </div>
+      )}
     </div>
-  )}
-</div>
-
   );
 }
