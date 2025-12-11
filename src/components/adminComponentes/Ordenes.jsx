@@ -20,29 +20,21 @@ export function Ordenes() {
   const [open, setOpen] = useState(false);
 
   const cancelarOrden = async (orden) => {
-    let result = window.confirm("Estas seguro de cancelar esta orden ?");
-    if (!result) return null;
+    let result = window.prompt(
+      "Introducir razon de la cancelacion de esta orden ?"
+    );
+    if (!result) return toast("Debe de agregar una razon");
 
     try {
-      const hour = new Date(orden?.fecha).getHours();
-
-      const date = new Intl.DateTimeFormat("en-US")
-        .format(new Date(orden?.fecha))
-        ?.split("T")[0];
-
-      const splitDate = date.replaceAll("/", "-").split("-");
-      const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
       const payload = {
-        id: orden?.id,
-        fecha: `${correctDate} ${hour}:00:00`,
-        estado: "cancelado",
-        user_id: orden?.user_id,
-        servicio_id: orden?.servicio_id,
-        carros_ids: orden?.carros_ids,
+        razon: result,
       };
 
-      await axiosClient.put("/admin/update-ordenes", payload);
-     toast("Orden cancelada!");
+      await axiosClient.post(
+        "/admin/cancelar-cita/" + orden.cita_id,
+        payload
+      );
+      toast("Orden cancelada!");
       setActualizado((prev) => !prev);
     } catch (error) {
       toast("Error al cancelar la orden");
@@ -55,108 +47,13 @@ export function Ordenes() {
   };
 
   const ordenesActivas = ordenes?.filter((orden) =>
-    ["pendiente", "en proceso"].includes(orden.estado.toLowerCase())
+    ["pendiente", "en proceso"].includes(orden?.estado?.toLowerCase())
   );
   const resultados = ordenesActivas?.filter((orden) =>
-    orden.nombre.toLowerCase().includes(search.toLowerCase())
+    orden?.usuario?.nombre?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    // <div class="relative bg-white  p-4 shadow rounded overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
-    //   {openModal && (
-    //     <Modal setOpen={setOpenModal} open={openModal}>
-    //       <AgendarCitaCliente
-    //         setOpenModal={setOpenModal}
-    //         setActualizado={setActualizado}
-    //       />
-    //     </Modal>
-    //   )}
-    //   {open && (
-    //     <Modal setOpen={setOpen} open={open}>
-    //       <OrdenDetalle info={orderSeleccionada} />
-    //     </Modal>
-    //   )}
-
-    //   <div className="w-full flex justify-between ">
-    //     <h1 className="font-semibold ms-6">Ordenes</h1>
-    //     <div className="flex">
-    //       <input
-    //         onChange={(e) => setSearch(e.target.value)}
-    //         type="search"
-    //         id="search"
-    //         className="block w-full p-2 rounded ps-9 bg-neutral-secondary-medium border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand shadow-xs placeholder:text-body me-2"
-    //         placeholder="Search"
-
-    //       />
-    //       <button
-    //         onClick={() => setOpenModal(true)}
-    //         className="bg-blue-300 p-1 border rounded text-white font-semibold text-sm"
-    //       >
-    //         Agregar
-    //       </button>
-    //     </div>
-    //   </div>
-    //   <table className="w-full text-sm text-left rtl:text-right text-body ">
-    //     <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
-    //       <tr>
-    //         <th scope="col" className="px-6 py-3 font-medium">
-    //           #
-    //         </th>
-    //         <th scope="col" className="px-6 py-3 font-medium">
-    //           Fecha
-    //         </th>
-    //         <th scope="col" className="px-6 py-3 font-medium">
-    //           Estado
-    //         </th>
-    //         <th scope="col" className="px-6 py-3 font-medium">
-    //           Pertenece a
-    //         </th>
-    //         <th scope="col" className="px-6 py-3 font-medium">
-    //           Acciones
-    //         </th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {resultados?.map((orden, index) => (
-    //         <tr
-    //           id={orden.id}
-    //           className="bg-neutral-primary border-b border-default"
-    //         >
-    //           <th
-    //             scope="row"
-    //             className="px-6 py-4 font-medium text-heading whitespace-nowrap"
-    //           >
-    //             {index + 1}
-    //           </th>
-    //           <td className="px-6 py-4">
-    //             {" "}
-    //             {new Date(orden.fecha).toString().split("-")[0].toString()}
-    //           </td>
-    //           <td className="px-6 py-4"> {orden.estado}</td>
-    //           <td className="px-6 py-4">{orden.nombre}</td>
-    //           <td className="flex gap-4 items-center">
-    //             <button
-    //               onClick={() => eliminarOrden(orden)}
-    //               style={{ cursor: "pointer" }}
-    //               className="bg-red-600 text-white p-1 border rounded font-semibold mt-2"
-    //             >
-    //               Eliminar
-    //             </button>
-    //             <button
-    //               style={{ cursor: "pointer" }}
-    //               onClick={() => verDetalles(orden)}
-    //               className="bg-blue-600 text-white p-1 border rounded font-semibold mt-2"
-    //             >
-    //               Ver
-    //             </button>
-    //           </td>
-    //         </tr>
-    //       ))}
-    //       {resultados?.length === 0 && <div>No hay orden</div>}
-    //     </tbody>
-    //   </table>
-    // </div>
-
     <div className="relative bg-white shadow-md rounded-lg p-4 overflow-x-auto">
       {openModal && (
         <Modal setOpen={setOpenModal} open={openModal}>
@@ -211,7 +108,7 @@ export function Ordenes() {
         <tbody>
           {resultados?.map((orden, index) => (
             <tr
-              key={orden.id}
+              key={orden.cita_id}
               className="bg-neutral-primary border-b border-default hover:bg-neutral-secondary-soft transition"
             >
               <td className="px-6 py-4 font-medium text-heading">
@@ -245,7 +142,7 @@ export function Ordenes() {
                 </Badge>
               </td>
               <td className="px-6 py-4">
-                {orden.nombre + " " + orden.apellido}
+                {orden?.usuario?.nombre + " " + orden?.usuario?.apellido}
               </td>
               <td className="px-6 py-4 flex gap-3 items-center">
                 <button

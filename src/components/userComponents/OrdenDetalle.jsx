@@ -6,17 +6,18 @@ import Select from "react-select";
 import { toast } from "sonner";
 
 export const OrdenDetalle = ({ info, setActualizado }) => {
-  const carrosIds = info.carros_ids.split("|");
+  const carrosIds = info?.carros_placas;
   const [carrosPorOrden, setCarrosPorOrden] = useState([]);
   const [cambio, setCambio] = useState("");
 
+  console.log(info)
   const { userData, selectedCajero } = useContext(CarWashContext);
 
   useEffect(() => {
     async function getCarros() {
       try {
         const promises = carrosIds.map(async (car) => {
-          const { data } = await axiosClient.get("/users/car-por-id/" + car);
+          const { data } = await axiosClient.get("/users/car-por-placa/" + car);
           return data.data;
         });
 
@@ -43,7 +44,7 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
     const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
     try {
       const payload = {
-        id: info?.id,
+        id: info?.cita_id,
         fecha: `${correctDate} ${hour}:00:00`,
         estado: cambio?.toLocaleLowerCase(),
         user_id: info?.user_id,
@@ -70,12 +71,6 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
           Tiempo estimado:
           <span className="font-medium text-gray-800 ml-1">
             {info?.tiempo_estimado} minutos
-          </span>
-        </p>
-        <p className="text-gray-600 text-base font-semibold">
-          Telefono:
-          <span className="font-medium text-gray-800 ml-1">
-            {info?.telefono}
           </span>
         </p>
 

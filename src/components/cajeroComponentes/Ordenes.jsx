@@ -17,10 +17,10 @@ export function Ordenes() {
   };
 
   const ordenesActivas = ordenes?.filter((orden) =>
-    ["pendiente", "en proceso"].includes(orden.estado.toLowerCase())
+    ["pendiente", "en proceso"].includes(orden?.estado?.toLowerCase())
   );
   const resultados = ordenesActivas?.filter((orden) =>
-    orden.nombre.toLowerCase().includes(search.toLowerCase())
+    orden.usuario.nombre.toLowerCase().includes(search.toLowerCase())
   );
   return (
     <div className="relative w-full bg-white p-6 rounded-xl shadow-lg border border-gray-200 overflow-x-auto">
@@ -67,7 +67,7 @@ export function Ordenes() {
           <tbody>
             {resultados?.map((orden, index) => (
               <tr
-                key={orden.id}
+                key={orden.cita_id}
                 className="bg-white border-b hover:bg-blue-50 transition "
               >
                 <td className="px-6 py-4 font-medium text-gray-800">
@@ -105,7 +105,7 @@ export function Ordenes() {
                   </Badge>
                 </td>
 
-                <td className="px-6 py-4">{orden.nombre}</td>
+                <td className="px-6 py-4">{orden.usuario.nombre}</td>
 
                 <td className="px-6 py-4 flex justify-end">
                   <button

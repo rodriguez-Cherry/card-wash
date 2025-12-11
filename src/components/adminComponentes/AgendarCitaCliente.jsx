@@ -29,9 +29,10 @@ const horasMap = {
 
 export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   const [date, setDate] = useState(null);
-  const [hour, setHour] = useState(8);
+  const [hour, setHour] = useState(null);
   const [carrosSelect, setCarrosSelect] = useState([]);
   const [clienteIdSeleccionado, setClienteIdSeleccionado] = useState("");
+  const [permitirCita, setPermitirCita] = useState(1);
 
   const [servicioIdSeleccionado, setServicioIdSeleccionado] = useState("");
 
@@ -57,7 +58,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   }));
   const carrosDelUserSeleccionado = carros?.map((carro) => ({
     value: carro?.placa,
-    label: carro?.marca + " " + carro?.modelo,
+    label: carro?.marca + " " + carro?.modelo + " - " + carro?.placa,
   }));
   const serviciosSeleccionado = servicios?.map((servicio) => ({
     value: servicio?.servicio_id,
@@ -75,6 +76,30 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   //   setServicioIdSeleccionado("");
   // };
 
+  useEffect(() => {
+    async function getHorasPermitidas() {
+      try {
+        const payload = {
+          fecha: date,
+          hora_inicio: hour + "",
+          hora_fin: hour + 1 + "",
+        };
+
+        const { data } = await axiosClient.post(
+          "/users/horarios-disponibles",
+          payload
+        );
+        setPermitirCita(data?.canditad);
+      } catch (error) {
+        console.log("error");
+      }
+    }
+
+    if (hour && date) {
+      getHorasPermitidas();
+    }
+  }, [hour, date]);
+
   const onAgendar = async () => {
     if (
       !hour ||
@@ -85,9 +110,13 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
     )
       return toast("Por favor agrega los campos");
     let horaFin = hour + 1;
+    const newDate = new Date(date);
+    const fecha = `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${
+      newDate.getDate() + 1
+    }`;
     const payload = {
       // fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
-      fecha: `${date}`,
+      fecha,
       hora_inicio: hour + "",
       hora_fin: horaFin + "",
       estado: "pendiente",
@@ -109,12 +138,20 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   };
 
   const onCancel = () => {
-    onResetValues();
+    // onResetValues();
   };
 
   const clienteSeleccionado = clientes?.find(
     (cliente) => cliente?.id === clienteIdSeleccionado
   );
+
+  const puedeAgendar = permitirCita === 0;
+  const elUsuarioHaSeleccionadoFecha = date && hour;
+
+  const estaDeshabilitado =
+    elUsuarioHaSeleccionadoFecha && permitirCita >= 3
+      ? carrosSelect?.length > 2
+      : carrosSelect?.length >= permitirCita;
   return (
     <div>
       <h1 className="text-lg font-semibold mb-3">Agendar cita</h1>
@@ -152,24 +189,12 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
             <p>{clienteSeleccionado?.telefono}</p>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="mt-4">Carros:</label>
-            <Select
-              isMulti={true}
-              options={carrosDelUserSeleccionado}
-              onChange={(options) => {
-                setCarrosSelect(options.map((option) => option.value));
-              }}
-              isDisabled={carrosSelect?.length > 2}
-            />
+          <div>
             <label>Servicios:</label>
             <Select
               options={serviciosSeleccionado}
               onChange={(option) => setServicioIdSeleccionado(option.value)}
             />
-          </div>
-
-          <div>
             <div className="flex flex-col gap-3 relative border rounded mt-3">
               <div className="flex gap-4 p-2 items-center">
                 <label htmlFor="date" className="px-1 font-semibold">
@@ -192,7 +217,31 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
                   }))}
                 />
               </div>
+              <div className="flex flex-col gap-2">
+                <label className="mt-4">Carros:</label>
+                <Select
+                  isMulti={true}
+                  options={carrosDelUserSeleccionado}
+                  onChange={(options) => {
+                    setCarrosSelect(options.map((option) => option.value));
+                  }}
+                  isDisabled={estaDeshabilitado}
+                />
+              </div>
+              {permitirCita < 3 && elUsuarioHaSeleccionadoFecha && (
+                <div className="mb-3">
+                  <p>Puede agendar hasta {permitirCita} vehiculos</p>
+                </div>
+              )}
             </div>
+            {puedeAgendar && elUsuarioHaSeleccionadoFecha && (
+              <div className="mt-3">
+                <p>
+                  Lo lamento nuestros servicios no estan disponibles en esta
+                  fecha, seleccione otra hora o fecha
+                </p>
+              </div>
+            )}
             <div className="text-right">
               <button
                 // disabled={isAgendarHabilitado}

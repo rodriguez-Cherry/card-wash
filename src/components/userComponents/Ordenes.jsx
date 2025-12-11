@@ -26,6 +26,8 @@ export function Ordenes() {
     error,
   } = useData(`/users/citas/${userId}`, "get", eliminadoOrden);
 
+  console.log(ordenes)
+
   return (
     <div style={{ width: "100%" }}>
       <h1 className="text-xl font-semibold"> Mis ordenes</h1>
@@ -69,7 +71,7 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
   };
 
   const ordenesActivas = ordenes?.filter((orden) =>
-    ["pendiente", "en proceso"].includes(orden.estado.toLowerCase())
+    ["pendiente", "en proceso"].includes(orden?.estado?.toLowerCase())
   );
 
   return (

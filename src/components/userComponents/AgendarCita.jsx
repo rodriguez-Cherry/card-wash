@@ -105,91 +105,6 @@ export function AgendarCita({ servicio, setOpen, userId }) {
       ? carrosSelect?.length > 2
       : carrosSelect?.length >= permitirCita;
   return (
-    // <div>
-    //   {isLoading && <div> Loading cars</div>}
-    //   {carros?.length === 0 && (
-    //     <div>
-    //       {" "}
-    //       <p className="mt-8">
-    //         No posee vehiculos por el momento, por favor dirijase a su perfil y
-    //         agregue uno y despues podra agendar su cita
-    //       </p>
-    //       <button
-    //         className="border rounded p-1 mt-4 bg-blue-300 text-white font-semibold shadow"
-    //         onClick={() => {
-    //           setOpen(false);
-    //           setSelectedHome("Perfil");
-    //         }}
-    //       >
-    //         Ir a Perfil
-    //       </button>
-    //     </div>
-    //   )}
-    //   {carros?.length > 0 && (
-    //     <div>
-    //       <h1 className="font-semibold text-xl text-center">Agenda tu cita</h1>
-    //       <div className="flex flex-col gap-3 relative border rounded mt-3">
-    //         <div className="flex gap-8 p-2 items-center">
-    //           <label htmlFor="date" className="px-1 font-semibold">
-    //             Fecha:
-    //           </label>
-    //           <input
-    //             className="border p-1 rounded"
-    //             type="date"
-    //             onChange={(e) => setDate(e.target.value)}
-    //           />
-    //         </div>
-    //         <div className="p-2 flex gap-2 items-center">
-    //           <label htmlFor="date" className="px-1 font-semibold">
-    //             Horas :
-    //           </label>
-    //           <Select
-    //             onChange={(rangoHora) => {
-    //               setHour(rangoHora.value);
-    //             }}
-    //             options={horasPermitidas?.map((hora) => ({
-    //               value: horasMap[hora.hora],
-    //               label: hora.hora,
-    //             }))}
-    //           />
-    //         </div>
-    //         <div className="p-2 flex gap-2 items-center">
-    //           <label htmlFor="date" className="px-1 font-semibold">
-    //             Vehiculos:
-    //           </label>
-    //           <Select
-    //             isMulti={true}
-    //             onChange={(carrosSelected) => {
-    //               let carrosId = carrosSelected.map(
-    //                 (selecionado) => selecionado.value
-    //               );
-    //               setCarrosSelect(carrosId);
-    //             }}
-    //             options={carros?.map((c) => ({
-    //               value: c.id,
-    //               label: c.marca + " " + c.modelo,
-    //             }))}
-    //             isDisabled={carrosSelect?.length > 2}
-    //           />
-    //         </div>
-    //       </div>
-    //       <div className="text-right">
-    //         <button
-    //           onClick={onAgendar}
-    //           className="p-1 border rounded bg-blue-600 font-semibold text-white mt-4 text-center"
-    //         >
-    //           Agendar
-    //         </button>
-    //         <button
-    //           onClick={onCancel}
-    //           className="p-1 border rounded bg-red-600 font-semibold text-white mt-4 ms-2"
-    //         >
-    //           Cancelar
-    //         </button>
-    //       </div>
-    //     </div>
-    //   )}
-    // </div>
     <div className="w-full">
       {isLoading && (
         <div className="text-center py-6">Cargando vehículos...</div>
@@ -286,7 +201,7 @@ export function AgendarCita({ servicio, setOpen, userId }) {
               <div>
                 <p>
                   Lo lamento nuestros servicios no estan disponibles en esta
-                  fecha, seleccione otra fecha
+                  fecha, seleccione otra hora o fecha
                 </p>
               </div>
             )}
