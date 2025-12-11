@@ -9,6 +9,7 @@ import { axiosClient } from "../../api/ApiCliente";
 import { toast } from "sonner";
 import { Modal } from "../Modal";
 import { OrdenDetalle } from "./OrdenDetalle";
+import { conseguirFecha } from "../../util/conseguirFecha";
 
 const estadoMap = {
   pendiente: "secondary",
@@ -75,6 +76,8 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
     ["pendiente", "en proceso"].includes(orden?.estado?.toLowerCase())
   );
 
+
+
   return (
     <div className="w-full bg-white p-6 rounded-xl shadow-md border border-neutral-200 mt-4">
       {open && (
@@ -123,7 +126,7 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
                 </td>
 
                 <td className="px-4 py-3 text-neutral-700">
-                  {new Date(orden.fecha).toString().slice(0, 15)}
+                  {conseguirFecha(orden.fecha)}
                 </td>
 
                 <td className="px-4 py-3 text-neutral-700">{orden.tipo}</td>

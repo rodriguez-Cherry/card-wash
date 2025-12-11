@@ -6,6 +6,7 @@ import { axiosClient } from "../../api/ApiCliente";
 import { OrdenDetalle } from "../userComponents/OrdenDetalle";
 import { toast } from "sonner";
 import { Badge } from "@chakra-ui/react";
+import { conseguirFecha } from "../../util/conseguirFecha";
 
 export function Ordenes() {
   const [actualizado, setActualizado] = useState(false);
@@ -17,7 +18,7 @@ export function Ordenes() {
   } = useData("/admin/ordenes", "get", actualizado);
   const [orderSeleccionada, setOrdenSeleccionada] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-    const [openModalOrden, setOpenModalOrden] = useState(false);
+  const [openModalOrden, setOpenModalOrden] = useState(false);
   const [open, setOpen] = useState(false);
 
   const cancelarOrden = async (orden) => {
@@ -31,10 +32,7 @@ export function Ordenes() {
         razon: result,
       };
 
-      await axiosClient.post(
-        "/admin/cancelar-cita/" + orden.cita_id,
-        payload
-      );
+      await axiosClient.post("/admin/cancelar-cita/" + orden.cita_id, payload);
       toast("Orden cancelada!");
       setActualizado((prev) => !prev);
     } catch (error) {
@@ -115,9 +113,7 @@ export function Ordenes() {
               <td className="px-6 py-4 font-medium text-heading">
                 {index + 1}
               </td>
-              <td className="px-6 py-4">
-                {new Date(orden.fecha).toLocaleDateString()}
-              </td>
+              <td className="px-6 py-4">{conseguirFecha(orden?.fecha)}</td>
               <td className="px-6 py-4">
                 <Badge
                   variant="surface"

@@ -3,6 +3,7 @@ import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
 import { OrdenDetalle } from "../userComponents/OrdenDetalle";
 import { Badge } from "@chakra-ui/react";
+import { conseguirFecha } from "../../util/conseguirFecha";
 
 export function Ordenes() {
   const [actualizado, setActualizado] = useState(false);
@@ -75,11 +76,7 @@ export function Ordenes() {
                   {index + 1}
                 </td>
 
-                <td className="px-6 py-4">
-                  {new Intl.DateTimeFormat("en-US").format(
-                    new Date(orden?.fecha)
-                  )}
-                </td>
+                <td className="px-6 py-4">{conseguirFecha(orden?.fecha)}</td>
 
                 <td className="px-6 py-4">
                   <Badge

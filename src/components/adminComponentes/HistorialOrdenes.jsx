@@ -6,6 +6,7 @@ import { OrdenDetalle } from "../userComponents/OrdenDetalle";
 import { toast } from "sonner";
 import { Badge } from "@chakra-ui/react";
 import { FacturaDetalle } from "./FacturaDetalle";
+import { conseguirFecha } from "../../util/conseguirFecha";
 
 export function HistorialOrdenes() {
   const [actualizado, setActualizado] = useState(false);
@@ -98,7 +99,8 @@ export function HistorialOrdenes() {
                 {index + 1}
               </td>
               <td className="px-6 py-4">
-                {new Date(orden.fecha).toLocaleDateString()}
+                {/* {new Date(orden.fecha).toLocaleDateString()} */}
+                {conseguirFecha(orden.fecha)}
               </td>
               <td className="px-6 py-4">
                 <Badge

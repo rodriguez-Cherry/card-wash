@@ -1,4 +1,5 @@
 import { Badge } from "@chakra-ui/react";
+import { conseguirFecha } from "../../util/conseguirFecha";
 
 export const FacturaDetalle = ({ info }) => {
   const carros = info?.carros;
@@ -22,7 +23,7 @@ export const FacturaDetalle = ({ info }) => {
           A nombre de: {info?.nombre} {info?.apellido}
         </p>
         <p className="mt-3 text-gray-600 font-semibold">
-          Fecha: {info?.fecha} {info?.hora + ":00 - " + hora_fin + ":00"}
+          Fecha: {conseguirFecha(info?.fecha)} {info?.hora + ":00 - " + hora_fin + ":00"}
         </p>
         <p className="mt-3 text-gray-600 font-semibold">
           Estado:{" "}

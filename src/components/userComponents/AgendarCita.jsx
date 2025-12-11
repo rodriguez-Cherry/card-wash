@@ -40,9 +40,6 @@ export function AgendarCita({ servicio, setOpen, userId }) {
     if (!hour || !carrosSelect.length || !date)
       return toast("Por favor agrega los campos");
 
-    const newDate = new Date(`${date}, ${hour}:00:00`);
-
-    console.log(`${date} ${hour}:00:00`);
 
     const payload = {
       // fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
