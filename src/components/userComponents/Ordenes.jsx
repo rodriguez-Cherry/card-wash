@@ -26,7 +26,7 @@ export function Ordenes() {
     error,
   } = useData(`/users/citas/${userId}`, "get", eliminadoOrden);
 
-  console.log(ordenes)
+  console.log(ordenes);
 
   return (
     <div style={{ width: "100%" }}>
@@ -39,6 +39,7 @@ export function Ordenes() {
 function OrdenesTable({ ordenes, setEliminadoOrden }) {
   const [orderSeleccionada, setOrdenSeleccionada] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openModalOrden, setOpenModalOrden] = useState(false);
 
   const eliminarOrden = async (orden) => {
     const result = confirm("Esta seguro de eliminar esta orden ?");
@@ -75,236 +76,10 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
   );
 
   return (
-    // <div
-    //   style={{ width: "100%" }}
-    //   className="bg-white p-4 rounded shadow mt-4  w-full border"
-    // >
-    //   {ordenes?.length === 0 && (
-    //     <>
-    //       <p>Por el momento no hay ordenes </p>
-    //     </>
-    //   )}
-
-    //   {open && (
-    //     <Modal setOpen={setOpen} open={open}>
-    //       <OrdenDetalle info={orderSeleccionada} />
-    //     </Modal>
-    //   )}
-
-    //   {ordenes?.length > 0 && (
-    //     <div style={{ width: "100%" }}>
-    //       <table style={{ width: "100%", borderCollapse: "collapse" }}>
-    //         <thead>
-    //           <tr>
-    //             <th
-    //               style={{
-    //                 padding: "8px",
-    //                 textAlign: "left",
-    //                 borderBottom: "2px solid #ddd",
-    //                 fontWeight: "400",
-    //                 fontSize: "14px",
-    //                 color: "#4d4d4d",
-    //                 width: "16%",
-    //               }}
-    //             >
-    //               <div className="flex items-center">
-    //                 {" "}
-    //                 <span className="font-semibold">#</span>
-    //               </div>
-    //             </th>
-
-    //             <th
-    //               style={{
-    //                 padding: "8px",
-    //                 textAlign: "left",
-    //                 borderBottom: "2px solid #ddd",
-    //                 fontWeight: "400",
-    //                 fontSize: "14px",
-    //                 color: "#4d4d4d",
-    //                 width: "16%",
-    //               }}
-    //             >
-    //               <div className="flex items-center">
-    //                 <span className="font-semibold">Estado</span>
-    //               </div>
-    //             </th>
-    //             <th
-    //               style={{
-    //                 padding: "8px",
-    //                 textAlign: "left",
-    //                 borderBottom: "2px solid #ddd",
-    //                 fontWeight: "400",
-    //                 fontSize: "14px",
-    //                 color: "#4d4d4d",
-    //                 width: "16%",
-    //               }}
-    //             >
-    //               <div className="flex items-center">
-    //                 <span className="font-semibold">Fecha</span>
-    //               </div>
-    //             </th>
-    //             <th
-    //               style={{
-    //                 padding: "8px",
-    //                 textAlign: "left",
-    //                 borderBottom: "2px solid #ddd",
-    //                 fontWeight: "400",
-    //                 fontSize: "14px",
-    //                 color: "#4d4d4d",
-    //                 width: "16%",
-    //               }}
-    //             >
-    //               <div className="flex items-center">
-    //                 <span className="font-semibold">Servicio</span>
-    //               </div>
-    //             </th>
-    //             <th
-    //               style={{
-    //                 padding: "8px",
-    //                 textAlign: "left",
-    //                 borderBottom: "2px solid #ddd",
-    //                 fontWeight: "400",
-    //                 fontSize: "14px",
-    //                 color: "#4d4d4d",
-    //                 width: "16%",
-    //               }}
-    //             >
-    //               <div>
-    //                 <span className="font-semibold">Monto</span>
-    //               </div>
-    //             </th>
-    //             <th
-    //               style={{
-    //                 padding: "8px",
-    //                 textAlign: "right",
-    //                 borderBottom: "2px solid #ddd",
-    //                 fontWeight: "400",
-    //                 fontSize: "14px",
-    //                 color: "#4d4d4d",
-    //                 width: "16%",
-    //               }}
-    //             >
-    //               <div>
-    //                 <span className="font-semibold">Acciones</span>
-    //               </div>
-    //             </th>
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           {ordenes?.map((orden, index) => {
-    //             return (
-    //               <tr key={orden.id}>
-    //                 <td
-    //                   style={{
-    //                     height: "3rem",
-    //                     textAlign: "left",
-    //                     borderBottom: "1px solid #ddd",
-    //                     fontWeight: "400",
-    //                     fontSize: "14px",
-    //                     color: "#4d4d4d",
-    //                   }}
-    //                 >
-    //                   {index + 1}
-    //                 </td>
-    //                 <td
-    //                   style={{
-    //                     height: "3rem",
-    //                     textAlign: "left",
-    //                     borderBottom: "1px solid #ddd",
-    //                     fontWeight: "400",
-    //                     fontSize: "14px",
-    //                     color: "#4d4d4d",
-    //                   }}
-    //                 >
-    //                   {" "}
-    //                   <Badge variant={estadoMap[orden.estado]}>
-    //                     {orden.estado}
-    //                   </Badge>{" "}
-    //                 </td>
-    //                 <td
-    //                   style={{
-    //                     height: "3rem",
-    //                     textAlign: "left",
-    //                     borderBottom: "1px solid #ddd",
-    //                     fontWeight: "400",
-    //                     fontSize: "14px",
-    //                     color: "#4d4d4d",
-    //                   }}
-    //                 >
-    //                   {" "}
-    //                   {new Date(orden.fecha)
-    //                     .toString()
-    //                     .split("-")[0]
-    //                     .toString()
-    //                     .slice(0, 15)}
-    //                 </td>
-    //                 <td
-    //                   style={{
-    //                     height: "3rem",
-    //                     textAlign: "left",
-    //                     borderBottom: "1px solid #ddd",
-    //                     fontWeight: "400",
-    //                     fontSize: "14px",
-    //                     color: "#4d4d4d",
-    //                   }}
-    //                 >
-    //                   {" "}
-    //                   {orden.tipo}{" "}
-    //                 </td>
-    //                 <td
-    //                   style={{
-    //                     height: "3rem",
-    //                     textAlign: "rigth",
-    //                     borderBottom: "1px solid #ddd",
-    //                     fontWeight: "400",
-    //                     fontSize: "14px",
-    //                     color: "#4d4d4d",
-    //                   }}
-    //                 >
-    //                   ${orden.precio}
-    //                 </td>
-    //                 <td
-    //                   style={{
-    //                     height: "3rem",
-    //                     textAlign: "right",
-    //                     borderBottom: "1px solid #ddd",
-    //                     fontWeight: "400",
-    //                     fontSize: "14px",
-    //                     color: "#4d4d4d",
-    //                   }}
-    //                 >
-    //                   <button
-    //                     className="border mr-2"
-    //                     onClick={() => {
-    //                       setOrdenSeleccionada(orden);
-    //                       setOpen(true);
-    //                     }}
-    //                   >
-    //                     Ver
-    //                   </button>
-    //                   <button
-    //                     onClick={(e) => {
-    //                       e.stopPropagation();
-
-    //                       eliminar(orden.id);
-    //                     }}
-    //                   >
-    //                     <FontAwesomeIcon icon={faTrash} />
-    //                   </button>
-    //                 </td>
-    //               </tr>
-    //             );
-    //           })}
-    //         </tbody>
-    //       </table>
-    //     </div>
-    //   )}
-    // </div>
-
     <div className="w-full bg-white p-6 rounded-xl shadow-md border border-neutral-200 mt-4">
       {open && (
         <Modal setOpen={setOpen} open={open}>
-          <OrdenDetalle info={orderSeleccionada} />
+          <OrdenDetalle info={orderSeleccionada} setOpen={setOpen} />
         </Modal>
       )}
 

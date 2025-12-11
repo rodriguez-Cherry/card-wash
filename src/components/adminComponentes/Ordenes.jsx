@@ -17,6 +17,7 @@ export function Ordenes() {
   } = useData("/admin/ordenes", "get", actualizado);
   const [orderSeleccionada, setOrdenSeleccionada] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+    const [openModalOrden, setOpenModalOrden] = useState(false);
   const [open, setOpen] = useState(false);
 
   const cancelarOrden = async (orden) => {
@@ -66,7 +67,7 @@ export function Ordenes() {
 
       {open && (
         <Modal setOpen={setOpen} open={open}>
-          <OrdenDetalle info={orderSeleccionada} />
+          <OrdenDetalle info={orderSeleccionada} setOpen={setOpen} />
         </Modal>
       )}
 

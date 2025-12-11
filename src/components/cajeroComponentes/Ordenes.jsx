@@ -29,6 +29,7 @@ export function Ordenes() {
           <OrdenDetalle
             info={orderSeleccionada}
             setActualizado={setActualizado}
+            setOpen={setOpen}
           />
         </Modal>
       )}

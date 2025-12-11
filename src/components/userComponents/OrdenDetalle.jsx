@@ -5,12 +5,11 @@ import { Badge } from "@chakra-ui/react";
 import Select from "react-select";
 import { toast } from "sonner";
 
-export const OrdenDetalle = ({ info, setActualizado }) => {
+export const OrdenDetalle = ({ info, setActualizado, setOpen }) => {
   const carrosIds = info?.carros_placas;
   const [carrosPorOrden, setCarrosPorOrden] = useState([]);
   const [cambio, setCambio] = useState("");
 
-  console.log(info)
   const { userData, selectedCajero } = useContext(CarWashContext);
 
   useEffect(() => {
@@ -34,31 +33,54 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
   const cambiarEstado = async () => {
     if (!cambio) return toast("Por favor seleccione una opcion");
 
-    const hour = new Date(info?.fecha).getHours();
+    let posiblesCambios = ["en proceso", "pendiente"];
+    if (posiblesCambios.includes(cambio?.toLowerCase())) {
+      try {
+        const payload = {
+          estado: cambio?.toLocaleLowerCase(),
+        };
 
-    const date = new Intl.DateTimeFormat("en-US")
-      .format(new Date(info?.fecha))
-      ?.split("T")[0];
+        await axiosClient.put("/admin/update-orden/" + info?.cita_id, payload);
+        setActualizado((prev) => !prev);
+        setOpen(prev => !prev)
+        toast("Estado de orden cambiado exitosamente!");
+      } catch (error) {
+        toast("Hubo un error al cambiar el estado");
+      }
+      return;
+    }
 
-    const splitDate = date.replaceAll("/", "-").split("-");
-    const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+    let result = window.prompt(
+      "Introducir razon de la cancelacion de esta orden ?"
+    );
+    if (!result) return toast("Debe de agregar una razon");
+
     try {
       const payload = {
-        id: info?.cita_id,
-        fecha: `${correctDate} ${hour}:00:00`,
+        razon: result,
         estado: cambio?.toLocaleLowerCase(),
-        user_id: info?.user_id,
-        servicio_id: info?.servicio_id,
-        carros_ids: info?.carros_ids,
       };
 
-      await axiosClient.put("/admin/update-ordenes", payload);
+      await axiosClient.post("/admin/cancelar-cita/" + info?.cita_id, payload);
+      toast(`Orden ${cambio}`);
       setActualizado((prev) => !prev);
-      toast("Estado de orden cambiado exitosamente!");
     } catch (error) {
-      toast("Hubo un error al cambiar el estado");
+      toast("Error al cancelar la orden");
     }
   };
+
+  const estadoOpciones =
+    info?.estado === "pendiente"
+      ? [
+          { value: "En proceso", label: "En proceso" },
+          { value: "Completado", label: "Completado" },
+          { value: "Cancelado", label: "Cancelado" },
+        ]
+      : [
+          { value: "Pendiente", label: "Pendiente" },
+          { value: "Completado", label: "Completado" },
+          { value: "Cancelado", label: "Cancelado" },
+        ];
 
   return (
     <div>
@@ -111,11 +133,7 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
               <Select
                 className="font-normal"
                 onChange={(item) => setCambio(item.value)}
-                options={[
-                  { value: "En proceso", label: "En proceso" },
-                  { value: "Completado", label: "Completado" },
-                  { value: "Cancelado", label: "Cancelado" },
-                ]}
+                options={estadoOpciones}
               />
 
               <button
