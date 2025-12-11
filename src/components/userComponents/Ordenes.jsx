@@ -46,22 +46,6 @@ function OrdenesTable({ ordenes, setEliminadoOrden }) {
     const result = confirm("Esta seguro de eliminar esta orden ?");
 
     if (!result) return null;
-    // const hour = new Date(orden?.fecha).getHours();
-
-    // const date = new Intl.DateTimeFormat("en-US")
-    //   .format(new Date(orden?.fecha))
-    //   ?.split("T")[0];
-
-    // const splitDate = date.replaceAll("/", "-").split("-");
-    // const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
-    // const payload = {
-    //   id: orden?.id,
-    //   fecha: `${correctDate} ${hour}:00:00`,
-    //   estado: "cancelado",
-    //   user_id: orden?.user_id,
-    //   servicio_id: orden?.servicio_id,
-    //   carros_ids: orden?.carros_ids,
-    // };
 
     try {
       await axiosClient.delete("/users/eliminar-cita/" + orden.cita_id);

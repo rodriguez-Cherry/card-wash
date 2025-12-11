@@ -37,9 +37,6 @@ export function HistorialOrdenes() {
     setOpen(true);
   };
 
-  // const ordenesCanceladas = ordenes?.filter((orden) =>
-  //   ["cancelado", "completado"].includes(orden.estado.toLowerCase())
-  // );
   const resultados = ordenes?.filter((orden) =>
     orden.nombre.toLowerCase().includes(search.toLowerCase())
   );

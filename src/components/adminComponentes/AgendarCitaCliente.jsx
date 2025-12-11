@@ -67,14 +67,10 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
 
   const { setSelectedAdmin } = useContext(CarWashContext);
 
-  // const onResetValues = () => {
-  //   setOpenModal(false);
-  //   setDate(null);
-  //   setHour(8);
-  //   setCarrosSelect([]);
-  //   setClienteIdSeleccionado("");
-  //   setServicioIdSeleccionado("");
-  // };
+  const today = new Date();
+  const todayDate = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
   useEffect(() => {
     async function getHorasPermitidas() {
@@ -138,7 +134,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   };
 
   const onCancel = () => {
-    // onResetValues();
+    
   };
 
   const clienteSeleccionado = clientes?.find(
@@ -203,6 +199,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
                 <input
                   className="border p-1 rounded"
                   type="date"
+                  min={todayDate}
                   onChange={(e) => setDate(e.target.value)}
                 />
               </div>
@@ -237,7 +234,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
             {puedeAgendar && elUsuarioHaSeleccionadoFecha && (
               <div className="mt-3">
                 <p>
-                  Lo lamento nuestros servicios no estan disponibles en esta
+                  Lo lamentamos nuestros servicios no estan disponibles en esta
                   fecha, seleccione otra hora o fecha
                 </p>
               </div>

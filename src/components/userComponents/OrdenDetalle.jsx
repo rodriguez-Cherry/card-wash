@@ -42,7 +42,7 @@ export const OrdenDetalle = ({ info, setActualizado, setOpen }) => {
 
         await axiosClient.put("/admin/update-orden/" + info?.cita_id, payload);
         setActualizado((prev) => !prev);
-        setOpen(prev => !prev)
+        setOpen((prev) => !prev);
         toast("Estado de orden cambiado exitosamente!");
       } catch (error) {
         toast("Hubo un error al cambiar el estado");
@@ -82,6 +82,8 @@ export const OrdenDetalle = ({ info, setActualizado, setOpen }) => {
           { value: "Cancelado", label: "Cancelado" },
         ];
 
+  console.log(info);
+
   return (
     <div>
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-md p-6 border border-gray-100">
@@ -95,8 +97,14 @@ export const OrdenDetalle = ({ info, setActualizado, setOpen }) => {
             {info?.tiempo_estimado} minutos
           </span>
         </p>
+        <p className="text-gray-600 text-base font-semibold">
+          Hora:
+          <span className="font-medium text-gray-800 ml-1">
+            {info?.hora_inicio}:00 - {parseInt(info?.hora_inicio) + 1}:00
+          </span>
+        </p>
 
-        <p className="mt-3 text-gray-600 font-semibold">
+        <p className="mt-2 text-gray-600 font-semibold">
           Estado:{" "}
           <Badge
             variant="outline"
@@ -146,7 +154,6 @@ export const OrdenDetalle = ({ info, setActualizado, setOpen }) => {
           </div>
         )}
       </div>
-      {/* </div> */}
     </div>
   );
 };

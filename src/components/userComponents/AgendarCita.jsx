@@ -32,19 +32,21 @@ export function AgendarCita({ servicio, setOpen, userId }) {
   const [hour, setHour] = useState(null);
   const [permitirCita, setPermitirCita] = useState(1);
   const [carrosSelect, setCarrosSelect] = useState([]);
+  const [existeUnoAgendado, setExisteUnoAgendado] = useState(null);
 
   const { isLoading, data: carros } = useData("/users/car/" + userId, "get");
   const { setSelectedHome } = useContext(CarWashContext);
 
+  const today = new Date();
+  const todayDate = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
   const onAgendar = async () => {
     if (!hour || !carrosSelect.length || !date)
       return toast("Por favor agrega los campos");
 
-
     const payload = {
-      // fecha: newDate.toISOString().slice(0, 19).replace("T", " "),
       fecha: `${date}`,
-      // user_id: userId,
       hora_inicio: hour + "",
       hora_fin: hour + 1 + "",
       estado: "pendiente",
@@ -94,6 +96,25 @@ export function AgendarCita({ servicio, setOpen, userId }) {
     }
   }, [hour, date]);
 
+  useEffect(() => {
+    const verificarCarrosAgendados = async () => {
+      let payload = {
+        fecha: date,
+        placas: carrosSelect,
+      };
+      const data = await axiosClient.post(
+        "/users/verificar-placas-disponible",
+        payload
+      );
+
+      setExisteUnoAgendado(data?.data?.unoEstaAgendado);
+    };
+
+    if (date || carrosSelect.length) {
+      verificarCarrosAgendados();
+    }
+  }, [date, carrosSelect.length]);
+
   const puedeAgendar = permitirCita === 0;
   const elUsuarioHaSeleccionadoFecha = date && hour;
 
@@ -142,6 +163,7 @@ export function AgendarCita({ servicio, setOpen, userId }) {
               <input
                 className="border rounded-lg p-2 w-full md:w-auto focus:ring-2 focus:ring-[#38BDF8]"
                 type="date"
+                min={todayDate}
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
@@ -185,19 +207,25 @@ export function AgendarCita({ servicio, setOpen, userId }) {
                   }}
                   options={carros?.map((c) => ({
                     value: c.placa,
-                    label: `${c.marca} ${c.modelo}`,
+                    label: `${c.marca} ${c.modelo} - ${c.placa}`,
                   }))}
                   isDisabled={estaDeshabilitado}
                   isClearable
                 />
-                
               </div>
             </div>
+
+            {
+              existeUnoAgendado && 
+              <div>
+                <p>Uno de sus vehiculos esta agendado el dia de hoy</p>
+              </div>
+            }
 
             {puedeAgendar && elUsuarioHaSeleccionadoFecha && (
               <div>
                 <p>
-                  Lo lamento nuestros servicios no estan disponibles en esta
+                  Lo lamentamos nuestros servicios no estan disponibles en esta
                   fecha, seleccione otra hora o fecha
                 </p>
               </div>
