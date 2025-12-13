@@ -7,24 +7,36 @@ import { CarWashContext } from "../../contex/Context";
 
 const horasPermitidas = [
   {
-    hora: "8:00 AM - 10:00 AM",
+    hora: "8:00 AM - 9:00 AM",
   },
   {
-    hora: "10:00 AM - 12:00 PM",
+    hora: "9:00 AM - 10:00 AM",
   },
   {
-    hora: "1:00 PM - 3:00 PM",
+    hora: "10:00 AM - 11:00 AM",
   },
   {
-    hora: "3:00 PM - 5:00 PM",
+    hora: "1:00 PM - 2:00 PM",
+  },
+    {
+    hora: "2:00 PM - 3:00 PM",
+  },
+  {
+    hora: "3:00 PM - 4:00 PM",
+  },
+    {
+    hora: "4:00 PM - 5:00 PM",
   },
 ];
 
 const horasMap = {
-  "8:00 AM - 10:00 AM": 8,
-  "10:00 AM - 12:00 PM": 9,
-  "1:00 PM - 3:00 PM": 10,
-  "3:00 PM - 5:00 PM": 11,
+  "8:00 AM - 9:00 AM": 8,
+  "9:00 AM - 10:00 PM": 9,
+  "10:00 PM - 11:00 PM": 10,
+  "1:00 PM - 2:00 PM": 1,
+  "2:00 PM - 3:00 PM": 2,
+  "3:00 PM - 4:00 PM": 3,
+  "4:00 PM - 5:00 PM": 4,
 };
 
 export function AgendarCita({ servicio, setOpen, userId }) {
@@ -45,6 +57,10 @@ export function AgendarCita({ servicio, setOpen, userId }) {
     if (!hour || !carrosSelect.length || !date)
       return toast("Por favor agrega los campos");
 
+    if (existeUnoAgendado) {
+      return toast("Por favor seleccione otro vehiculo");
+    }
+
     const payload = {
       fecha: `${date}`,
       hora_inicio: hour + "",
@@ -56,12 +72,8 @@ export function AgendarCita({ servicio, setOpen, userId }) {
     try {
       await axiosClient.post("/users/agendar", payload);
       setOpen(false);
-      // setDate(null);
-      // setCarrosSelect([]);
       toast("Su cita ha sido agendada!");
     } catch (error) {
-      // setDate(null);
-      // setCarrosSelect([]);
       toast(error.response.data);
     }
   };
@@ -215,12 +227,14 @@ export function AgendarCita({ servicio, setOpen, userId }) {
               </div>
             </div>
 
-            {
-              existeUnoAgendado && 
+            {existeUnoAgendado && (
               <div>
-                <p>Uno de sus vehiculos esta agendado el dia de hoy</p>
+                <p>
+                  Uno de sus vehiculos esta agendado el dia de hoy, no puede
+                  agendar el dia de hoy
+                </p>
               </div>
-            }
+            )}
 
             {puedeAgendar && elUsuarioHaSeleccionadoFecha && (
               <div>

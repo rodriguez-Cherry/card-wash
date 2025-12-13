@@ -30,6 +30,7 @@ export function Ordenes() {
     try {
       const payload = {
         razon: result,
+        estado: "cancelado"
       };
 
       await axiosClient.post("/admin/cancelar-cita/" + orden.cita_id, payload);

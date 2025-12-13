@@ -96,7 +96,6 @@ export function HistorialOrdenes() {
                 {index + 1}
               </td>
               <td className="px-6 py-4">
-                {/* {new Date(orden.fecha).toLocaleDateString()} */}
                 {conseguirFecha(orden.fecha)}
               </td>
               <td className="px-6 py-4">
@@ -131,7 +130,7 @@ export function HistorialOrdenes() {
                   onClick={() => verDetalles(orden)}
                   className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-blue-700 transition"
                 >
-                  Ver
+                  Ver factura
                 </button>
               </td>
             </tr>

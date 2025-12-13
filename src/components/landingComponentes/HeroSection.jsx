@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router";
 import { CarWashContext } from "../../contex/Context";
-// import ""
 
 export function HeroSection() {
   const { sessionEstado } = useContext(CarWashContext);
@@ -15,7 +14,6 @@ export function HeroSection() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="md:w-2/3 lg:w-1/2">
           <h1 class="text-4xl  md:text-5xl lg:text-6xl font-bold mb-4">
-            {/* Cuidado profesional del automóvil que brilla */}
              No tienes tiempo para lavar tu automovil?
           </h1>
           <p class="text-lg md:text-xl mb-8">

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import { useData } from "../../util/useData";
 
 import imagen1 from "../../assets/imgs/1.jpg";
@@ -33,7 +32,6 @@ export function Services() {
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* <!-- Service Card 1 --> */}
                    {data?.map((servicio, index) => (
             <ServicioCaja index={index + 1} {...servicio} />
           ))}
@@ -45,7 +43,6 @@ export function Services() {
 }
 
 const ServicioCaja = ({ tipo, descripcion, index }) => {
-  const navigate = useNavigate();
   return (
     <div class="service-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
       <div class="h-48 bg-gray-200 flex items-center justify-center">
@@ -54,12 +51,6 @@ const ServicioCaja = ({ tipo, descripcion, index }) => {
       <div class="p-6">
         <h3 class="text-xl font-bold text-gray-900 mb-2">{tipo}</h3>
         <p class="text-gray-600 mb-4">{descripcion}</p>
-        {/* <a
-          onClick={() => navigate("/home")}
-          class="text-blue-500 font-semibold hover:text-blue-700 flex items-center cursor-pointer"
-        >
-          Reserva ahora <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
-        </a> */}
       </div>
     </div>
   );

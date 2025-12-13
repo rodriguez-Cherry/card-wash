@@ -16,15 +16,27 @@ const horasPermitidas = [
     hora: "10:00 AM - 11:00 AM",
   },
   {
-    hora: "11:00 AM - 12:00 AM",
+    hora: "1:00 PM - 2:00 PM",
+  },
+  {
+    hora: "2:00 PM - 3:00 PM",
+  },
+  {
+    hora: "3:00 PM - 4:00 PM",
+  },
+  {
+    hora: "4:00 PM - 5:00 PM",
   },
 ];
 
 const horasMap = {
   "8:00 AM - 9:00 AM": 8,
-  "9:00 AM - 10:00 AM": 9,
-  "10:00 AM - 11:00 AM": 10,
-  "11:00 AM - 12:00 AM": 11,
+  "9:00 AM - 10:00 PM": 9,
+  "10:00 PM - 11:00 PM": 10,
+  "1:00 PM - 2:00 PM": 1,
+  "2:00 PM - 3:00 PM": 2,
+  "3:00 PM - 4:00 PM": 3,
+  "4:00 PM - 5:00 PM": 4,
 };
 
 export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
@@ -33,7 +45,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   const [carrosSelect, setCarrosSelect] = useState([]);
   const [clienteIdSeleccionado, setClienteIdSeleccionado] = useState("");
   const [permitirCita, setPermitirCita] = useState(1);
-
+  const [existeUnoAgendado, setExisteUnoAgendado] = useState(null);
   const [servicioIdSeleccionado, setServicioIdSeleccionado] = useState("");
 
   const { data: clientes, isLoading } = useData(
@@ -96,6 +108,25 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
     }
   }, [hour, date]);
 
+  useEffect(() => {
+    const verificarCarrosAgendados = async () => {
+      let payload = {
+        fecha: date,
+        placas: carrosSelect,
+      };
+      const data = await axiosClient.post(
+        "/users/verificar-placas-disponible",
+        payload
+      );
+
+      setExisteUnoAgendado(data?.data?.unoEstaAgendado);
+    };
+
+    if (date || carrosSelect.length) {
+      verificarCarrosAgendados();
+    }
+  }, [date, carrosSelect.length]);
+
   const onAgendar = async () => {
     if (
       !hour ||
@@ -105,6 +136,10 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
       !servicioIdSeleccionado
     )
       return toast("Por favor agrega los campos");
+
+    if (existeUnoAgendado) {
+      return toast("Por favor seleccione otro vehiculo");
+    }
     let horaFin = hour + 1;
     const newDate = new Date(date);
     const fecha = `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${
@@ -134,7 +169,7 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
   };
 
   const onCancel = () => {
-    
+    setOpenModal(false)
   };
 
   const clienteSeleccionado = clientes?.find(
@@ -225,6 +260,14 @@ export function AgendarCitaCliente({ setOpenModal, setActualizado }) {
                   isDisabled={estaDeshabilitado}
                 />
               </div>
+              {existeUnoAgendado && (
+                <div>
+                  <p>
+                    Uno de sus vehiculos esta agendado el dia de hoy, no puede
+                    agendar el dia de hoy
+                  </p>
+                </div>
+              )}
               {permitirCita < 3 && elUsuarioHaSeleccionadoFecha && (
                 <div className="mb-3">
                   <p>Puede agendar hasta {permitirCita} vehiculos</p>

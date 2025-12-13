@@ -34,7 +34,6 @@ export function Perfil() {
     actualisado
   );
 
-  // en realidad no se elimina se actualiza a estado inactivo en la base de datos y no aparece en la pantalla
   const eliminarVehiculo = async (carro) => {
     const result = confirm("Esta seguro de eliminar este vehiculo ?");
 
@@ -202,8 +201,6 @@ export function Perfil() {
         )}
       </div>
 
-      {/* </CardContent> */}
-      {/* </Card> */}
     </div>
   );
 }
