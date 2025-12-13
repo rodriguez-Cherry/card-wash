@@ -3,56 +3,6 @@ export function Footer() {
     <footer class="bg-gray-900 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {/* <div>
-            <h3 class="text-lg font-bold mb-4">Services</h3>
-            <ul class="space-y-2">
-              <li>
-                <a  class="text-gray-400 hover:text-white">
-                  B
-                </a>
-              </li>
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white">
-                  Deluxe Wash
-                </a>
-              </li>
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white">
-                  Premium Detail
-                </a>
-              </li>
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white">
-                  Ceramic Coating
-                </a>
-              </li>
-            </ul>
-          </div> */}
-          {/* <div>
-            <h3 class="text-lg font-bold mb-4">Company</h3>
-            <ul class="space-y-2">
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white">
-                  Our Team
-                </a>
-              </li>
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white">
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a href="#" class="text-gray-400 hover:text-white">
-                  Blog
-                </a>
-              </li>
-            </ul>
-          </div> */}
           <div className="w-full">
             <h3 class="text-lg font-bold mb-4">Soporte</h3>
             <div class="">

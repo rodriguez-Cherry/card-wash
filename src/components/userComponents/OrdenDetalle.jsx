@@ -5,8 +5,8 @@ import { Badge } from "@chakra-ui/react";
 import Select from "react-select";
 import { toast } from "sonner";
 
-export const OrdenDetalle = ({ info, setActualizado }) => {
-  const carrosIds = info.carros_ids.split("|");
+export const OrdenDetalle = ({ info, setActualizado, setOpen }) => {
+  const carrosIds = info?.carros_placas;
   const [carrosPorOrden, setCarrosPorOrden] = useState([]);
   const [cambio, setCambio] = useState("");
 
@@ -16,7 +16,7 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
     async function getCarros() {
       try {
         const promises = carrosIds.map(async (car) => {
-          const { data } = await axiosClient.get("/users/car-por-id/" + car);
+          const { data } = await axiosClient.get("/users/car-por-placa/" + car);
           return data.data;
         });
 
@@ -33,31 +33,56 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
   const cambiarEstado = async () => {
     if (!cambio) return toast("Por favor seleccione una opcion");
 
-    const hour = new Date(info?.fecha).getHours();
+    let posiblesCambios = ["en proceso", "pendiente"];
+    if (posiblesCambios.includes(cambio?.toLowerCase())) {
+      try {
+        const payload = {
+          estado: cambio?.toLocaleLowerCase(),
+        };
 
-    const date = new Intl.DateTimeFormat("en-US")
-      .format(new Date(info?.fecha))
-      ?.split("T")[0];
+        await axiosClient.put("/admin/update-orden/" + info?.cita_id, payload);
+        setActualizado((prev) => !prev);
+        setOpen((prev) => !prev);
+        toast("Estado de orden cambiado exitosamente!");
+      } catch (error) {
+        toast("Hubo un error al cambiar el estado");
+      }
+      return;
+    }
 
-    const splitDate = date.replaceAll("/", "-").split("-");
-    const correctDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+    let result = window.prompt(
+      "Introducir razon de la cancelacion de esta orden ?"
+    );
+    if (!result) return toast("Debe de agregar una razon");
+
     try {
       const payload = {
-        id: info?.id,
-        fecha: `${correctDate} ${hour}:00:00`,
+        razon: result,
         estado: cambio?.toLocaleLowerCase(),
-        user_id: info?.user_id,
-        servicio_id: info?.servicio_id,
-        carros_ids: info?.carros_ids,
       };
 
-      await axiosClient.put("/admin/update-ordenes", payload);
+      await axiosClient.post("/admin/cancelar-cita/" + info?.cita_id, payload);
+      toast(`Orden ${cambio}`);
       setActualizado((prev) => !prev);
-      toast("Estado de orden cambiado exitosamente!");
     } catch (error) {
-      toast("Hubo un error al cambiar el estado");
+      toast("Error al cancelar la orden");
     }
   };
+
+  const estadoOpciones =
+    info?.estado === "pendiente"
+      ? [
+          { value: "En proceso", label: "En proceso" },
+          { value: "Completado", label: "Completado" },
+          { value: "Cancelado", label: "Cancelado" },
+        ]
+      : [
+          { value: "Pendiente", label: "Pendiente" },
+          { value: "Completado", label: "Completado" },
+          { value: "Cancelado", label: "Cancelado" },
+        ];
+
+  console.log(info);
 
   return (
     <div>
@@ -73,13 +98,13 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
           </span>
         </p>
         <p className="text-gray-600 text-base font-semibold">
-          Telefono:
+          Hora:
           <span className="font-medium text-gray-800 ml-1">
-            {info?.telefono}
+            {info?.hora_inicio}:00 - {parseInt(info?.hora_inicio) + 1}:00
           </span>
         </p>
 
-        <p className="mt-3 text-gray-600 font-semibold">
+        <p className="mt-2 text-gray-600 font-semibold">
           Estado:{" "}
           <Badge
             variant="outline"
@@ -116,11 +141,7 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
               <Select
                 className="font-normal"
                 onChange={(item) => setCambio(item.value)}
-                options={[
-                  { value: "En proceso", label: "En proceso" },
-                  { value: "Completado", label: "Completado" },
-                  { value: "Cancelado", label: "Cancelado" },
-                ]}
+                options={estadoOpciones}
               />
 
               <button
@@ -133,7 +154,6 @@ export const OrdenDetalle = ({ info, setActualizado }) => {
           </div>
         )}
       </div>
-      {/* </div> */}
     </div>
   );
 };

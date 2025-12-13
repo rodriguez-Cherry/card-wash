@@ -17,8 +17,9 @@ import {
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
 import { AgregarVehiculo } from "./AgregarVehiculo";
-import { axiosClient } from "../../api/ApiCliente"
+import { axiosClient } from "../../api/ApiCliente";
 import { EditarVehiculo } from "./EditarVehiculo";
+import { toast } from "sonner";
 
 export function Perfil() {
   const { userData } = useContext(CarWashContext);
@@ -33,19 +34,17 @@ export function Perfil() {
     actualisado
   );
 
-  // en realidad no se elimina se actualiza a estado inactivo en la base de datos y no aparece en la pantalla
   const eliminarVehiculo = async (carro) => {
     const result = confirm("Esta seguro de eliminar este vehiculo ?");
 
     if (!result) return null;
     try {
-      const payload = {
-        ...carro,
-        estado: "inactivo",
-      };
-      await axiosClient.put("/users/update-car/" + carro.id, payload);
+      await axiosClient.delete("/users/eliminar-carro/" + carro.placa);
       setActualisado(!actualisado);
-    } catch (error) {}
+      toast("Carro Eliminado!");
+    } catch (error) {
+      toast("el Carro no pudo ser eliminado!");
+    }
   };
 
   const editarCarro = (carro) => {
@@ -54,8 +53,7 @@ export function Perfil() {
   };
   return (
     <div className="flex flex-col gap-4 w-full">
-
-    {/* agregar vehiculo */}
+      {/* agregar vehiculo */}
       {openModal && (
         <Modal open={openModal} setOpen={setOpenModal}>
           <AgregarVehiculo
@@ -120,68 +118,6 @@ export function Perfil() {
           </div>
         </CardContent>
       </Card>
-      {/* <Card> */}
-      {/* <CardHeader> */}
-      {/* <div className="flex justify-between gap-5">
-            <h1 className="text-xl text-blue-900">Mis vehiculos</h1>
-            <button
-              className="border rounded p-1 bg-blue-600 text-white"
-              onClick={() => setOpenModal(true)}
-            >
-              Agregar
-            </button>
-          </div> */}
-      {/* </CardHeader> */}
-      {/* <CardContent> */}
-      {/* <div>
-            {data?.length === 0 && (
-              <p className="text-zinc-400">
-                {" "}
-                Por el momento no posee vehiculos, puede agregar un vehiculo{" "}
-              </p>
-            )}
-
-            {data?.length > 0 && (
-              <>
-                <div className="flex gap-5 ">
-                  <p>#</p>
-                  <p>Color</p>
-                  <p>Marca</p>
-                  <p>Modelo</p>
-                  <p>año</p>
-                </div>
-                <div>
-                  {data?.map((carro, index) => {
-                    return (
-                      <div
-                        className="flex gap-5"
-                        style={{ borderBottom: " 2px solid gray" }}
-                        key={carro.id}
-                      >
-                        <p>{index + 1}</p>
-                        <p> {carro.color} </p>
-                        <p> {carro.marca} </p>
-                        <p> {carro.modelo} </p>
-                        <p> {carro.año} </p>
-                        <button
-                          onClick={() => editarCarro(carro)}
-                          className="bg-blue-300 border rounded p-1"
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => eliminarVehiculo(carro)}
-                          className="bg-red-300 border rounded p-1"
-                        >
-                          Eliminar
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </>
-            )}
-          </div> */}
 
       <div className="w-full bg-white rounded-xl shadow-md border border-neutral-200 p-6">
         <div className="flex justify-between flex-wrap gap-3 mb-5">
@@ -209,7 +145,7 @@ export function Perfil() {
               {/* Encabezado */}
               <thead>
                 <tr className="bg-neutral-100 border-b border-neutral-300">
-                  <th className="py-2 px-3 font-medium text-neutral-700">#</th>
+                  <th className="py-2 px-3 font-medium text-neutral-700">Placa</th>
                   <th className="py-2 px-3 font-medium text-neutral-700">
                     Color
                   </th>
@@ -232,10 +168,10 @@ export function Perfil() {
               <tbody>
                 {data.map((carro, index) => (
                   <tr
-                    key={carro.id}
+                    key={carro.placa}
                     className="border-b border-neutral-200 hover:bg-neutral-50 transition"
                   >
-                    <td className="py-3 px-3">{index + 1}</td>
+                    <td className="py-3 px-3">{carro?.placa}</td>
                     <td className="py-3 px-3">{carro.color}</td>
                     <td className="py-3 px-3">{carro.marca}</td>
                     <td className="py-3 px-3">{carro.modelo}</td>
@@ -265,8 +201,6 @@ export function Perfil() {
         )}
       </div>
 
-      {/* </CardContent> */}
-      {/* </Card> */}
     </div>
   );
 }

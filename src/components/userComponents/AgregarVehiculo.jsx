@@ -6,6 +6,7 @@ import { toast } from "sonner";
 export function AgregarVehiculo({ setOpenModal, setActualisado }) {
   const { userData } = useContext(CarWashContext);
   const [carInfo, setCarInfo] = useState({
+    placa: "",
     modelo: "",
     marca: "",
     año: "",
@@ -22,25 +23,42 @@ export function AgregarVehiculo({ setOpenModal, setActualisado }) {
   };
 
   async function guardarVehiculo() {
-    if (!carInfo.modelo || !carInfo.marca || !carInfo.año || !carInfo.color)
+    if (
+      !carInfo.placa ||
+      !carInfo.modelo ||
+      !carInfo.marca ||
+      !carInfo.año ||
+      !carInfo.color
+    )
       return toast("Por favor llenar todos los campos");
 
     try {
       const { data } = await axiosClient.post("/users/add-car", {
         ...carInfo,
-        estado: "activo",
         user_id: userData.id,
       });
-      setActualisado(prev => !prev)
+      setActualisado((prev) => !prev);
       setOpenModal(false);
+      toast("Vehiculo agregado!");
     } catch (error) {
-      toast('Error al agregar vehiculo')
+      toast("Error al agregar vehiculo");
     }
   }
 
   return (
     <div className="w-full flex flex-col gap-3">
       <h2 className="text-lg font-semibold">Agregue su vehiculo</h2>
+      <label className="font-semibold" id="placa">
+        Placa
+      </label>
+      <input
+        id="placa"
+        type="text"
+        name="placa"
+        onChange={conseguirValores}
+        required
+        className=" block border w-full rounded-md bg-white/5 px-3 py-1.5 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+      />
       <label className="font-semibold" id="marca">
         Marca
       </label>

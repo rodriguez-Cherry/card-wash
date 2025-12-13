@@ -1,19 +1,7 @@
-// import { useContext } from "react";
 import { Link } from "react-router";
-// import { CarWashContext } from "../contex/Context";
+
 
 export function Navigation() {
-  // const navigate = useNavigate();
-
-  // const { data } = useContext(CarWashContext);
-  // const reservarAhora = () => {
-  //   console.log( "del", data)
-  //   if (data.estaAutenticado) {
-  //     navigate("/home");
-  //     return
-  //   }
-  //   navigate("/login");
-  // };
   return (
     <nav class="bg-white shadow-lg sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useData } from "../../util/useData";
 import { Modal } from "../Modal";
-// import { AgendarCitaCliente } from "./AgendarCitaCliente";
 import { axiosClient } from "../../api/ApiCliente";
 import { OrdenDetalle } from "../userComponents/OrdenDetalle";
 import { toast } from "sonner";
 import { Badge } from "@chakra-ui/react";
+import { FacturaDetalle } from "./FacturaDetalle";
+import { conseguirFecha } from "../../util/conseguirFecha";
 
 export function HistorialOrdenes() {
   const [actualizado, setActualizado] = useState(false);
@@ -14,50 +15,37 @@ export function HistorialOrdenes() {
     data: ordenes,
     isLoading,
     error,
-  } = useData("/admin/ordenes", "get", actualizado);
+  } = useData("/admin/historial-facturas", "get", actualizado);
   const [orderSeleccionada, setOrdenSeleccionada] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const eliminarOrden = async (orden) => {
-    let result = window.confirm("Estas seguro de eliminar esta orden ?");
-    if (!result) return null;
+  // const eliminarOrden = async (orden) => {
+  //   let result = window.confirm("Estas seguro de eliminar esta orden ?");
+  //   if (!result) return null;
 
-    try {
-      await axiosClient.delete("/admin/eliminar-cita/" + orden.id);
-      toast("Orden eliminada!");
-      setActualizado((prev) => !prev);
-    } catch (error) {
-      toast("Error al eliminar la orden");
-    }
-  };
+  //   try {
+  //     await axiosClient.delete("/admin/eliminar-cita/" + orden.id);
+  //     toast("Orden eliminada!");
+  //     setActualizado((prev) => !prev);
+  //   } catch (error) {
+  //     toast("Error al eliminar la orden");
+  //   }
+  // };
 
   const verDetalles = (orden) => {
     setOrdenSeleccionada(orden);
     setOpen(true);
   };
 
-  const ordenesCanceladas = ordenes?.filter((orden) =>
-    ["cancelado", "completado"].includes(orden.estado.toLowerCase())
-  );
-  const resultados = ordenesCanceladas?.filter((orden) =>
+  const resultados = ordenes?.filter((orden) =>
     orden.nombre.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="relative bg-white shadow-md rounded-lg p-4 overflow-x-auto">
-      {/* {openModal && (
-        <Modal setOpen={setOpenModal} open={openModal}>
-          <AgendarCitaCliente
-            setOpenModal={setOpenModal}
-            setActualizado={setActualizado}
-          />
-        </Modal>
-      )} */}
-
       {open && (
         <Modal setOpen={setOpen} open={open}>
-          <OrdenDetalle info={orderSeleccionada} />
+          <FacturaDetalle info={orderSeleccionada} />
         </Modal>
       )}
 
@@ -101,14 +89,14 @@ export function HistorialOrdenes() {
         <tbody>
           {resultados?.map((orden, index) => (
             <tr
-              key={orden.id}
+              key={orden.factura_id}
               className="bg-neutral-primary border-b border-default hover:bg-neutral-secondary-soft transition"
             >
               <td className="px-6 py-4 font-medium text-heading">
                 {index + 1}
               </td>
               <td className="px-6 py-4">
-                {new Date(orden.fecha).toLocaleDateString()}
+                {conseguirFecha(orden.fecha)}
               </td>
               <td className="px-6 py-4">
                 <Badge
@@ -139,17 +127,10 @@ export function HistorialOrdenes() {
               </td>
               <td className="px-6 py-4 flex gap-3 items-center">
                 <button
-                  onClick={() => eliminarOrden(orden)}
-                  className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-red-700 transition"
-                >
-                  Eliminar
-                </button>
-
-                <button
                   onClick={() => verDetalles(orden)}
                   className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-blue-700 transition"
                 >
-                  Ver
+                  Ver factura
                 </button>
               </td>
             </tr>

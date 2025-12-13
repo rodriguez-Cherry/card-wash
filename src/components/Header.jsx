@@ -17,15 +17,6 @@ export function Header() {
     navigate("/");
   }
   return (
-    // <div className="w-full flex justify-between px-6 pt-4 text-xl">
-    //   <p onClick={() => navigate("/")}>Car Wash</p>
-    //   <button
-    //     onClick={cerrarSession}
-    //     className="bg-dark box-border border border-transparent hover:bg-dark-strong focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
-    //   >
-    //     <FontAwesomeIcon icon={faLock} /> Cerrar session
-    //   </button>
-    // </div>
     <div className="w-full flex items-center justify-between px-6 py-4 bg-white shadow-sm">
       {/* LOGO / TÍTULO */}
       <p
