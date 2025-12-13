@@ -129,6 +129,7 @@ export const OrdenDetalle = ({ info, setActualizado, setOpen }) => {
               >
                 <p className="text-gray-800 font-semibold">{carro.marca}</p>
                 <p className="text-gray-600 text-sm">{carro.modelo}</p>
+                 <p className="text-gray-600 text-sm">{carro.placa}</p>
               </div>
             ))}
           </div>
