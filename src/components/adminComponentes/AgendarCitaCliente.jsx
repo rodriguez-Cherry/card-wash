@@ -31,8 +31,8 @@ const horasPermitidas = [
 
 const horasMap = {
   "8:00 AM - 9:00 AM": 8,
-  "9:00 AM - 10:00 PM": 9,
-  "10:00 PM - 11:00 PM": 10,
+  "9:00 AM - 10:00 AM": 9,
+  "10:00 AM - 11:00 AM": 10,
   "1:00 PM - 2:00 PM": 1,
   "2:00 PM - 3:00 PM": 2,
   "3:00 PM - 4:00 PM": 3,
